@@ -142,9 +142,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Cexception.h" />
+    <ClInclude Include="Matrice.h" />
+    <ClInclude Include="MatriceCarree.h" />
     <ClInclude Include="Parseur.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Cexception.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Matrice.cpp" />
+    <ClCompile Include="MatriceCarree.cpp" />
     <ClCompile Include="Parseur.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

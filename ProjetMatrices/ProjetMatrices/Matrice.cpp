@@ -118,7 +118,7 @@ Entraine : Recopie de l'objet en parametre
 *****************************************
 */
 template <class T>
-CMatrice & CMatrice<T>::operator=(CMatrice & MATmatrice)
+CMatrice & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
 {
 	unsigned int uiLigne;
 	unsigned int uiColonne;
