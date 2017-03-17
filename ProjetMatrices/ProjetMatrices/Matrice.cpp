@@ -1,6 +1,10 @@
 #include "Matrice.h"
 #include "Cexception.h"
 
+#include <iostream>
+
+using namespace std;
+
 // ----- Constructeurs et destructeurs----------------------------------------
 
  /*****************************************
@@ -173,7 +177,6 @@ bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
 		// Les matrices sont identiques.
 		return true;
 	}
-	return true;
 }
 
 /*****************************************
@@ -234,7 +237,23 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T> CMatrice<T>::operator+(CMatrice<T> MATmatrice);
+CMatrice<T> CMatrice<T>::operator+(CMatrice<T> MATmatrice)
+{
+	unsigned int uiLigne;
+	unsigned int uiColonne;
+
+	CMatrice MATsommeMatrice(*this);
+
+	for (uiColonne = 0; uiColonne < uiMATnbColonnes; uiColonne++)
+	{
+		for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
+		{
+			MATsommeMatrice(uiLigne, uiColonne) = (*this)(uiLigne, uiColonne) + MATmatrice(uiLigne, uiColonne);
+		}
+	}
+
+	return MATsommeMatrice;
+}
 
 /*****************************************
 Constructeur par defaut
@@ -246,7 +265,23 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T> CMatrice<T>::operator*(T tValeur);
+CMatrice<T> CMatrice<T>::operator*(T tValeur)
+{
+	unsigned int uiLigne;
+	unsigned int uiColonne;
+
+	CMatrice MATmatrice(*this);
+
+	for (uiColonne = 0; uiColonne < uiMATnbColonnes; uiColonne++)
+	{
+		for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
+		{
+			MATmatrice(uiLigne, uiColonne) *= tValeur;
+		}
+	}
+
+	return MATmatrice;
+}
 
 /*****************************************
 Constructeur par defaut
@@ -270,7 +305,12 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T> CMatrice<T>::operator-(T tValeur);
+CMatrice<T> CMatrice<T>::operator-(T tValeur)
+{
+	CMatrice MATmatrice(*this);
+
+	return MATmatrice = (*this) + (-tValeur);
+}
 
 /*****************************************
 Constructeur par defaut
@@ -282,7 +322,12 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T> CMatrice<T>::operator-(CMatrice<T> MATmatrice);
+CMatrice<T> CMatrice<T>::operator-(CMatrice<T> MATmatrice)
+{
+	CMatrice MATDifferenceMatrice(*this);
+
+	return MATDifferenceMatrice = (*this) + (MATmatrice * (-1));
+}
 
 /*****************************************
 Constructeur par defaut
@@ -320,7 +365,21 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-void CMatrice<T>::MATafficher();
+void CMatrice<T>::MATafficher()
+{
+	unsigned int uiLigne;
+	unsigned int uiColonne;
+
+	for (uiColonne = 0; uiColonne < uiMATnbColonnes; uiColonne++)
+	{
+		for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
+		{
+			cout << MATgetValeur(uiLigne, uiColonne) << " ";
+		}
+
+		cout << endl;
+	}
+}
 
 /*****************************************
 Constructeur par defaut
@@ -358,7 +417,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 T CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne)
 {
-	return (uiLigne, uiColonne);
+	return (*this)(uiLigne, uiColonne);
 }
 
 /*****************************************
@@ -501,7 +560,7 @@ template <class T>
 void CMatrice<T>::MATinitMatrice()
 {
 	unsigned int uiBoucle;
-	ppMATmatrice = (T **)malloc(sizeof(T *) * uiMATnbColonnes);
+	ppMATmatrice = (T **) malloc(sizeof(T *) * uiMATnbColonnes);
 
 	if (ppMATmatrice == nullptr)
 	{
@@ -510,7 +569,7 @@ void CMatrice<T>::MATinitMatrice()
 
 	for (uiBoucle = 0; uiBoucle < uiMATnbColonnes; uiBoucle++)
 	{
-		ppMATmatrice[uiBoucle] = (T *)calloc(uiMATnbLignes, sizeof(T));
+		ppMATmatrice[uiBoucle] = (T *) calloc(uiMATnbLignes, sizeof(T));
 
 		if (ppMATmatrice[uiBoucle] == nullptr)
 		{
@@ -518,5 +577,3 @@ void CMatrice<T>::MATinitMatrice()
 		}
 	}
 }
-
-
