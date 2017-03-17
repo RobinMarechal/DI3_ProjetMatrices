@@ -70,7 +70,7 @@ public:
 	Entraine : Recopie de l'objet en parametre
 	*****************************************
 	*/
-	CMatrice & operator=(CMatrice & MATmatrice);
+	CMatrice<T> & operator=(CMatrice<T> & MATmatrice);
 
 	/*****************************************
 	Operateur ==
@@ -81,7 +81,7 @@ public:
 	Entraine : (true : les matrices sont identiques) OU (false : les matrices sont differentes)
 	*****************************************
 	*/
-	bool operator==(CMatrice & MATmatrice);
+	bool operator==(CMatrice<T> & MATmatrice);
 
 	/*****************************************
 	Operateur !=
@@ -92,7 +92,7 @@ public:
 	Entraine : (true : les matrices sont differentes) OU (false : les matrices sont identiques)
 	*****************************************
 	*/
-	bool operator!=(CMatrice & MATmatrice);
+	bool operator!=(CMatrice<T> & MATmatrice);
 
 	/*****************************************
 	Operateur + a parametre de type T : 
@@ -104,7 +104,7 @@ public:
 	Entraine : Allocation d'un nouvel objet CMatrice 
 	*****************************************
 	*/
-	CMatrice operator+(T tValeur);
+	CMatrice<T> operator+(T tValeur);
 
 	/*****************************************
 	Operateur + a parametre de type CMatrice
@@ -115,7 +115,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice operator+(CMatrice MATmatrice);
+	CMatrice<T> operator+(CMatrice MATmatrice);
 
 	/*****************************************
 	Constructeur par defaut
@@ -126,7 +126,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice operator*(T tValeur);
+	CMatrice<T> operator*(T tValeur);
 
 	/*****************************************
 	Constructeur par defaut
@@ -137,7 +137,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice operator*(CMatrice MATmatrice);
+	CMatrice<T> operator*(CMatrice<T> MATmatrice);
 
 	/*****************************************
 	Constructeur par defaut
@@ -148,7 +148,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice operator-(T tValeur);
+	CMatrice<T> operator-(T tValeur);
 
 	/*****************************************
 	Constructeur par defaut
@@ -159,7 +159,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice operator-(CMatrice MATmatrice);
+	CMatrice<T> operator-(CMatrice<T> MATmatrice);
 
 	/*****************************************
 	Constructeur par defaut
@@ -170,7 +170,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice operator/(T tValeur);
+	CMatrice<T> operator/(T tValeur);
 
 	/*****************************************
 	Constructeur par defaut
@@ -181,7 +181,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice operator^(int iPuissance);
+	CMatrice<T> operator^(int iPuissance);
 
 	// ----- Getters ----------------------------------------
 
@@ -310,7 +310,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice MATechelonnee();
+	CMatrice<T> MATechelonnee();
 
 	/*****************************************
 	Constructeur par defaut
@@ -321,7 +321,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice MATtransposee();
+	CMatrice<T> MATtransposee();
 
 	/*****************************************
 	Constructeur par defaut
@@ -332,7 +332,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice MATsousMatrice();
+	CMatrice<T> MATsousMatrice();
 
 	/*****************************************
 	Constructeur par defaut

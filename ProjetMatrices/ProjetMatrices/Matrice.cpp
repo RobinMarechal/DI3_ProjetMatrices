@@ -47,7 +47,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T>::CMatrice(CMatrice & MATmatrice)
+CMatrice<T>::CMatrice(CMatrice<T> & MATmatrice)
 {
 	unsigned int uiLigne, uiColonne;
 
@@ -61,7 +61,7 @@ CMatrice<T>::CMatrice(CMatrice & MATmatrice)
 	{
 		for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
 		{
-			MATsetValeur(uiLigne, uiColonne, MATmatrice.getValeu(uiLigne, uiColonne));
+			MATsetValeur(uiLigne, uiColonne, MATmatrice.MATgetValeur(uiLigne, uiColonne));
 		}
 	}
 }
@@ -118,7 +118,7 @@ Entraine : Recopie de l'objet en parametre
 *****************************************
 */
 template <class T>
-CMatrice & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
+CMatrice<T> & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
 {
 	unsigned int uiLigne;
 	unsigned int uiColonne;
@@ -133,10 +133,10 @@ CMatrice & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
 	{
 		for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
 		{
-			MATsetValeur(uiLigne, uiColonne, MATmatrice.getValeur(uiLigne, uiColonne));
+			MATsetValeur(uiLigne, uiColonne, MATmatrice.MATgetValeur(uiLigne, uiColonne));
 		}
 	}
-
+	
 	return *this;
 }
 
@@ -150,10 +150,30 @@ Entraine : (true : les matrices sont identiques) OU (false : les matrices sont d
 *****************************************
 */
 template <class T>
-bool CMatrice<T>::operator==(CMatrice & MATmatrice)
+bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
 {
 	if (uiMATnbColonnes != MATmatrice.uiMATnbColonnes || uiMATnbLignes != MATmatrice.uiMATnbLignes)
 		return false;
+
+	else
+	{
+		unsigned int uiLigne;
+		unsigned int uiColonne;
+
+		for (uiColonne = 0; uiColonne < uiMATnbColonnes; uiColonne++)
+		{
+			for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
+			{
+				// Les coefficients sont différents : les matrices sont différentes.
+				if (MATmatrice.ppMATmatrice[uiColonne][uiLigne] != ppMATmatrice[uiColonne][uiLigne])
+					return false;
+			}
+		}
+		
+		// Les matrices sont identiques.
+		return true;
+	}
+	return true;
 }
 
 /*****************************************
@@ -166,7 +186,14 @@ Entraine : (true : les matrices sont differentes) OU (false : les matrices sont 
 *****************************************
 */
 template <class T>
-bool CMatrice<T>::operator!=(CMatrice & MATmatrice);
+bool CMatrice<T>::operator!=(CMatrice<T> & MATmatrice)
+{
+	if (*this == MATmatrice)
+		return false;
+
+	else
+		return true;
+}
 
 /*****************************************
 Operateur + a parametre de type T :
@@ -179,7 +206,23 @@ Entraine : Allocation d'un nouvel objet CMatrice
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::CMatrice operator+(T tValeur);
+CMatrice<T> CMatrice<T>::operator+(T tValeur)
+{
+	unsigned int uiLigne;
+	unsigned int uiColonne;
+
+	CMatrice MATmatrice(*this);
+
+	for (uiColonne = 0; uiColonne < uiMATnbColonnes; uiColonne++)
+	{
+		for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
+		{
+			MATmatrice(uiLigne, uiColonne) += tValeur;
+		}
+	}
+
+	return MATmatrice;
+}
 
 /*****************************************
 Operateur + a parametre de type CMatrice
@@ -191,7 +234,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::operator+(CMatrice MATmatrice);
+CMatrice<T> CMatrice<T>::operator+(CMatrice<T> MATmatrice);
 
 /*****************************************
 Constructeur par defaut
@@ -203,7 +246,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::operator*(T tValeur);
+CMatrice<T> CMatrice<T>::operator*(T tValeur);
 
 /*****************************************
 Constructeur par defaut
@@ -215,7 +258,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::operator*(CMatrice MATmatrice);
+CMatrice<T> CMatrice<T>::operator*(CMatrice<T> MATmatrice);
 
 /*****************************************
 Constructeur par defaut
@@ -227,7 +270,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::operator-(T tValeur);
+CMatrice<T> CMatrice<T>::operator-(T tValeur);
 
 /*****************************************
 Constructeur par defaut
@@ -239,7 +282,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::operator-(CMatrice MATmatrice);
+CMatrice<T> CMatrice<T>::operator-(CMatrice<T> MATmatrice);
 
 /*****************************************
 Constructeur par defaut
@@ -251,7 +294,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::operator/(T tValeur);
+CMatrice<T> CMatrice<T>::operator/(T tValeur);
 
 /*****************************************
 Constructeur par defaut
@@ -263,7 +306,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::operator^(int iPuissance);
+CMatrice<T> CMatrice<T>::operator^(int iPuissance);
 
 // ----- Getters ----------------------------------------
 
@@ -313,7 +356,10 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-T CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne);
+T CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne)
+{
+	return (uiLigne, uiColonne);
+}
 
 /*****************************************
 Constructeur par defaut
@@ -351,7 +397,10 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-void CMatrice<T>::MATsetValeur(unsigned int uiLigne, unsigned int uiColonne, T tValeur);
+void CMatrice<T>::MATsetValeur(unsigned int uiLigne, unsigned int uiColonne, T tValeur)
+{
+	(*this)(uiLigne, uiColonne) = tValeur;
+}
 
 /*****************************************
 Constructeur par defaut
@@ -401,7 +450,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::MATechelonnee();
+CMatrice<T> CMatrice<T>::MATechelonnee();
 
 /*****************************************
 Constructeur par defaut
@@ -413,7 +462,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::MATtransposee();
+CMatrice<T> CMatrice<T>::MATtransposee();
 
 /*****************************************
 Constructeur par defaut
@@ -425,7 +474,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice CMatrice<T>::MATsousMatrice();
+CMatrice<T> CMatrice<T>::MATsousMatrice();
 
 /*****************************************
 Constructeur par defaut
