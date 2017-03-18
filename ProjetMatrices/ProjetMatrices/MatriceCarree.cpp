@@ -53,6 +53,64 @@ template <class T>
 CMatriceCarree<T>::~CMatriceCarree() {}
 
 
+// Operateurs 
+
+
+/*****************************************
+Constructeur par defaut
+*****************************************
+Entree : void
+Necessite : Si iPuissance = 0 : (T est un type de base) OU (T est une classe qui surcharge l'operateur ^)
+Sortie : rien
+Entraine : Initialisation de l'objet
+*****************************************
+*/
+template <class T>
+CMatriceCarree<T> CMatriceCarree<T>::operator^(int iPuissance)
+{
+	unsigned int uiBoucle;
+	if (iPuissance == 0)
+	{
+		unsigned int uiDim = MACgetDimension();
+		T tTab[uiDim];
+		T tObjTmp;
+
+		for (uiBoucle = 0; uiBoucle < uiDim; uiBoucle++)
+		{
+			tTab[uiBoucle] = tObjTmp ^ 0 ;
+		}
+
+		return CMatriceCarree<T>::MACdiag(uiDim)
+	}
+	else
+	{
+		bool bNegatif = false;
+
+		// Si la puissance est negative, on prend sa valeur absolue 
+		// car A^(-n) = A^(n^(-1))
+		if (iPuissance < 0)
+		{
+			iPuissance *= -1;
+			bNegatif = true;
+		}
+
+		CMatriceCarree<T> MATresultat(*this);
+		for (uiBoucle = 1; uiBoucle < iPuissance; uiBoucle++)
+		{
+			MATresultat = MATresultat * *this;
+		}
+
+		// Puis on inverse le resultat si la puissance etait negative
+		if (bNegatif)
+		{
+			MATresultat = MATresultat.MACinverse();
+		}
+
+		return MATresultat;
+	}
+}
+
+
 // Getters
 
 /*****************************************
@@ -65,9 +123,9 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-unsigned int CMatriceCarree<T>::MACgetDimension()
+inline unsigned int CMatriceCarree<T>::MACgetDimension()
 {
-	return uiMATnbLignes;
+	return MATgetNbLignes();
 }
 
 
@@ -81,10 +139,10 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-void CMatriceCarree<T>::MACsetDimension(unsigned int uiDimension)
+inline void CMatriceCarree<T>::MACsetDimension(unsigned int uiDimension)
 {
-	uiMATnbLignes = uiDimension;
-	uiMATnbColonnes = uiDimension;
+	MATsetNbLignes(uiDimension);
+	MATsetNbColonnes(uiDimension);
 }
 
 
@@ -100,7 +158,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 T CMatriceCarree<T>::MACdet()
 {
-	if (uiMATnbLignes == 1)
+	if (MACgetDimension() == 1)
 	{
 		return ppMATmatrice[0][0];
 	}
@@ -108,9 +166,9 @@ T CMatriceCarree<T>::MACdet()
 	{
 		unsigned int uiBoucleL;
 		T tDeterminant = 0;
-		for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
+		for (uiBoucleL = 0; uiBoucleL < MACgetDimension(); uiBoucleL++)
 		{
-			CMatriceCarree MACsousMatrice = MATsousMatrice(uiBoucleL, 0);
+			CMatriceCarree<T> MACsousMatrice = MATsousMatrice(uiBoucleL, 0);
 			int iSignature = -1;
 			if ((uiBoucleL) % 2 == 0)
 				iSignature = 1;
@@ -140,7 +198,7 @@ T CMatriceCarree<T>::MACtr()
 	unsigned int uiBoucle;
 	T trace;
 
-	for (uiBoucle = 0; uiBoucle < uiMATnbLignes; uiBoucle++)
+	for (uiBoucle = 0; uiBoucle < MACgetDimension(); uiBoucle++)
 	{
 		trace += ppMATmatrice[uiBoucle][uiBoucle];
 	}
@@ -158,16 +216,17 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T> CMatriceCarree<T>::MACcommatrice()
+CMatriceCarree<T> CMatriceCarree<T>::MACcommatrice()
 {
 	unsigned int uiBoucleL, uiBoucleC;
-	CMatriceCarree MACresultat(uiMATnbLignes);
+	unsigned int uiDim = MACgetDimension();
+	CMatriceCarree<T> MACresultat(uiDim);
 
-	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL++)
 	{
-		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC++)
 		{
-			CMatriceCarree MACsousMatrice = MATsousMatrice(uiBoucleL, uiBoucleC);
+			CMatriceCarree<T> MACsousMatrice = MATsousMatrice(uiBoucleL, uiBoucleC);
 			int iSignature = -1;
 			if ((uiBoucleL + uiBoucleC) % 2 == 0)
 				iSignature = 1;
@@ -190,20 +249,21 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T> CMatriceCarree<T>::MACinverse()
+CMatriceCarree<T> CMatriceCarree<T>::MACinverse()
 {
-	unsigned int uiBoucleL, uiBoucleC;
 	T det;
-	CMatriceCarree MACcomm, MACtransComm;
+	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiDim = MACgetDimension();
+	CMatriceCarree<T> MACcomm, MACtransComm;
 
-	CMatriceCarree MACinv(uiMATnbLignes);
+	CMatriceCarree<T> MACinv(uiDim);
 	det = MACdet();
 	MACcomm = MACcommatrice();
 	MACtransComm = (CMatriceCarree) MATtransposee(MACcomm);
 
-	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL++)
 	{
-		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC++)
 		{
 			MACinv(uiBoucleL, uiBoucleC) = MACtransComm(uiBoucleL, uiBoucleC) / det;
 		}
@@ -242,12 +302,16 @@ template <class T>
 bool CMatriceCarree<T>::MACestTriangulaireSuperieure()
 {
 	unsigned int uiBoucleLigne, uiBoucleColonne;
-	for (uiBoucleColonne= 1; uiBoucleColonne < uiMATnbColonnes; uiBoucleColonne++)
+	for (uiBoucleColonne= 1; uiBoucleColonne < MACgetDimension(); uiBoucleColonne++)
 	{
 		for (uiBoucleLigne = 0; uiBoucleLigne < uiBoucleColonne; uiBoucleLigne++)
 		{
 			if (MATgetValeur(uiBoucleLigne, uiBoucleColonne) != 0)
-				retur false;
+			{
+				// Si l'element dans le triangle superiere est non nul
+				// Alors la matrice c'est pas triangulaire superieurs
+				return false;
+			}
 		}
 	}
 
@@ -268,12 +332,16 @@ template <class T>
 bool CMatriceCarree<T>::MACestTriangulaireInferieure()
 {
 	unsigned int uiBoucleLigne, uiBoucleColonne;
-	for (uiBoucleLigne = 1; uiBoucleLigne < uiMATnbLignes; uiBoucleLigne++)
+	for (uiBoucleLigne = 1; uiBoucleLigne < MACgetDimension(); uiBoucleLigne++)
 	{
 		for (uiBoucleColonne = 0; uiBoucleColonnee < uiBoucleLigne; uiBoucleColonne++)
 		{
 			if (MATgetValeur(uiBoucleLigne, uiBoucleColonne) != 0)
-				retur false;
+			{
+				// Si l'element dans le triangle inferieure est non nul
+				// Alors la matrice c'est pas triangulaire inferieure
+				return false;
+			}
 		}
 	}
 
@@ -294,10 +362,11 @@ template <class T>
 bool CMatriceCarree<T>::MACestDiagonale()
 {
 	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiDim = MACgetDimension();
 
-	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL)
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL)
 	{
-		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC)
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC)
 		{
 			if (uiBoucleL != uiBoucleC && MATgetValeur(uiBoucleL, uiBoucleC) != 0)
 			{
@@ -341,15 +410,16 @@ template <class T>
 bool CMatriceCarree<T>::MACestSymetrique()
 {
 	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiDim = MACgetDimension();
 
-	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL++)
 	{
-		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC++)
 		{
 			if (uiBoucleL != uiBoucleC && MATgetValeur(uiBoucleL, uiBoucleC) != MATgetValeur(uiBoucleC, uiBoucleL))
 			{
 				// L'element a l'indice (uiBoucleL, uiBoucleC) n'est pas sur la diagonale
-				// et il est different de l'element a l'indice (uiBoucleC, uiBoucleL)
+				// et (*this)(uiBoucleL, uiBoucleC) != (*this)(uiBoucleC, uiBoucleL)
 				return false;
 			}
 		}
@@ -372,19 +442,59 @@ template <class T>
 bool CMatriceCarree<T>::MACestAntiSymetrique()
 {
 	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiDim = MACgetDimension();
 
-	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL++)
 	{
-		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC++)
 		{
 			if (MATgetValeur(uiBoucleL, uiBoucleC) != (-1) * MATgetValeur(uiBoucleC, uiBoucleL))
 			{
-				// L'element a l'indice (uiBoucleL, uiBoucleC)
-				// n'est pas l'opposé de l'element a l'indice (uiBoucleC, uiBoucleL)
+				// L'element a l'indice (uiBoucleL, uiBoucleC) n'est pas sur la diagonale
+				// et (*this)(uiBoucleL, uiBoucleC) != (-1) * (*this)(uiBoucleC, uiBoucleL)
 				return false;
 			}
 		}
 	}
 
 	return true;
+}
+
+
+
+
+/*****************************************
+Constructeur par defaut
+*****************************************
+Entree : void
+Necessite : rien
+Sortie : rien
+Entraine : Initialisation de l'objet
+*****************************************
+*/
+template <class T>
+static CMatriceCarree<T> CMatriceCarree<T>::MACdiag(unsigned int uiDim, T * ptDiag)
+{
+	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiDim = MACgetDimension();
+	CMatriceCarree<T> MACresultat(uiDim);
+
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL++)
+	{
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC++)
+		{
+			if (uiBoucleL == uiBoucleC)
+			{
+				// On est sur la diagonale ==> valeur de ptDiag
+				MACresultat(uiBoucleL, uiBoucleC) = ptDiag[uiBoucleL];
+			}
+			else
+			{
+				// On est en dehors de la diagonale ==> 0
+				MACresultat(uiBoucleL, uiBoucleC) = 0;
+			}
+		}
+	}
+
+	return MACresultat;
 }

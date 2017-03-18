@@ -57,6 +57,19 @@ class CMatriceCarree : public CMatrice <T>
 	*/
 	~CMatriceCarree();
 
+	// ----- Operateurs ---------------------------------------------------
+
+	/*****************************************
+	Constructeur par defaut
+	*****************************************
+	Entree : void
+	Necessite : rien
+	Sortie : rien
+	Entraine : Initialisation de l'objet
+	*****************************************
+	*/
+	CMatriceCarree<T> operator^(int iPuissance);
+
 	// ----- Getters et Setters ---------------------------------------------------
 
 
@@ -119,7 +132,7 @@ class CMatriceCarree : public CMatrice <T>
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice <T> MACcommatrice();
+	CMatriceCarree <T> MACcommatrice();
 
 
 	/*****************************************
@@ -131,7 +144,7 @@ class CMatriceCarree : public CMatrice <T>
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice <T> MACinverse();
+	CMatriceCarree <T> MACinverse();
 
 
 	/*****************************************
@@ -216,6 +229,18 @@ class CMatriceCarree : public CMatrice <T>
 	*****************************************
 	*/
 	bool MACestAntiSymetrique();
+
+
+	/*****************************************
+	Constructeur par defaut
+	*****************************************
+	Entree : void
+	Necessite : rien
+	Sortie : rien
+	Entraine : Initialisation de l'objet
+	*****************************************
+	*/
+	static CMatriceCarree<T> MACdiag(unsigned int uiDim, T * ptDiag);
 };
 
 #include "MatriceCarree.cpp"

@@ -172,17 +172,6 @@ public:
 	*/
 	CMatrice<T> operator/(T tValeur);
 
-	/*****************************************
-	Constructeur par defaut
-	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
-	CMatrice<T> operator^(int iPuissance);
-
 	// ----- Getters ----------------------------------------
 
 	/*****************************************
@@ -344,6 +333,9 @@ public:
 	*****************************************
 	*/
 	bool MATestNulle();
+
+
+	protected:
 
 	/*****************************************
 	Constructeur par defaut
