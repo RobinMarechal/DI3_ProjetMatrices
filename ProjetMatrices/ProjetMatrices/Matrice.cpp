@@ -1,6 +1,10 @@
 #include "Matrice.h"
 #include "Cexception.h"
 
+#include <iostream>
+
+using namespace std;
+
 // ----- Constructeurs et destructeurs----------------------------------------
 
  /*****************************************
@@ -162,12 +166,11 @@ bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
 	{
 		for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
 		{
-			// Les coefficients sont différents : les matrices sont différentes.
+			// Les coefficients sont diffï¿½rents : les matrices sont diffï¿½rentes.
 			if (MATmatrice.ppMATmatrice[uiColonne][uiLigne] != ppMATmatrice[uiColonne][uiLigne])
 				return false;
 		}
-	}
-		
+	}		
 	// Les matrices sont identiques.
 	return true;
 }
@@ -282,6 +285,11 @@ Entraine : Initialisation de l'objet
 template <class T>
 CMatrice<T> CMatrice<T>::operator*(CMatrice<T> MATmatrice)
 {
+	if(uiMATnbLignes != MATmatrice.uiMATnbColonnes || uiMATnbColonnes != MATmatrice.uiMATnbLignes)
+	{
+		throw Cexception(0, "Dimensions invalides");
+	}
+
 	unsigned int uiBoucleL, uiBoucleC, uiBouclePdt;
 	CMatrice<T> MATresultat(uiMATnbLignes, uiMATnbColonnes);
 
@@ -303,7 +311,6 @@ CMatrice<T> CMatrice<T>::operator*(CMatrice<T> MATmatrice)
 	}
 
 	return MATresultat;
-
 }
 
 /*****************************************
@@ -400,7 +407,21 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-void CMatrice<T>::MATafficher();
+void CMatrice<T>::MATafficher()
+{
+	unsigned int uiLigne;
+	unsigned int uiColonne;
+
+	for (uiColonne = 0; uiColonne < uiMATnbColonnes; uiColonne++)
+	{
+		for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
+		{
+			cout << MATgetValeur(uiLigne, uiColonne) << " ";
+		}
+
+		cout << endl;
+	}
+}
 
 /*****************************************
 Constructeur par defaut
@@ -438,7 +459,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 inline T CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne)
 {
-	return (uiLigne, uiColonne);
+	return (*this)(uiLigne, uiColonne);
 }
 
 /*****************************************
@@ -581,7 +602,7 @@ template <class T>
 void CMatrice<T>::MATinitMatrice()
 {
 	unsigned int uiBoucle;
-	ppMATmatrice = (T **)malloc(sizeof(T *) * uiMATnbColonnes);
+	ppMATmatrice = (T **) malloc(sizeof(T *) * uiMATnbColonnes);
 
 	if (ppMATmatrice == nullptr)
 	{
@@ -590,7 +611,7 @@ void CMatrice<T>::MATinitMatrice()
 
 	for (uiBoucle = 0; uiBoucle < uiMATnbColonnes; uiBoucle++)
 	{
-		ppMATmatrice[uiBoucle] = (T *)calloc(uiMATnbLignes, sizeof(T));
+		ppMATmatrice[uiBoucle] = (T *) calloc(uiMATnbLignes, sizeof(T));
 
 		if (ppMATmatrice[uiBoucle] == nullptr)
 		{
@@ -598,5 +619,3 @@ void CMatrice<T>::MATinitMatrice()
 		}
 	}
 }
-
-

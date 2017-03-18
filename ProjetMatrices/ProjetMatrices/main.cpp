@@ -6,12 +6,7 @@ using namespace std;
 
 void gregoire()
 {
-	CMatrice <int> m(3, 2);
-	CMatrice <int> n(3, 2);
-
-	n = m + 3;
-
-	cout << n(0, 0) << endl;
+	
 }
 
 void robin()
