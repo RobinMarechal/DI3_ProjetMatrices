@@ -109,7 +109,10 @@ Entraine : rien
 template <class T>
 inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne)
 {
-	return ppMATmatrice[uiColonne][uiLigne];
+	if (uiLigne >= uiMATnbLignes || uiColonne >= uiMATnbColonnes)
+		throw Cexception(0, "Indice invalide");
+
+	return ppMATmatrice[uiLigne][uiColonne];
 }
 
 /*****************************************
@@ -412,9 +415,9 @@ void CMatrice<T>::MATafficher()
 	unsigned int uiLigne;
 	unsigned int uiColonne;
 
-	for (uiColonne = 0; uiColonne < uiMATnbColonnes; uiColonne++)
+	for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
 	{
-		for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
+		for (uiColonne = 0; uiColonne < uiMATnbColonnes; uiColonne++)
 		{
 			cout << MATgetValeur(uiLigne, uiColonne) << " ";
 		}
