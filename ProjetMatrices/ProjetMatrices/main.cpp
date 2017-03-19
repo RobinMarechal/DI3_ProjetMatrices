@@ -7,9 +7,9 @@ using namespace std;
 
 void gregoire()
 {
-	CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
+	//CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
 
-	m.MATafficher();
+	//m.MATafficher();
 }
 
 void robin()

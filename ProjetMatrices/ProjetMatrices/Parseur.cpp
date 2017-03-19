@@ -60,9 +60,9 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 
 	ifstream fichier(pcFichier);
     
-	fichier >> pcType;
-	fichier >> pcLignes;
-	fichier >> pcColonnes;
+	fichier.getline(pcType, 1024);
+	fichier.getline(pcLignes, 1024);
+	fichier.getline(pcColonnes, 1024);
 	fichier >> pcDebutMatrice;
 
 	// Récupérer le nombre de lignes.
