@@ -1,4 +1,4 @@
-#ifndef CMATRICE_H
+ï»¿#ifndef CMATRICE_H
 #define CMATRICE_H
 
 template <class T>
@@ -339,7 +339,7 @@ public:
 	bool MATestNulle();
 };
 
-// Opérateurs complémentaires
+// OpÃ©rateurs complÃ©mentaires
 
 template <class T>
 CMatrice<T> operator+(T tValeur, CMatrice<T> MATmatrice);
