@@ -439,7 +439,6 @@ template <class T>
 inline unsigned int CMatrice<T>::MATgetNbColonnes()
 {
 	return uiMATnbColonnes;
-
 }
 
 /*****************************************

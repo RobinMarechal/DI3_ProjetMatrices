@@ -6,7 +6,12 @@ using namespace std;
 
 void gregoire()
 {
-	
+	CMatrice <int> m(3, 3);
+	CMatrice <int> n(3, 3);
+
+	n = m + 3;
+
+	n.MATafficher();
 }
 
 void robin()
