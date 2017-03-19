@@ -433,7 +433,11 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-inline unsigned int CMatrice<T>::MATgetNbColonnes();
+inline unsigned int CMatrice<T>::MATgetNbColonnes()
+{
+	return uiMATnbColonnes;
+
+}
 
 /*****************************************
 Constructeur par defaut
@@ -445,7 +449,10 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-inline unsigned int CMatrice<T>::MATgetNbLignes();
+inline unsigned int CMatrice<T>::MATgetNbLignes()
+{
+	return uiMATnbLignes;
+}
 
 /*****************************************
 Constructeur par defaut
@@ -472,7 +479,18 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-T * CMatrice<T>::MATgetLigne(unsigned int uiLigne);
+T * CMatrice<T>::MATgetLigne(unsigned int uiLigne)
+{
+	unsigned int uiBoucleC;
+	T tTab[uiMATnbColonnes];
+	
+	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+	{
+		tTab[uiBoucleC] = MATgetValeur(uiLigne, uiBoucleC);
+	}
+
+	return tTab;
+}
 
 /*****************************************
 Constructeur par defaut
@@ -484,7 +502,18 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-T * CMatrice<T>::MATgetColonne(unsigned int uiColonne);
+T * CMatrice<T>::MATgetColonne(unsigned int uiColonne)
+{
+	unsigned int uiBoucleL;
+	T tTab[uiMATnbLignes];
+
+	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
+	{
+		tTab[uiBoucleL] = MATgetValeur(uiBoucleL, uiColonne);
+	}
+
+	return tTab;
+}
 
 // ----- Setters ----------------------------------------
 
@@ -513,7 +542,10 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-inline void CMatrice<T>::MATsetNbLignes(unsigned int uiNbLignes);
+inline void CMatrice<T>::MATsetNbLignes(unsigned int uiNbLignes)
+{
+	uiMATnbLignes = uiNbLignes;
+}
 
 /*****************************************
 Constructeur par defaut
@@ -525,7 +557,10 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-inline void CMatrice<T>::MATsetNbColonnes(unsigned int uiNbColonnes);
+inline void CMatrice<T>::MATsetNbColonnes(unsigned int uiNbColonnes)
+{
+	uiMATnbColonnes = uiNbColonnes;
+}
 
 // ----- Calculs ----------------------------------------
 
@@ -539,7 +574,18 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-unsigned int CMatrice<T>::MATrang();
+unsigned int CMatrice<T>::MATrang()
+{
+	CMatrice<T> MATech = MATechelonnee();
+	unsigned int uiBoucleL = 0;
+
+	while (!MATligneEstNulle(uiBoucleL))
+	{
+		uiBoucleL++;
+	}
+
+	return uiBoucleL;
+}
 
 /*****************************************
 Constructeur par defaut
@@ -563,7 +609,22 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T> CMatrice<T>::MATtransposee();
+CMatrice<T> CMatrice<T>::MATtransposee()
+{
+	unsigned int uiBoucleL, uiBoucleC;
+	CMatrice<T> MATresultat(uiMATnbColonnes, uiMATnbLignes);
+
+
+	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
+	{
+		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+		{
+			MATresultat(uiBoucleC, uiBoucleL) = MATgetValeur(uiBoucleL, uiBoucleC);
+		}
+	}
+
+	return MATresultat;
+}
 
 /*****************************************
 Constructeur par defaut
@@ -587,7 +648,23 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-bool CMatrice<T>::MATestNulle();
+bool CMatrice<T>::MATestNulle()
+{
+	unsigned int uiBoucleL, uiBoucleC;
+
+	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
+	{
+		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+		{
+			if (MATgetValeur(uiBoucleL, uiBoucleC) != 0)
+			{
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
 
 /*****************************************
 Constructeur par defaut
@@ -618,4 +695,20 @@ void CMatrice<T>::MATinitMatrice()
 			throw Cexception(0, "Allocation failed");
 		}
 	}
+}
+
+template<class T>
+bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
+{
+	unsigned int uiBoucleC;
+
+	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+	{
+		if (MATgetValeur(uiLigne, uiBoucleC) == 0)
+		{
+			return false;
+		}
+	}
+
+	return true;
 }

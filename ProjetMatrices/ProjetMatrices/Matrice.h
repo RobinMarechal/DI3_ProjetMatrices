@@ -9,6 +9,10 @@ private:
 	unsigned int uiMATnbLignes;
 	T ** ppMATmatrice;
 
+	void MATinitMatrice();
+
+	bool MATligneEstNulle(unsigned int uiLigne);
+
 public:
 
 	// ----- Constructeurs et destructeurs----------------------------------------
@@ -333,20 +337,6 @@ public:
 	*****************************************
 	*/
 	bool MATestNulle();
-
-
-	protected:
-
-	/*****************************************
-	Constructeur par defaut
-	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
-	void MATinitMatrice();
 };
 
 #include "Matrice.cpp"
