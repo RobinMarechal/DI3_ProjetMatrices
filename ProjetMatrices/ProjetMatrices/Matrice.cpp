@@ -712,3 +712,24 @@ bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
 
 	return true;
 }
+
+
+// Operateurs complémentaires
+
+template <class T>
+CMatrice<T> operator+(T tValeur, CMatrice<T> MATmatrice)
+{
+	return MATmatrice + tValeur;
+}
+
+template <class T>
+CMatrice<T> operator-(T tValeur, CMatrice<T> MATmatrice)
+{
+	return MATmatrice - tValeur;
+}
+
+template <class T>
+CMatrice<T> operator*(T tValeur, CMatrice<T> MATmatrice)
+{
+	return MATmatrice * tValeur;
+}

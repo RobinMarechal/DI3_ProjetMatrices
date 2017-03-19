@@ -339,6 +339,18 @@ public:
 	bool MATestNulle();
 };
 
+// Opérateurs complémentaires
+
+template <class T>
+CMatrice<T> operator+(T tValeur, CMatrice<T> MATmatrice);
+
+template <class T>
+CMatrice<T> operator-(T tValeur, CMatrice<T> MATmatrice);
+
+template <class T>
+CMatrice<T> operator*(T tValeur, CMatrice<T> MATmatrice);
+
+
 #include "Matrice.cpp"
 
 #endif

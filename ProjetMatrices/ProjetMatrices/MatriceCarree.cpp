@@ -461,8 +461,6 @@ bool CMatriceCarree<T>::MACestAntiSymetrique()
 }
 
 
-
-
 /*****************************************
 Constructeur par defaut
 *****************************************
