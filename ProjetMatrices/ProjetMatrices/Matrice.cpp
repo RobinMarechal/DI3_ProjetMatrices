@@ -599,7 +599,35 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T> CMatrice<T>::MATechelonnee();
+CMatrice<T> CMatrice<T>::MATechelonnee()
+{
+	unsigned int uiLignes,
+				 uiColonnes,
+				 uiIndicePivot;
+    
+    int iPivot,
+		iCoefficientLigne;
+
+	CMatrice <T> MATmatrice(*this);
+    
+    for (uiIndicePivot = 0; uiIndicePivot < uiMATnbColonnes; uiIndicePivot++)
+    {
+        for (uiLignes = 1 + uiIndicePivot; uiLignes < uiMATnbLignes; uiLignes++)
+        {
+            iPivot = MATmatrice.MATgetValeur(uiIndicePivot, uiIndicePivot);
+            
+            iCoefficientLigne = MATmatrice.MATgetValeur(uiLignes, uiIndicePivot);
+            
+            for (uiColonnes = 0; uiColonnes < uiMATnbColonnes; uiColonnes++)
+            {
+                MATmatrice.MATsetValeur(uiLignes, uiColonnes, iPivot * MATmatrice.MATgetValeur(uiLignes, uiColonnes)
+                                        - iCoefficientLigne * MATmatrice.MATgetValeur(uiIndicePivot, uiColonnes));
+            }
+        }
+    }
+    
+    return MATmatrice;
+}
 
 /*****************************************
 Constructeur par defaut
