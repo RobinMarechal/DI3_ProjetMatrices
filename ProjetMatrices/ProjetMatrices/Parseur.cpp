@@ -3,6 +3,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <stdlib.h>
 
 /***********************************************
 	Constructeur par défaut.
@@ -51,7 +52,11 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
          pcDebutMatrice[1024],
 		 pcCoefficient[1024];
 
-	unsigned int uiLigne, uiColonne, uiIndiceCaractere;
+	unsigned int uiLigne,
+				 uiColonne,
+				 uiIndiceCaractere,
+				 uiPARnombreLignes,
+				 uiPARnombreColonnes;
 
 	ifstream fichier(pcFichier);
     
@@ -89,7 +94,7 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
                 
                 uiIndiceCaractere++;
             }
-            
+
 			MATmatrice.MATsetValeur(uiLigne, uiColonne, atof(pcCoefficient));
         }
     }

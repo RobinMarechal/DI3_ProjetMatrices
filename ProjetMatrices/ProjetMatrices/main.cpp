@@ -3,15 +3,13 @@
 using namespace std;
 
 #include "Matrice.h"
+#include "Parseur.h"
 
 void gregoire()
 {
-	CMatrice <int> m(3, 3);
-	CMatrice <int> n(3, 3);
+	CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
 
-	n = m + 3;
-
-	n.MATafficher();
+	m.MATafficher();
 }
 
 void robin()

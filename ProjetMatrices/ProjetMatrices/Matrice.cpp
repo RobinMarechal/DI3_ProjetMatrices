@@ -468,7 +468,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 inline T CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne)
 {
-	return (*this)(uiLigne, uiColonne);
+	return ppMATmatrice[uiColonne][uiLigne];
 }
 
 /*****************************************
@@ -531,7 +531,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 inline void CMatrice<T>::MATsetValeur(unsigned int uiLigne, unsigned int uiColonne, T tValeur)
 {
-	(*this)(uiLigne, uiColonne) = tValeur;
+	ppMATmatrice[uiColonne][uiLigne] = tValeur;
 }
 
 /*****************************************
