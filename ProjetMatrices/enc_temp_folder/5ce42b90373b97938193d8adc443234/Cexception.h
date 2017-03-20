@@ -95,7 +95,7 @@ public:
 	Entraine : rien
 	*****************************************
 	*/
-	unsigned int EXCgetValeur() const { return uiEXCValeur; }
+	unsigned int EXCgetValeur() { return uiEXCValeur; }
 
 
 	/***************************************
@@ -107,7 +107,7 @@ public:
 	Entraine : rien
 	*****************************************
 	*/
-	char * EXCgetMessage() const { return pcEXCMessage; }
+	char * EXCgetMessage() { return pcEXCMessage; }
 
 
 	/***************************************
