@@ -6,8 +6,8 @@
 class CParseur
 {
 	public:
-
-	static /*CMatrice <double>*/ void PARparserFichier(char * pcFichier);
+	
+	static CMatrice <double> PARparserFichier(char * pcFichier);
 
 	private:
 

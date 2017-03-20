@@ -3,10 +3,13 @@
 using namespace std;
 
 #include "Matrice.h"
+#include "Parseur.h"
 
 void gregoire()
 {
-	
+	/*CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
+
+	m.MATechelonnee().MATafficher();*/
 }
 
 void robin()

@@ -439,7 +439,6 @@ template <class T>
 inline unsigned int CMatrice<T>::MATgetNbColonnes()
 {
 	return uiMATnbColonnes;
-
 }
 
 /*****************************************
@@ -469,7 +468,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 inline T CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne)
 {
-	return (*this)(uiLigne, uiColonne);
+	return ppMATmatrice[uiColonne][uiLigne];
 }
 
 /*****************************************
@@ -532,7 +531,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 inline void CMatrice<T>::MATsetValeur(unsigned int uiLigne, unsigned int uiColonne, T tValeur)
 {
-	(*this)(uiLigne, uiColonne) = tValeur;
+	ppMATmatrice[uiColonne][uiLigne] = tValeur;
 }
 
 /*****************************************
@@ -600,7 +599,35 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T> CMatrice<T>::MATechelonnee();
+CMatrice<T> CMatrice<T>::MATechelonnee()
+{
+	unsigned int uiLignes,
+				 uiColonnes,
+				 uiIndicePivot;
+    
+    int iPivot,
+		iCoefficientLigne;
+
+	CMatrice <T> MATmatrice(*this);
+    
+    for (uiIndicePivot = 0; uiIndicePivot < uiMATnbColonnes; uiIndicePivot++)
+    {
+        for (uiLignes = 1 + uiIndicePivot; uiLignes < uiMATnbLignes; uiLignes++)
+        {
+            iPivot = MATmatrice.MATgetValeur(uiIndicePivot, uiIndicePivot);
+            
+            iCoefficientLigne = MATmatrice.MATgetValeur(uiLignes, uiIndicePivot);
+            
+            for (uiColonnes = 0; uiColonnes < uiMATnbColonnes; uiColonnes++)
+            {
+                MATmatrice.MATsetValeur(uiLignes, uiColonnes, iPivot * MATmatrice.MATgetValeur(uiLignes, uiColonnes)
+                                        - iCoefficientLigne * MATmatrice.MATgetValeur(uiIndicePivot, uiColonnes));
+            }
+        }
+    }
+    
+    return MATmatrice;
+}
 
 /*****************************************
 Constructeur par defaut

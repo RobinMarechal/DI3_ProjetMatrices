@@ -18,195 +18,231 @@ public:
 	// ----- Constructeurs et destructeurs----------------------------------------
 
 	/*****************************************
-	Constructeur par defaut
-	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
+	Constructeur par défaut.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : initialisation de l'objet.
+	*****************************************/
+
 	CMatrice();
+	
 
 	/*****************************************
-	Constructeur a deux arguments
-	*****************************************
-	Entree : le nombre de lignes (unsigned int), le nombre de colonnes (unsigned int)
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
+	Constructeur à deux arguments.
+	******************************************
+	Entrée : le nombre de lignes (unsigned int),
+			 le nombre de colonnes (unsigned int).
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : Initialisation de l'objet.
+	******************************************/
+
 	CMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes);
 
-	/*****************************************
-	Destructeur
+
+	/****************************************
+	Constructeur de recopie.
 	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : (Destruction de l'objet) et (desallocation du tableau 2D)
-	*****************************************
-	*/
+	Entrée : instance de la classe CMatrice.
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : l'initialisation de l'objet.
+	*****************************************/
+
 	CMatrice(CMatrice<T> & MATmatrice);
+
+
+	/****************************************
+	Destructeur.
+	*****************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : destruction de l'objet,
+			   désallocation du tableau 2D.
+	****************************************/
+
 	~CMatrice();
 
 
-	// ----- Operateurs ----------------------------------------
+	// ----- Opérateurs ----------------------------------------
 
 	/*****************************************
-	Operateur ()
-	*****************************************
-	Entree : indice de la ligne (unsigned int), indice de la colonne (unsigned int)
-	Necessite : rien
-	Sortie : Valeur a la position (i, j) dans la matrice
-	Entraine : rien
-	*****************************************
-	*/
+	Opérateur ().
+	******************************************
+	Entrée : indice de la ligne (unsigned int),
+			 indice de la colonne (unsigned int).
+	Nécessite : rien.
+	Sortie : valeur de la position (i, j) dans la matrice.
+	Entraîne : rien.
+	*****************************************/
+
 	T & operator()(unsigned int uiLigne, unsigned int uiColonne);
 
+
 	/*****************************************
-	Operateur =
-	*****************************************
-	Entree : Instance de la classe CMatrice
-	Necessite : rien
-	Sortie : Instance de la classe CMatrice par reference, copie de celle en parametre
-	Entraine : Recopie de l'objet en parametre
-	*****************************************
-	*/
+	Operateur =.
+	******************************************
+	Entrée : instance de la classe CMatrice.
+	Nécessite : rien.
+	Sortie : instance de la classe CMatrice par référence,
+			 copie de celle en paramètre
+	Entraîne : la recopie de l'objet en paramètre
+	******************************************/
+
 	CMatrice<T> & operator=(CMatrice<T> & MATmatrice);
 
+
 	/*****************************************
-	Operateur ==
-	*****************************************
-	Entree : Instance de la classe CMatrice
-	Necessite : rien
-	Sortie : booleen
-	Entraine : (true : les matrices sont identiques) OU (false : les matrices sont differentes)
-	*****************************************
-	*/
+	Operateur ==.
+	******************************************
+	Entrée : instance de la classe CMatrice.
+	Nécessite : rien.
+	Sortie : booléen.
+	Entraîne : (true : les matrices sont identiques)
+			   OU (false : les matrices sont différentes).
+	******************************************/
+
 	bool operator==(CMatrice<T> & MATmatrice);
 
+
 	/*****************************************
-	Operateur !=
-	*****************************************
-	Entree : Instance de la classe CMatrice
-	Necessite : rien
-	Sortie : booleen
-	Entraine : (true : les matrices sont differentes) OU (false : les matrices sont identiques)
-	*****************************************
-	*/
+	Operateur !=.
+	******************************************
+	Entrée : instance de la classe CMatrice.
+	Necessite : rien.
+	Sortie : booléen.
+	Entraîne : (true : les matrices sont différentes)
+			   OU (false : les matrices sont identiques).
+	******************************************/
+
 	bool operator!=(CMatrice<T> & MATmatrice);
 
+
 	/*****************************************
-	Operateur + a parametre de type T : 
-	Ajoute la valeur passee en parametre a toutes les cases de la matrice
-	*****************************************
-	Entree : valeur a ajouter (T)
-	Necessite : rien
-	Sortie : Instance de la classe CMatrice contenant le resultat de la somme
-	Entraine : Allocation d'un nouvel objet CMatrice 
-	*****************************************
-	*/
+	Opérateur + à paramètre de type T. 
+	******************************************
+	Entrée : la valeur à ajouter (de type T).
+	Nécessite : rien.
+	Sortie : instance de la classe CMatrice contenant le résultat de la somme.
+	Entraîne : Allocation d'un nouvel objet CMatrice,
+			   ajout de la valeur passée en paramètre à toutes les cases de la matrice.
+	******************************************/
+
 	CMatrice<T> operator+(T tValeur);
 
+
 	/*****************************************
-	Operateur + a parametre de type CMatrice
-	*****************************************
-	Entree : CMatrice a ajouter
-	Necessite : Matrices de meme dimension
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
+	Operateur + à paramètre de type CMatrice.
+	******************************************
+	Entrée : instance de la classe CMatrice.
+	Nécessite : les matrices sont de même dimension.
+	Sortie : instance de la classe CMatrice contenant le résultat de la somme.
+	Entraîne : Allocation d'un nouvel objet CMatrice.
+	******************************************/
+
 	CMatrice<T> operator+(CMatrice MATmatrice);
 
+
 	/*****************************************
-	Constructeur par defaut
+	Opérateur * à paramètre de type T.
 	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
+	Entree : la valeur à multiplier (de type T).
+	Necessite : rien.
+	Sortie : instance de la classe CMatrice contenant le résultat du produit.
+	Entraîne : Allocation d'un nouvel objet CMatrice,
+			   multiplication de la valeur passée en paramètre avec toutes les cases de la matrice.
+	******************************************/
+
 	CMatrice<T> operator*(T tValeur);
 
+
 	/*****************************************
-	Constructeur par defaut
-	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
+	Operateur * à paramètre de type CMatrice.
+	******************************************
+	Entrée : instance de la classe CMatrice.
+	Nécessite : le nombre de colonnes de la première matrice
+				et le nombre de lignes de la deuxième matrice sont identiques.
+	Sortie : instance de la classe CMatrice contenant le résultat du produit.
+	Entraîne : Allocation d'un nouvel objet CMatrice.
+	******************************************/
+
 	CMatrice<T> operator*(CMatrice<T> MATmatrice);
 
-	/*****************************************
-	Constructeur par defaut
-	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
-	CMatrice<T> operator-(T tValeur);
 
 	/*****************************************
-	Constructeur par defaut
-	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
+	Opérateur - à paramètre de type T.
+	******************************************
+	Entree : la valeur à soustraire (de type T).
+	Necessite : rien.
+	Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
+	Entraîne : Allocation d'un nouvel objet CMatrice,
+			   soustraction de la valeur passée en paramètre avec toutes les cases de la matrice.
+	******************************************/
+
+	CMatrice<T> operator-(T tValeur);
+	
+
+	/*****************************************
+	Operateur - à paramètre de type CMatrice.
+	******************************************
+	Entrée : instance de la classe CMatrice.
+	Nécessite : les matrices sont de même dimension.
+	Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
+	Entraîne : Allocation d'un nouvel objet CMatrice.
+	******************************************/
+
 	CMatrice<T> operator-(CMatrice<T> MATmatrice);
 
+
 	/*****************************************
-	Constructeur par defaut
-	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
+	Opérateur / à paramètre de type T.
+	******************************************
+	Entree : la valeur à diviser (de type T).
+	Necessite : rien.
+	Sortie : instance de la classe CMatrice contenant le résultat de la division.
+	Entraîne : Allocation d'un nouvel objet CMatrice,
+			   division de la valeur passée en paramètre avec toutes les cases de la matrice.
+	******************************************/
+
 	CMatrice<T> operator/(T tValeur);
+
 
 	// ----- Getters ----------------------------------------
 
 	/*****************************************
-	Constructeur par defaut
-	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
+	Affichage d'une matrice.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : l'affichage de la matrice.
+	******************************************/
+
 	void MATafficher();
 
-	/*****************************************
-	Constructeur par defaut
-	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
-	*****************************************
-	*/
-	unsigned int MATgetNbColonnes();
 
 	/*****************************************
-	Constructeur par defaut
+	Lecture du nombre de colonnes.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : le nombre de colonnes de la matrice (unsigned int).
+	Entraîne : rien.
+	******************************************/
+
+	unsigned int MATgetNbColonnes();
+
+
+	/*****************************************
+	Lecture du nombre de lignes.
 	*****************************************
-	Entree : void
-	Necessite : rien
-	Sortie : rien
-	Entraine : Initialisation de l'objet
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : le nombre de lignes de la matrice (unsigned int).
+	Entraîne : rien.
 	*****************************************
 	*/
 	unsigned int MATgetNbLignes();
