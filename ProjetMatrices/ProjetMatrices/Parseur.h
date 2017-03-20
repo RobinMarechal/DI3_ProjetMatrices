@@ -7,11 +7,11 @@ class CParseur
 {
 	public:
 	
-	static CMatrice <double> PARparserFichier(char * pcFichier);
+		static CMatrice<double> PARparserFichier(char * pcFichier);
 
 	private:
 
-	CParseur();
+	CParseur() = delete;
 	~CParseur();
 };
 

@@ -106,13 +106,14 @@ Sortie : Valeur a la position (i, j) dans la matrice
 Entraine : rien
 *****************************************
 */
+
 template <class T>
-inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne)
+inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne) const
 {
 	if (uiLigne >= uiMATnbLignes || uiColonne >= uiMATnbColonnes)
 		throw Cexception(0, "Indice invalide");
 
-	return ppMATmatrice[uiLigne][uiColonne];
+	return ppMATmatrice[uiColonne][uiLigne];
 }
 
 /*****************************************
@@ -234,14 +235,14 @@ Entraine : Initialisation de l'objet
 template <class T>
 CMatrice<T> CMatrice<T>::operator+(CMatrice<T> MATmatrice)
 {
-	unsigned int uiBoucleL, uiBoucleL;
+	unsigned int uiBoucleL, uiBoucleC;
 	CMatrice<T> MATresultat(uiMATnbLignes, uiMATnbColonnes);
 
 	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
 	{
 		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
 		{
-			MATresultat(uiBoucleL, uiBoucleC) = MATgetValeur(uiLigne, uiColonne) + MATmatrice(uiBoucleL, uiBoucleC);
+			MATresultat(uiBoucleL, uiBoucleC) = MATgetValeur(uiBoucleL, uiBoucleC) + MATmatrice(uiBoucleL, uiBoucleC);
 		}
 	}
 
@@ -356,7 +357,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 CMatrice<T> CMatrice<T>::operator-(CMatrice<T> MATmatrice)
 {
-	unsigned int uiBoucleL, uiBoucleL;
+	unsigned int uiBoucleL, uiBoucleC;
 	CMatrice<T> MATresultat(*this);
 
 	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
@@ -436,7 +437,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-inline unsigned int CMatrice<T>::MATgetNbColonnes()
+inline unsigned int CMatrice<T>::MATgetNbColonnes() const
 {
 	return uiMATnbColonnes;
 }
@@ -451,7 +452,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-inline unsigned int CMatrice<T>::MATgetNbLignes()
+inline unsigned int CMatrice<T>::MATgetNbLignes() const
 {
 	return uiMATnbLignes;
 }
@@ -466,9 +467,9 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-inline T CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne)
+inline T & CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne)
 {
-	return ppMATmatrice[uiColonne][uiLigne];
+	return (*this)(uiLigne, uiColonne);
 }
 
 /*****************************************
@@ -531,7 +532,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 inline void CMatrice<T>::MATsetValeur(unsigned int uiLigne, unsigned int uiColonne, T tValeur)
 {
-	ppMATmatrice[uiColonne][uiLigne] = tValeur;
+	(*this)(uiLigne, uiColonne) = tValeur;
 }
 
 /*****************************************
@@ -546,6 +547,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 inline void CMatrice<T>::MATsetNbLignes(unsigned int uiNbLignes)
 {
+	// REALLOUER
 	uiMATnbLignes = uiNbLignes;
 }
 
@@ -561,6 +563,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 inline void CMatrice<T>::MATsetNbColonnes(unsigned int uiNbColonnes)
 {
+	// REALLOUER
 	uiMATnbColonnes = uiNbColonnes;
 }
 
@@ -747,19 +750,38 @@ bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
 // Operateurs complémentaires
 
 template <class T>
-CMatrice<T> operator+(T tValeur, CMatrice<T> MATmatrice)
+CMatrice<T> operator+(const T tValeur, const CMatrice<T> & MATmatrice)
 {
 	return MATmatrice + tValeur;
 }
 
 template <class T>
-CMatrice<T> operator-(T tValeur, CMatrice<T> MATmatrice)
+CMatrice<T> operator-(const T tValeur, const CMatrice<T> & MATmatrice)
 {
 	return MATmatrice - tValeur;
 }
 
 template <class T>
-CMatrice<T> operator*(T tValeur, CMatrice<T> MATmatrice)
+CMatrice<T> operator*(const T tValeur, const CMatrice<T> & MATmatrice)
 {
 	return MATmatrice * tValeur;
+}
+
+template<class T>
+std::ostream & operator<<(std::ostream & OSTflux, const CMatrice<T>& MATmatrice)
+{
+	unsigned int uiLigne;
+	unsigned int uiColonne;
+
+	for (uiLigne = 0; uiLigne < MATmatrice.MATgetNbLignes(); uiLigne++)
+	{
+		for (uiColonne = 0; uiColonne < MATmatrice.MATgetNbColonnes(); uiColonne++)
+		{
+			OSTflux << MATmatrice(uiLigne, uiColonne) << " ";
+		}
+
+		OSTflux << endl;
+	}
+
+	return OSTflux;
 }

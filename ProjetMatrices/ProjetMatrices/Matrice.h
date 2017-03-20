@@ -1,6 +1,8 @@
 ﻿#ifndef CMATRICE_H
 #define CMATRICE_H
 
+#include <iostream>
+
 template <class T>
 class CMatrice
 {
@@ -79,7 +81,7 @@ public:
 	Entraîne : rien.
 	*****************************************/
 
-	T & operator()(unsigned int uiLigne, unsigned int uiColonne);
+	T & operator()(unsigned int uiLigne, unsigned int uiColonne) const;
 
 
 	/*****************************************
@@ -233,7 +235,7 @@ public:
 	Entraîne : rien.
 	******************************************/
 
-	unsigned int MATgetNbColonnes();
+	unsigned int MATgetNbColonnes() const;
 
 
 	/*****************************************
@@ -245,7 +247,7 @@ public:
 	Entraîne : rien.
 	*****************************************
 	*/
-	unsigned int MATgetNbLignes();
+	unsigned int MATgetNbLignes() const;
 
 	/*****************************************
 	Constructeur par defaut
@@ -256,7 +258,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	T MATgetValeur(unsigned int uiLigne, unsigned int uiColonne);
+	T & MATgetValeur(unsigned int uiLigne, unsigned int uiColonne);
 
 	/*****************************************
 	Constructeur par defaut
@@ -378,14 +380,16 @@ public:
 // Opérateurs complémentaires
 
 template <class T>
-CMatrice<T> operator+(T tValeur, CMatrice<T> MATmatrice);
+CMatrice<T> operator+(const T tValeur, const CMatrice<T> & MATmatrice);
 
 template <class T>
-CMatrice<T> operator-(T tValeur, CMatrice<T> MATmatrice);
+CMatrice<T> operator-(const T tValeur, const CMatrice<T> & MATmatrice);
 
 template <class T>
-CMatrice<T> operator*(T tValeur, CMatrice<T> MATmatrice);
+CMatrice<T> operator*(const T tValeur, const CMatrice<T> & MATmatrice);
 
+template <class T>
+std::ostream & operator<<(std::ostream & OSTflux, const CMatrice<T> & MATmatrice);
 
 #include "Matrice.cpp"
 

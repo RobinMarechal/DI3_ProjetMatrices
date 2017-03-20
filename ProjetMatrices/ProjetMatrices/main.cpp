@@ -5,6 +5,16 @@ using namespace std;
 #include "Matrice.h"
 #include "Parseur.h"
 
+// Desactiver les tests :
+// #define NDEBUG
+
+#ifndef DEBUG
+
+#include "TestCMatrice.h"
+
+#endif
+
+
 void gregoire()
 {
 	/*CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
@@ -14,13 +24,11 @@ void gregoire()
 
 void robin()
 {
-	CMatrice<int> m(2, 2);
-	m(0, 0) = 0;
-	m(0, 1) = 1;
-	m(1, 0) = 2;
-	m(1, 1) = 3;
+#ifndef NDEBUG
 
-	m.MATafficher();
+	CTestCMatrice::TMAstart();
+
+#endif
 }
 
 

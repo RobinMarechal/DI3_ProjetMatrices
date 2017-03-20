@@ -15,9 +15,9 @@
 	Entraine : initialisation de l'objet.
 
 ************************************************/
-
+/*
 CParseur::CParseur() {}
-
+*/
 
 /***********************************************
 	Destructeur.
