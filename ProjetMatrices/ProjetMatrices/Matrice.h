@@ -276,7 +276,7 @@ public:
 	Entraîne : rien.
 	******************************************/
 
-	T * MATgetLigne(unsigned int uiLigne);
+	T * MATgetLigne(unsigned int uiLigne) const;
 
 	
 	/*****************************************
