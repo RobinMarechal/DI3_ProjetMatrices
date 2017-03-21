@@ -7,15 +7,15 @@ using namespace std;
 
 // ----- Constructeurs et destructeurs----------------------------------------
 
- /*****************************************
- Constructeur par defaut
- *****************************************
- Entree : void
- Necessite : rien
- Sortie : rien
- Entraine : Initialisation de l'objet
- *****************************************
- */
+/*****************************************
+Constructeur par défaut.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : initialisation de l'objet.
+*****************************************/
+
 template <class T>
 CMatrice<T>::CMatrice()
 {
@@ -25,14 +25,15 @@ CMatrice<T>::CMatrice()
 }
 
 /*****************************************
-Constructeur a deux arguments
-*****************************************
-Entree : le nombre de lignes (unsigned int), le nombre de colonnes (unsigned int)
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Constructeur à deux arguments.
+******************************************
+Entrée : le nombre de lignes (unsigned int)
+		 le nombre de colonnes (unsigned in
+Nécessite : rien.
+Sortie : rien.
+Entraîne : Initialisation de l'objet.
+******************************************/
+
 template <class T>
 CMatrice<T>::CMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes)
 {
@@ -41,15 +42,15 @@ CMatrice<T>::CMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes)
 	MATinitMatrice();
 }
 
-/*****************************************
-Constructeur de recopie
+/****************************************
+Constructeur de recopie.
 *****************************************
-Entree : une instance de la classe CMatrice
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Entrée : instance de la classe CMatrice.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'initialisation de l'objet.
+*****************************************/
+
 template <class T>
 CMatrice<T>::CMatrice(CMatrice<T> & MATmatrice)
 {
@@ -70,15 +71,16 @@ CMatrice<T>::CMatrice(CMatrice<T> & MATmatrice)
 	}
 }
 
-/*****************************************
-Destructeur
+/****************************************
+Destructeur.
 *****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : (Destruction de l'objet) et (desallocation du tableau 2D)
-*****************************************
-*/
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : destruction de l'objet,
+		   désallocation du tableau 2D.
+****************************************/
+
 template <class T>
 CMatrice<T>::~CMatrice()
 {
@@ -89,14 +91,14 @@ CMatrice<T>::~CMatrice()
 // ----- Operateurs ----------------------------------------
 
 /*****************************************
-Operateur ()
-*****************************************
-Entree : indice de la ligne (unsigned int), indice de la colonne (unsigned int)
-Necessite : rien
-Sortie : Valeur a la position (i, j) dans la matrice
-Entraine : rien
-*****************************************
-*/
+Opérateur ().
+******************************************
+Entrée : indice de la ligne (unsigned int)
+		 indice de la colonne (unsigned in
+Nécessite : rien.
+Sortie : valeur de la position (i, j) dans
+Entraîne : rien.
+*****************************************/
 
 template <class T>
 inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne) const
@@ -108,14 +110,15 @@ inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne)
 }
 
 /*****************************************
-Operateur =
-*****************************************
-Entree : Instance de la classe CMatrice
-Necessite : rien
-Sortie : Instance de la classe CMatrice par reference, copie de celle en parametre
-Entraine : Recopie de l'objet en parametre
-*****************************************
-*/
+Operateur =.
+******************************************
+Entrée : instance de la classe CMatrice.
+Nécessite : rien.
+Sortie : instance de la classe CMatrice par référence,
+		 copie de celle en paramètre
+Entraîne : la recopie de l'objet en paramètre
+******************************************/
+
 template <class T>
 CMatrice<T> & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
 {
@@ -140,14 +143,15 @@ CMatrice<T> & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
 }
 
 /*****************************************
-Operateur ==
-*****************************************
-Entree : Instance de la classe CMatrice
-Necessite : rien
-Sortie : booleen
-Entraine : (true : les matrices sont identiques) OU (false : les matrices sont differentes)
-*****************************************
-*/
+Operateur ==.
+******************************************
+Entrée : instance de la classe CMatrice.
+Nécessite : rien.
+Sortie : booléen.
+Entraîne : (true : les matrices sont identiques)
+		   OU (false : les matrices sont différentes).
+******************************************/
+
 template <class T>
 bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
 {
@@ -171,14 +175,15 @@ bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
 }
 
 /*****************************************
-Operateur !=
-*****************************************
-Entree : Instance de la classe CMatrice
-Necessite : rien
-Sortie : booleen
-Entraine : (true : les matrices sont differentes) OU (false : les matrices sont identiques)
-*****************************************
-*/
+Operateur !=.
+******************************************
+Entrée : instance de la classe CMatrice.
+Necessite : rien.
+Sortie : booléen.
+Entraîne : (true : les matrices sont différentes)
+		   OU (false : les matrices sont identiques).
+******************************************/
+
 template <class T>
 bool CMatrice<T>::operator!=(CMatrice<T> & MATmatrice)
 {
@@ -186,15 +191,15 @@ bool CMatrice<T>::operator!=(CMatrice<T> & MATmatrice)
 }
 
 /*****************************************
-Operateur + a parametre de type T :
-Ajoute la valeur passee en parametre a toutes les cases de la matrice
-*****************************************
-Entree : valeur a ajouter (T)
-Necessite : rien
-Sortie : Instance de la classe CMatrice contenant le resultat de la somme
-Entraine : Allocation d'un nouvel objet CMatrice
-*****************************************
-*/
+Opérateur + à paramètre de type T. 
+******************************************
+Entrée : la valeur à ajouter (de type T).
+Nécessite : rien.
+Sortie : instance de la classe CMatrice contenant le résultat de la somme.
+Entraîne : Allocation d'un nouvel objet CMatrice,
+		   ajout de la valeur passée en paramètre à toutes les cases de la matrice.
+******************************************/
+
 template <class T>
 CMatrice<T> CMatrice<T>::operator+(T tValeur)
 {
@@ -215,14 +220,14 @@ CMatrice<T> CMatrice<T>::operator+(T tValeur)
 }
 
 /*****************************************
-Operateur + a parametre de type CMatrice
-*****************************************
-Entree : CMatrice a ajouter
-Necessite : Matrices de meme dimension
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Operateur + à paramètre de type CMatrice.
+******************************************
+Entrée : instance de la classe CMatrice.
+Nécessite : les matrices sont de même dimension.
+Sortie : instance de la classe CMatrice contenant le résultat de la somme.
+Entraîne : Allocation d'un nouvel objet CMatrice.
+******************************************/
+
 template <class T>
 CMatrice<T> CMatrice<T>::operator+(CMatrice<T> MATmatrice)
 {
@@ -241,14 +246,15 @@ CMatrice<T> CMatrice<T>::operator+(CMatrice<T> MATmatrice)
 }
 
 /*****************************************
-Constructeur par defaut
+Opérateur * à paramètre de type T.
 *****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Entree : la valeur à multiplier (de type T).
+Necessite : rien.
+Sortie : instance de la classe CMatrice contenant le résultat du produit.
+Entraîne : Allocation d'un nouvel objet CMatrice,
+		   multiplication de la valeur passée en paramètre avec toutes les cases de la matrice.
+******************************************/
+
 template <class T>
 CMatrice<T> CMatrice<T>::operator*(T tValeur)
 {
@@ -269,14 +275,15 @@ CMatrice<T> CMatrice<T>::operator*(T tValeur)
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Operateur * à paramètre de type CMatrice.
+******************************************
+Entrée : instance de la classe CMatrice.
+Nécessite : le nombre de colonnes de la première matrice
+			et le nombre de lignes de la deuxième matrice sont identiques.
+Sortie : instance de la classe CMatrice contenant le résultat du produit.
+Entraîne : Allocation d'un nouvel objet CMatrice.
+******************************************/
+
 template <class T>
 CMatrice<T> CMatrice<T>::operator*(CMatrice<T> MATmatrice)
 {
@@ -309,14 +316,15 @@ CMatrice<T> CMatrice<T>::operator*(CMatrice<T> MATmatrice)
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Opérateur - à paramètre de type T.
+******************************************
+Entree : la valeur à soustraire (de type T).
+Necessite : rien.
+Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
+Entraîne : Allocation d'un nouvel objet CMatrice,
+		   soustraction de la valeur passée en paramètre avec toutes les cases de la matrice.
+******************************************/
+
 template <class T>
 CMatrice<T> CMatrice<T>::operator-(T tValeur)
 {
@@ -337,14 +345,14 @@ CMatrice<T> CMatrice<T>::operator-(T tValeur)
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Operateur - à paramètre de type CMatrice.
+******************************************
+Entrée : instance de la classe CMatrice.
+Nécessite : les matrices sont de même dimension.
+Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
+Entraîne : Allocation d'un nouvel objet CMatrice.
+******************************************/
+
 template <class T>
 CMatrice<T> CMatrice<T>::operator-(CMatrice<T> MATmatrice)
 {
@@ -363,14 +371,15 @@ CMatrice<T> CMatrice<T>::operator-(CMatrice<T> MATmatrice)
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Opérateur / à paramètre de type T.
+******************************************
+Entree : la valeur à diviser (de type T).
+Necessite : tValeur doit être différente de 0.
+Sortie : instance de la classe CMatrice contenant le résultat de la division.
+Entraîne : Allocation d'un nouvel objet CMatrice,
+		   division de la valeur passée en paramètre avec toutes les cases de la matrice.
+******************************************/
+
 template <class T>
 CMatrice<T> CMatrice<T>::operator/(T tValeur)
 {
@@ -393,14 +402,14 @@ CMatrice<T> CMatrice<T>::operator/(T tValeur)
 // ----- Getters ----------------------------------------
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Affichage d'une matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'affichage de la matrice.
+******************************************/
+
 template <class T>
 void CMatrice<T>::MATafficher()
 {
@@ -419,14 +428,14 @@ void CMatrice<T>::MATafficher()
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Lecture du nombre de colonnes.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : le nombre de colonnes de la matrice (unsigned int).
+Entraîne : rien.
+******************************************/
+
 template <class T>
 inline unsigned int CMatrice<T>::MATgetNbColonnes() const
 {
@@ -434,14 +443,14 @@ inline unsigned int CMatrice<T>::MATgetNbColonnes() const
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Lecture du nombre de lignes.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : le nombre de lignes de la matrice (unsigned int).
+Entraîne : rien.
+******************************************/
+
 template <class T>
 inline unsigned int CMatrice<T>::MATgetNbLignes() const
 {
@@ -449,14 +458,15 @@ inline unsigned int CMatrice<T>::MATgetNbLignes() const
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Lecture de la valeur d'un coefficient.
+******************************************
+Entéee : l'indice de la ligne (unsigned int),
+		 l'indice de la colonne (unsigned int).
+Nécessite : rien.
+Sortie : le coefficient à la position (uiLigne, uiColonne).
+Entraîne : rien.
+******************************************/
+
 template <class T>
 inline T & CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne) const
 {
@@ -464,14 +474,14 @@ inline T & CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonn
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Lecture d'une ligne.
+******************************************
+Entrée : l'indice de la ligne (unsigned int).
+Nécessite : rien.
+Sortie : la ligne à l'indice uiLigne.
+Entraîne : rien.
+******************************************/
+
 template <class T>
 T * CMatrice<T>::MATgetLigne(unsigned int uiLigne) const
 {
@@ -487,14 +497,14 @@ T * CMatrice<T>::MATgetLigne(unsigned int uiLigne) const
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Lecture d'une colonne.
+******************************************
+Entrée : l'indice de la colonne (unsigned int).
+Nécessite : rien.
+Sortie : la colonne à l'indice uiColonne.
+Entraîne : rien.
+******************************************/
+
 template <class T>
 T * CMatrice<T>::MATgetColonne(unsigned int uiColonne) const
 {
@@ -512,14 +522,16 @@ T * CMatrice<T>::MATgetColonne(unsigned int uiColonne) const
 // ----- Setters ----------------------------------------
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Mutateur pour la valeur.
+******************************************
+Entrée : l'indice de la ligne (unsigned int),
+		 l'indice de la colonne (unsigned int),
+		 la valeur définir (de type T).
+Nécessite : rien.
+Sortie : rien.
+Entraîne : un changement de valeur du coefficient (uiLigne, uiColonne).
+******************************************/
+
 template <class T>
 inline void CMatrice<T>::MATsetValeur(unsigned int uiLigne, unsigned int uiColonne, T tValeur)
 {
@@ -527,14 +539,14 @@ inline void CMatrice<T>::MATsetValeur(unsigned int uiLigne, unsigned int uiColon
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Mutateur pour le nombre de lignes.
+******************************************
+Entrée : le nombre de lignes (unsigned int).
+Nécessite : rien.
+Sortie : rien.
+Entraîne : une initialisation ou modification du nombre de lignes de la matrice.
+******************************************/
+
 template <class T>
 inline void CMatrice<T>::MATsetNbLignes(unsigned int uiNbLignes)
 {
@@ -543,14 +555,14 @@ inline void CMatrice<T>::MATsetNbLignes(unsigned int uiNbLignes)
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Mutateur pour le nombre de colonnes.
+******************************************
+Entrée : le nombre de colonnes (unsigned int).
+Nécessite : rien.
+Sortie : rien.
+Entraîne : une initialisation ou modification du nombre de colonnes de la matrice.
+******************************************/
+
 template <class T>
 inline void CMatrice<T>::MATsetNbColonnes(unsigned int uiNbColonnes)
 {
@@ -561,14 +573,14 @@ inline void CMatrice<T>::MATsetNbColonnes(unsigned int uiNbColonnes)
 // ----- Calculs ----------------------------------------
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Le rang de la matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : le rang de la matrice (unsigned int).
+Entraîne : rien.
+******************************************/
+
 template <class T>
 unsigned int CMatrice<T>::MATrang()
 {
@@ -584,14 +596,14 @@ unsigned int CMatrice<T>::MATrang()
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Echelonnement de la matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : une instance de CMatrice.
+Entraîne : l'échelonnement de la matrice.
+******************************************/
+
 template <class T>
 CMatrice<T> CMatrice<T>::MATechelonnee()
 {
@@ -624,14 +636,14 @@ CMatrice<T> CMatrice<T>::MATechelonnee()
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Transposée de la matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : une instance de CMatrice.
+Entraîne : une transposition de la matrice.
+******************************************/
+
 template <class T>
 CMatrice<T> CMatrice<T>::MATtransposee()
 {
@@ -651,14 +663,14 @@ CMatrice<T> CMatrice<T>::MATtransposee()
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Calcul d'une sous-matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : une instance de CMatrice.
+Entraîne : //
+******************************************/
+
 template <class T>
 CMatrice<T> CMatrice<T>::MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne) const
 {
@@ -668,14 +680,15 @@ CMatrice<T> CMatrice<T>::MATsousMatrice(unsigned int uiLigne, unsigned int uiCol
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Test de matrice nulle.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : un booléen.
+Entraine : (true : la matrice est nulle)
+		   OU (false : la matrice n'est pas nulle).
+******************************************/
+
 template <class T>
 bool CMatrice<T>::MATestNulle() const
 {
@@ -696,14 +709,14 @@ bool CMatrice<T>::MATestNulle() const
 }
 
 /*****************************************
-Constructeur par defaut
-*****************************************
-Entree : void
-Necessite : rien
-Sortie : rien
-Entraine : Initialisation de l'objet
-*****************************************
-*/
+Initialisation de la matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : initialisation de l'objet.
+******************************************/
+
 template <class T>
 void CMatrice<T>::MATinitMatrice()
 {
@@ -726,6 +739,16 @@ void CMatrice<T>::MATinitMatrice()
 	}
 }
 
+/*****************************************
+Test d'une ligne nulle.
+******************************************
+Entrée : l'indice de la ligne (unsigned int).
+Nécessite : rien.
+Sortie : un booléen.
+Entraîne : (true : la ligne est nulle)
+		   OU (false : la ligne n'est pas nulle).
+******************************************/
+
 template<class T>
 bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
 {
@@ -742,6 +765,15 @@ bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
 	return true;
 }
 
+/*****************************************
+Désalloue une matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : désalloue l'objet.
+******************************************/
+
 template <class T>
 void CMatrice<T>::MATdesallouerMatrice()
 {
@@ -757,6 +789,15 @@ void CMatrice<T>::MATdesallouerMatrice()
 	free(ppMATmatrice);
 	ppMATmatrice = nullptr;
 }
+
+/*****************************************
+Ajoute une ou des colonnes.
+******************************************
+Entrée : le nombre de colonnes (int).
+Nécessite : rien.
+Sortie : rien.
+Entraîne : une réallocation du tableau 2D.
+******************************************/
 
 template<class T>
 void CMatrice<T>::MATajouterColonnes(int iNb)
@@ -788,6 +829,15 @@ void CMatrice<T>::MATajouterColonnes(int iNb)
 		}
 	}
 }
+
+/*****************************************
+Ajoute une ou plusieurs lignes.
+******************************************
+Entrée : le nombre de lignes (int).
+Nécessite : rien.
+Sortie : rien.
+Entraîne : une réallocation du tableau 2D.
+******************************************/
 
 template<class T>
 void CMatrice<T>::MATajouterLignes(int iNb)
