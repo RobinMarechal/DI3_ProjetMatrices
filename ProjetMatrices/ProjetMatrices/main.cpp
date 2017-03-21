@@ -6,7 +6,7 @@ using namespace std;
 #include "Parseur.h"
 
 // pour desactiver les tests : #define NDEBUG
-#define NDEBUG
+// #define NDEBUG
 
 #ifndef DEBUG
 

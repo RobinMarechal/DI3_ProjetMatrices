@@ -828,7 +828,7 @@ CMatrice<T> operator+(const T tValeur, CMatrice<T> & MATmatrice)
 template <class T>
 CMatrice<T> operator-(const T tValeur, CMatrice<T> & MATmatrice)
 {
-	return MATmatrice - tValeur;
+	return (MATmatrice - tValeur) * (-1);
 }
 
 template <class T>

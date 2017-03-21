@@ -128,7 +128,7 @@ void CTestCMatrice::TMAtestOperateurMoins()
 	assertEquals((MATm1 - 5)(1, 0), -2);
 	assertEquals((MATm1 - 5)(1, 1), -1);
 
-	//assertEquals(5 - MATm1, MATm1 * (-1) + 5);
+	assertEquals(5 - MATm1, MATm1 * (-1) + 5);
 
 	cout << "OK" << endl;
 }
@@ -478,7 +478,7 @@ void CTestCMatrice::TMAtestCalculSousMatrice()
 
 void CTestCMatrice::TMAtestCalculs()
 {
-	//TMAtestCalculSousMatrice();
+	TMAtestCalculSousMatrice();
 	TMAtestCalculEchelonnee();
 	TMAtestCalculTransposee();
 	TMAtestCalculRang();
@@ -578,7 +578,7 @@ void CTestCMatrice::TMAtestExceptions()
 		bException = true;
 	}
 
-	//assertTrue(bException);
+	assertTrue(bException);
 
 	// Ne doit pas lever d'exception
 	try
@@ -590,7 +590,7 @@ void CTestCMatrice::TMAtestExceptions()
 		bException = false;
 	}
 
-	//assertTrue(bException);
+	assertTrue(bException);
 
 	bException = false;
 
@@ -606,7 +606,7 @@ void CTestCMatrice::TMAtestExceptions()
 		bException = true;
 	}
 
-	//assertTrue(bException);
+	assertTrue(bException);
 
 	// Ne doit pas lever d'exception
 	try
@@ -618,23 +618,23 @@ void CTestCMatrice::TMAtestExceptions()
 		bException = false;
 	}
 
-	//assertTrue(bException);
+	assertTrue(bException);
 
 	bException = false;
 
 	// operator/
 
 	// Doit lever une exception
-	/*try
+	try
 	{
 		MATm1 / 0;
 	}
 	catch (Cexception EXCe)
 	{
 		bException = true;
-	}*/
+	}
 
-	//assertTrue(bException);
+	assertTrue(bException);
 
 	// Ne doit pas lever d'exception
 
@@ -711,9 +711,9 @@ void CTestCMatrice::TMAtestExceptions()
 
 void CTestCMatrice::TMAstart()
 {
-	cout << "---------------------" << endl;
+	cout << "------------------------------------------" << endl;
 	cout << "DEBUT DES TESTS DE CMATRICE" << endl;
-	cout << "---------------------" << endl << endl;
+	cout << "------------------------------------------" << endl << endl;
 
 	CTestCMatrice TMAtest;
 
@@ -724,5 +724,5 @@ void CTestCMatrice::TMAstart()
 	TMAtest.TMAtestCalculs();
 
 	cout << endl << "FIN DES TESTS DE CMATRICE" << endl;
-	cout << "---------------------" << endl;
+	cout << "------------------------------------------" << endl;
 }
