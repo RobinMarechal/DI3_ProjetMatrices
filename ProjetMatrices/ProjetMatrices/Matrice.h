@@ -15,6 +15,11 @@ private:
 
 	bool MATligneEstNulle(unsigned int uiLigne);
 
+	void MATdesallouerMatrice();
+	//void MATactualiserMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes);
+	void MATajouterColonnes(int iNb = 1);
+	void MATajouterLignes(int iNb = 1);
+
 public:
 
 	// ----- Constructeurs et destructeurs----------------------------------------
@@ -258,7 +263,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	T & MATgetValeur(unsigned int uiLigne, unsigned int uiColonne);
+	T & MATgetValeur(unsigned int uiLigne, unsigned int uiColonne) const;
 
 	/*****************************************
 	Constructeur par defaut
@@ -269,7 +274,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	T * MATgetLigne(unsigned int uiLigne);
+	T * MATgetLigne(unsigned int uiLigne) const;
 
 	
 	/*****************************************
@@ -281,7 +286,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	T * MATgetColonne(unsigned int uiColonne);
+	T * MATgetColonne(unsigned int uiColonne) const;
 
 
 	// ----- Setters ----------------------------------------
@@ -363,7 +368,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	CMatrice<T> MATsousMatrice();
+	CMatrice<T> MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne) const;
 
 	/*****************************************
 	Constructeur par defaut
@@ -374,7 +379,7 @@ public:
 	Entraine : Initialisation de l'objet
 	*****************************************
 	*/
-	bool MATestNulle();
+	bool MATestNulle() const;
 };
 
 // Opérateurs complémentaires

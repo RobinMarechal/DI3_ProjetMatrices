@@ -147,6 +147,7 @@
     <ClInclude Include="MatriceCarree.h" />
     <ClInclude Include="Parseur.h" />
     <ClInclude Include="TestCMatrice.h" />
+    <ClInclude Include="TestCMatriceCarree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cexception.cpp" />
@@ -161,6 +162,7 @@
     </ClCompile>
     <ClCompile Include="Parseur.cpp" />
     <ClCompile Include="TestCMatrice.cpp" />
+    <ClCompile Include="TestCMatriceCarree.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

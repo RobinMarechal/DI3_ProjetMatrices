@@ -7,8 +7,6 @@
 class CTestCMatrice
 {
 private:
-	CTestCMatrice();
-	~CTestCMatrice();
 
 	void TMAtestAccesseurs();
 
@@ -18,7 +16,6 @@ private:
 	void TMAtestOperateursComparaison();
 	void TMAtestOperateurProduit();
 	void TMAtestOperateurDiviser();
-	void TMAtestOperateurPuissance();
 
 	void TMAtestOperateurs();
 

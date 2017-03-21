@@ -82,16 +82,7 @@ Entraine : (Destruction de l'objet) et (desallocation du tableau 2D)
 template <class T>
 CMatrice<T>::~CMatrice()
 {
-	unsigned int uiBoucleC;
-
-	// On desalloue toutes les colonnes
-	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
-	{
-		free(ppMATmatrice[uiBoucleC]);
-	}
-
-	// Puis on desalloue le pointeur
-	free(ppMATmatrice);
+	MATdesallouerMatrice();
 }
 
 
@@ -111,7 +102,7 @@ template <class T>
 inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne) const
 {
 	if (uiLigne >= uiMATnbLignes || uiColonne >= uiMATnbColonnes)
-		throw Cexception(0, "Indice invalide");
+		throw Cexception(0, "Operator () : Indice invalide");
 
 	return ppMATmatrice[uiColonne][uiLigne];
 }
@@ -289,17 +280,17 @@ Entraine : Initialisation de l'objet
 template <class T>
 CMatrice<T> CMatrice<T>::operator*(CMatrice<T> MATmatrice)
 {
-	if(uiMATnbLignes != MATmatrice.uiMATnbColonnes || uiMATnbColonnes != MATmatrice.uiMATnbLignes)
+	if(uiMATnbColonnes != MATmatrice.uiMATnbLignes)
 	{
-		throw Cexception(0, "Dimensions invalides");
+		throw Cexception(0, "Operator * : Dimensions invalides");
 	}
 
 	unsigned int uiBoucleL, uiBoucleC, uiBouclePdt;
-	CMatrice<T> MATresultat(uiMATnbLignes, uiMATnbColonnes);
+	CMatrice<T> MATresultat(uiMATnbLignes, MATmatrice.uiMATnbColonnes);
 
 	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
 	{
-		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+		for (uiBoucleC = 0; uiBoucleC < MATmatrice.uiMATnbColonnes; uiBoucleC++)
 		{
 			// MATresultat(uiBoucleL, uiBoucleC) est egal 
 			// au produit scalaire de la ligne uiBoucleL de *this
@@ -467,7 +458,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-inline T & CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne)
+inline T & CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne) const
 {
 	return (*this)(uiLigne, uiColonne);
 }
@@ -482,10 +473,10 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-T * CMatrice<T>::MATgetLigne(unsigned int uiLigne)
+T * CMatrice<T>::MATgetLigne(unsigned int uiLigne) const
 {
 	unsigned int uiBoucleC;
-	T tTab[uiMATnbColonnes];
+	T * tTab = new T[uiMATnbColonnes];
 	
 	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
 	{
@@ -505,10 +496,10 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-T * CMatrice<T>::MATgetColonne(unsigned int uiColonne)
+T * CMatrice<T>::MATgetColonne(unsigned int uiColonne) const
 {
 	unsigned int uiBoucleL;
-	T tTab[uiMATnbLignes];
+	T * tTab = new T[uiMATnbLignes];
 
 	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
 	{
@@ -547,7 +538,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 inline void CMatrice<T>::MATsetNbLignes(unsigned int uiNbLignes)
 {
-	// REALLOUER
+	MATajouterLignes(uiNbLignes - uiMATnbLignes);
 	uiMATnbLignes = uiNbLignes;
 }
 
@@ -563,7 +554,7 @@ Entraine : Initialisation de l'objet
 template <class T>
 inline void CMatrice<T>::MATsetNbColonnes(unsigned int uiNbColonnes)
 {
-	// REALLOUER
+	MATajouterColonnes(uiNbColonnes - uiMATnbColonnes);
 	uiMATnbColonnes = uiNbColonnes;
 }
 
@@ -584,7 +575,7 @@ unsigned int CMatrice<T>::MATrang()
 	CMatrice<T> MATech = MATechelonnee();
 	unsigned int uiBoucleL = 0;
 
-	while (!MATligneEstNulle(uiBoucleL))
+	while (uiBoucleL < uiMATnbLignes && !MATech.MATligneEstNulle(uiBoucleL))
 	{
 		uiBoucleL++;
 	}
@@ -608,7 +599,7 @@ CMatrice<T> CMatrice<T>::MATechelonnee()
 				 uiColonnes,
 				 uiIndicePivot;
     
-    int iPivot,
+    T iPivot,
 		iCoefficientLigne;
 
 	CMatrice <T> MATmatrice(*this);
@@ -669,7 +660,12 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-CMatrice<T> CMatrice<T>::MATsousMatrice();
+CMatrice<T> CMatrice<T>::MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne) const
+{
+	CMatrice<T> m(uiMATnbLignes - 1, uiMATnbColonnes - 1);
+
+	return m;
+}
 
 /*****************************************
 Constructeur par defaut
@@ -681,7 +677,7 @@ Entraine : Initialisation de l'objet
 *****************************************
 */
 template <class T>
-bool CMatrice<T>::MATestNulle()
+bool CMatrice<T>::MATestNulle() const
 {
 	unsigned int uiBoucleL, uiBoucleC;
 
@@ -716,7 +712,7 @@ void CMatrice<T>::MATinitMatrice()
 
 	if (ppMATmatrice == nullptr)
 	{
-		throw Cexception(0, "Allocation failed");
+		throw Cexception(0, "MATinitMatrice() : Mallocation failed");
 	}
 
 	for (uiBoucle = 0; uiBoucle < uiMATnbColonnes; uiBoucle++)
@@ -725,7 +721,7 @@ void CMatrice<T>::MATinitMatrice()
 
 		if (ppMATmatrice[uiBoucle] == nullptr)
 		{
-			throw Cexception(0, "Allocation failed");
+			throw Cexception(0, "MATinitMatrice() : Callocation failed");
 		}
 	}
 }
@@ -737,7 +733,7 @@ bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
 
 	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
 	{
-		if (MATgetValeur(uiLigne, uiBoucleC) == 0)
+		if (MATgetValeur(uiLigne, uiBoucleC) != 0)
 		{
 			return false;
 		}
@@ -746,23 +742,97 @@ bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
 	return true;
 }
 
+template <class T>
+void CMatrice<T>::MATdesallouerMatrice()
+{
+	unsigned int uiBoucleC;
+
+	// On desalloue toutes les colonnes
+	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+	{
+		free(ppMATmatrice[uiBoucleC]);
+	}
+
+	// Puis on desalloue le pointeur
+	free(ppMATmatrice);
+	ppMATmatrice = nullptr;
+}
+
+template<class T>
+void CMatrice<T>::MATajouterColonnes(int iNb)
+{
+	if (iNb < 0 && (unsigned int) (-iNb) >= uiMATnbColonnes)
+	{
+		throw Cexception(0, "MATajouterColonnes() : Argument invalide");
+	}
+
+	ppMATmatrice = (T **)realloc(ppMATmatrice, (uiMATnbColonnes + iNb) * sizeof(T *));
+
+	if (ppMATmatrice == nullptr)
+	{
+		throw Cexception(0, "MATajouterColonnes() : Echec de reallocation");
+	}
+
+	if (iNb > 0)
+	{
+		unsigned int uiBoucleC;
+
+		for (uiBoucleC = uiMATnbColonnes; uiBoucleC < uiMATnbColonnes + iNb; uiBoucleC++)
+		{
+			ppMATmatrice[uiBoucleC] = (T *)calloc(uiMATnbLignes, sizeof(T));
+
+			if (ppMATmatrice[uiBoucleC] == nullptr)
+			{
+				throw Cexception(0, "MATajouterColonnes() : Callocation failed");
+			}
+		}
+	}
+}
+
+template<class T>
+void CMatrice<T>::MATajouterLignes(int iNb)
+{
+	if (iNb < 0 && (unsigned int)(-iNb) >= uiMATnbLignes)
+	{
+		throw Cexception(0, "MATajouterLignes() : Argument invalide");
+	}
+
+	unsigned int uiBoucleC, uiBoucleL;
+
+	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+	{
+		ppMATmatrice[uiBoucleC] = (T *) realloc(ppMATmatrice[uiBoucleC], (uiMATnbLignes + iNb) * sizeof(T));
+
+		if (ppMATmatrice[uiBoucleC] == nullptr)
+		{
+			throw Cexception(0, "MATajouterColonnes() : Reallocation failed");
+		}
+
+		for (uiBoucleL = uiMATnbLignes; uiBoucleL < uiMATnbLignes + iNb; uiBoucleL++)
+		{
+			ppMATmatrice[uiBoucleC][uiBoucleL] = 0;
+		}
+	}
+}
+
+
 
 // Operateurs complémentaires
 
 template <class T>
-CMatrice<T> operator+(const T tValeur, const CMatrice<T> & MATmatrice)
+CMatrice<T> operator+(const T tValeur, CMatrice<T> & MATmatrice)
 {
 	return MATmatrice + tValeur;
 }
 
 template <class T>
-CMatrice<T> operator-(const T tValeur, const CMatrice<T> & MATmatrice)
+CMatrice<T> operator-(const T tValeur, CMatrice<T> & MATmatrice)
 {
 	return MATmatrice - tValeur;
 }
 
 template <class T>
-CMatrice<T> operator*(const T tValeur, const CMatrice<T> & MATmatrice)
+CMatrice<T> operator*(const T tValeur, CMatrice<T> & MATmatrice)
 {
 	return MATmatrice * tValeur;
 }

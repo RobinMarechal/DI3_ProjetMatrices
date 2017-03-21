@@ -5,8 +5,8 @@ using namespace std;
 #include "Matrice.h"
 #include "Parseur.h"
 
-// Desactiver les tests :
-// #define NDEBUG
+// pour desactiver les tests : #define NDEBUG
+#define NDEBUG
 
 #ifndef DEBUG
 
