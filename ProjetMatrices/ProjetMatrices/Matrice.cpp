@@ -869,11 +869,33 @@ void CMatrice<T>::MATajouterLignes(int iNb)
 
 // Operateurs complémentaires
 
+/*****************************************
+Opérateur +.
+******************************************
+Entrée : la valeur à ajouter (de type T),
+		 une instance de CMatrice.
+Nécessite : rien.
+Sortie : instance de la classe CMatrice contenant le résultat de la somme.
+Entraîne : Allocation d'un nouvel objet CMatrice,
+		   ajout de la valeur passée en paramètre à toutes les cases de la matrice.
+******************************************/
+
 template <class T>
 CMatrice<T> operator+(const T tValeur, CMatrice<T> & MATmatrice)
 {
 	return MATmatrice + tValeur;
 }
+
+/*****************************************
+Opérateur -.
+******************************************
+Entrée : la valeur à soustraire (de type T),
+		 une instance de CMatrice.
+Nécessite : rien.
+Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
+Entraîne : Allocation d'un nouvel objet CMatrice,
+		   soustraction de la valeur passée en paramètre avec toutes les cases de la matrice.
+******************************************/
 
 template <class T>
 CMatrice<T> operator-(const T tValeur, CMatrice<T> & MATmatrice)
@@ -881,11 +903,32 @@ CMatrice<T> operator-(const T tValeur, CMatrice<T> & MATmatrice)
 	return (MATmatrice - tValeur) * (-1);
 }
 
+/*****************************************
+Opérateur *.
+******************************************
+Entrée : la valeur à multiplier (de type T),
+		 une instance de CMatrice.
+Nécessite : rien.
+Sortie : instance de la classe CMatrice contenant le résultat du produit.
+Entraîne : Allocation d'un nouvel objet CMatrice,
+		   multiplication de la valeur passée en paramètre avec toutes les cases de la matrice.
+******************************************/
+
 template <class T>
 CMatrice<T> operator*(const T tValeur, CMatrice<T> & MATmatrice)
 {
 	return MATmatrice * tValeur;
 }
+
+/*****************************************
+Opérateur <<.
+******************************************
+Entrée : un flux,
+		 une instance de CMatrice.
+Nécessite : rien.
+Sortie : un flux.
+Entraîne : l'affichage de la matrice.
+******************************************/
 
 template<class T>
 std::ostream & operator<<(std::ostream & OSTflux, const CMatrice<T>& MATmatrice)
