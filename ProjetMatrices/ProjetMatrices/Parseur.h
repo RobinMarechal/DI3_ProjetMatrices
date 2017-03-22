@@ -5,11 +5,12 @@
 
 class CParseur
 {
-	public:
+public:
 	
-		static CMatrice<double> PARparserFichier(char * pcFichier);
+	static CMatrice<double> PARparserFichier(char * pcFichier);
 
-	private:
+private:
+	static void PARtoLowerString(char * pcStr);
 	CParseur();
 	~CParseur();
 }

@@ -17,6 +17,15 @@
 
 ************************************************/
 
+void CParseur::PARtoLowerString(char * pcStr)
+{
+	unsigned int uiBoucle;
+	for (uiBoucle = 0; uiBoucle < strlen(pcStr); uiBoucle++)
+	{
+		pcStr[uiBoucle] = tolower(pcStr[uiBoucle]);
+	}
+}
+
 CParseur::CParseur() {}
 
 
@@ -65,17 +74,25 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 
 	const unsigned int uiNbBalises = 4;
 
-	const char * pcBalises[] = {
+	char * pcBalises[] = {
 		"TypeMatrice", 
 		"NBLignes", 
 		"NBColonnes", 
 		"Matrice"
 	};
 
-	const char * pcValeursBalises[uiNbBalises] = {0};
+	char * pcValeursBalises[uiNbBalises] = {0};
+
+	const unsigned int uiNbValeursNumeriques = 2;
+	const unsigned int uiPremiereLigneAValeurNumerique = 1;
+	
+	int pValeursNumeriques[uiNbValeursNumeriques];
+
+
 
 	ifstream fichier(pcFichier);
 
+	// Pour chaque balise, on récupère la valeur sous forme de char * à traiter
 	for (uiBoucle = 0; uiBoucle < uiNbBalises; uiBoucle++)
 	{
 		char * pcTmp,
@@ -83,16 +100,61 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 
 		fichier.getline(pcLines, 1024);
 
+		// VERIFICATION DE pcLines
+
+		//
+
 		pcTmp = strchr(pcLines, '=') + 1;
 
+		// On avance jusqu'au prochain caractère qui n'est pas un espace
 		while(*pcTmp == ' ')
 		{
-			if(*pcTmp== '\0')
+			if (*pcTmp == '\0')
+			{
+				// la valeur de la balise est vide => format invalide
 				throw Cexception(0, "Format invalide");
+			}
+
 			pcTmp++;
 		}
 
+		if (*pcTmp == '[')
+		{
+			pcBalises[uiBoucle] = "";
+			// Tant qu'on a pas trouvé le ']' de fin de matrice,
+			// ET qu'on est pas a la fin du fichier
+			while (strchr(pcLines, ']') != NULL && !fichier.eof())
+			{
+				fichier.getline(pcLines, 1024);
+				strcat(pcBalises[uiBoucle], pcLines);
+			}
+
+		}
+		else
+		{
+			PARtoLowerString(pcTmp);
+			pcValeursBalises[uiBoucle] = pcTmp;
+		}
+
 	}
+
+	if (strstr(pcValeursBalises[0], "double") == NULL || strlen(pcValeursBalises[0]) != strlen("double"))
+	{
+		// TypeMatrice ne vaut pas "double", peu importe la casse
+		throw Cexception(0, "Format invalide : le type de la matrice est invalide");
+	}
+
+	// 
+	for (uiBoucle = 0; uiBoucle < uiNbValeursNumeriques; uiBoucle++)
+	{
+		pValeursNumeriques[uiBoucle] = atoi(pcValeursBalises[uiBoucle + uiPremiereLigneAValeurNumerique]);
+		if (pValeursNumeriques[uiBoucle] <= 0)
+		{
+			throw Cexception(0, "Dimensions de la matrice invalides");
+		}
+	}
+
+	//////////////////////////////////////////
     
 	
 	fichier.getline(pcLignes, 1024);
