@@ -11,8 +11,9 @@ public:
 
 private:
 	static void PARtoLowerString(char * pcStr);
+	static void PARremplirMatrice(CMatrice<double> & MATmatrice, unsigned int uiNbLignes, unsigned int uiNbColonnes, char * pcStrMatrice);
 	CParseur();
 	~CParseur();
-}
+};
 
 #endif

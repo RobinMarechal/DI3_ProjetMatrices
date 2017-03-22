@@ -7,7 +7,7 @@ using namespace std;
 #include <signal.h>
 
 // pour desactiver les tests : #define NDEBUG
- #define NDEBUG
+ // #define NDEBUG
 
 #ifndef DEBUG
 
@@ -32,8 +32,18 @@ void gregoire()
 
 void robin()
 {
-#ifndef NDEBUG
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\ProjetMatrices\\test.txt");
+		cout << m << endl;
+	}
+	catch (Cexception e)
+	{
+		cout << e.EXCgetMessage() << endl;
+	}
 
+#ifndef NDEBUG
+	_set_abort_behavior(0, _WRITE_ABORT_MSG);
+	signal(SIGABRT, &handleSIGABRT);
 	CTestCMatrice::TMAstart();
 
 #endif
@@ -42,11 +52,8 @@ void robin()
 
 int main(int argc, char * argv[])
 {
-	_set_abort_behavior(0, _WRITE_ABORT_MSG);
-	signal(SIGABRT, &handleSIGABRT);
-
 	robin();
-	gregoire();
+	//gregoire();
 
 	return 0;
 }
