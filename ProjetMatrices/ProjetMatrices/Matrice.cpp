@@ -374,6 +374,11 @@ Entraine : Initialisation de l'objet
 template <class T>
 CMatrice<T> CMatrice<T>::operator/(T tValeur)
 {
+	if (tValeur == 0)
+	{
+		throw Cexception(0, "operator / : Division par 0");
+	}
+
 	unsigned int uiLigne;
 	unsigned int uiColonne;
 
