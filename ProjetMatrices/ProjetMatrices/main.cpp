@@ -6,7 +6,7 @@ using namespace std;
 #include "Parseur.h"
 
 // pour desactiver les tests : #define NDEBUG
-// #define NDEBUG
+ #define NDEBUG
 
 #ifndef DEBUG
 
@@ -17,9 +17,9 @@ using namespace std;
 
 void gregoire()
 {
-	/*CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
+	CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
 
-	m.MATechelonnee().MATafficher();*/
+	m.MATechelonnee().MATafficher();
 }
 
 void robin()

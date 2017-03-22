@@ -11,7 +11,7 @@ class CParseur
 
 	private:
 
-	CParseur() = delete;
+	CParseur();
 	~CParseur();
 };
 
