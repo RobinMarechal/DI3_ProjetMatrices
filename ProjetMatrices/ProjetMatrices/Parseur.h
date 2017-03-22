@@ -10,11 +10,8 @@ class CParseur
 		static CMatrice<double> PARparserFichier(char * pcFichier);
 
 	private:
-
-
-
-	CParseur() = delete;
+	CParseur();
 	~CParseur();
-};
+}
 
 #endif

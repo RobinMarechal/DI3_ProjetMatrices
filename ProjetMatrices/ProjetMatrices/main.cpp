@@ -7,7 +7,7 @@ using namespace std;
 #include <signal.h>
 
 // pour desactiver les tests : #define NDEBUG
-// #define NDEBUG
+ #define NDEBUG
 
 #ifndef DEBUG
 
@@ -25,9 +25,9 @@ void handleSIGABRT(int iSignNb)
 
 void gregoire()
 {
-	/*CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
+	CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
 
-	m.MATechelonnee().MATafficher();*/
+	m.MATechelonnee().MATafficher();
 }
 
 void robin()

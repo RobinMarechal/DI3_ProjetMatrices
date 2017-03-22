@@ -4,6 +4,7 @@
 #include <fstream>
 #include <sstream>
 #include <stdlib.h>
+#include "Cexception.h"
 
 /***********************************************
 	Constructeur par défaut.
@@ -15,9 +16,9 @@
 	Entraine : initialisation de l'objet.
 
 ************************************************/
-/*
+
 CParseur::CParseur() {}
-*/
+
 
 /***********************************************
 	Destructeur.
@@ -52,26 +53,59 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
          pcDebutMatrice[1024],
 		 pcCoefficient[1024];
 
+	char pcBuffer[1024];
+
 	unsigned int uiLigne,
 				 uiColonne,
 				 uiIndiceCaractere,
 				 uiPARnombreLignes,
 				 uiPARnombreColonnes;
 
+	unsigned int uiBoucle;
+
+	const unsigned int uiNbBalises = 4;
+
+	const char * pcBalises[] = {
+		"TypeMatrice", 
+		"NBLignes", 
+		"NBColonnes", 
+		"Matrice"
+	};
+
+	const char * pcValeursBalises[uiNbBalises] = {0};
+
 	ifstream fichier(pcFichier);
+
+	for (uiBoucle = 0; uiBoucle < uiNbBalises; uiBoucle++)
+	{
+		char * pcTmp,
+			 * pcLines;
+
+		fichier.getline(pcLines, 1024);
+
+		pcTmp = strchr(pcLines, '=') + 1;
+
+		while(*pcTmp == ' ')
+		{
+			if(*pcTmp== '\0')
+				throw Cexception(0, "Format invalide");
+			pcTmp++;
+		}
+
+	}
     
-	fichier.getline(pcType, 1024);
+	
 	fichier.getline(pcLignes, 1024);
 	fichier.getline(pcColonnes, 1024);
 	fichier >> pcDebutMatrice;
 
 	// Récupérer le nombre de lignes.
 
-	uiPARnombreLignes = atoi(strstr(pcLignes + 9, "\0"));
+	uiPARnombreLignes = atoi(strstr(strchr(pcLignes, '=') + 1, "\0"));
     
 	// Récupérer le nombre de colonnes.
 
-	uiPARnombreColonnes = atoi(strstr(pcColonnes + 11, "\0"));
+	uiPARnombreColonnes = atoi(strstr(strchr(pcColonnes, '=') + 1, "\0"));
     
     // Création de la matrice.
 

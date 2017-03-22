@@ -11,13 +11,66 @@ private:
 	unsigned int uiMATnbLignes;
 	T ** ppMATmatrice;
 
+	/*****************************************
+	Initialisation de la matrice.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : initialisation de l'objet.
+	******************************************/
+
 	void MATinitMatrice();
+
+
+	/*****************************************
+	Test d'une ligne nulle.
+	******************************************
+	Entrée : l'indice de la ligne (unsigned int).
+	Nécessite : rien.
+	Sortie : un booléen.
+	Entraîne : (true : la ligne est nulle)
+			   OU (false : la ligne n'est pas nulle).
+	******************************************/
 
 	bool MATligneEstNulle(unsigned int uiLigne);
 
+
+	/*****************************************
+	Désalloue une matrice.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : désalloue l'objet.
+	******************************************/
+
 	void MATdesallouerMatrice();
+
 	//void MATactualiserMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes);
+
+
+	/*****************************************
+	Ajoute une ou des colonnes.
+	******************************************
+	Entrée : le nombre de colonnes (int).
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : une réallocation du tableau 2D.
+	******************************************/
+
 	void MATajouterColonnes(int iNb = 1);
+
+
+	/*****************************************
+	Ajoute une ou plusieurs lignes.
+	******************************************
+	Entrée : le nombre de lignes (int).
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : une réallocation du tableau 2D.
+	******************************************/
+
 	void MATajouterLignes(int iNb = 1);
 
 public:
