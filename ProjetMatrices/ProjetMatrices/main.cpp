@@ -30,14 +30,6 @@ void gregoire()
 
 void robin()
 {
-	try {
-		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\ProjetMatrices\\test.txt");
-		cout << m << endl;
-	}
-	catch (Cexception e)
-	{
-		cout << e.EXCgetMessage() << endl;
-	}
 
 #ifndef NDEBUG
 

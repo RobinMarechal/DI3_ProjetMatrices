@@ -287,12 +287,14 @@ CMatrice<T> CMatrice<T>::operator/(const T & tValeur)
 	return MATmatrice;
 }
 
+
 template<class T>
 CMatrice<T> CMatrice<T>::operator^(int iPuissance)
 {
 	if (iPuissance == 0)
 	{
-		throw Cexception(0, "Impossible d'elever une matrice à la puissance 2 dans cette librairie.");
+		// Impossible dans certains cas...
+		throw Cexception(0, "Cette librairie ne permet pas d'élever une matrice à la puissance 0.");
 	}
 
 	unsigned int uiBoucle;
@@ -307,7 +309,7 @@ CMatrice<T> CMatrice<T>::operator^(int iPuissance)
 	}
 
 	CMatrice<T> MATresultat(*this);
-	for (uiBoucle = 1; uiBoucle < (unsigned int) iPuissance; uiBoucle++)
+	for (uiBoucle = 1; uiBoucle < (unsigned int)iPuissance; uiBoucle++)
 	{
 		MATresultat = MATresultat * *this;
 	}
