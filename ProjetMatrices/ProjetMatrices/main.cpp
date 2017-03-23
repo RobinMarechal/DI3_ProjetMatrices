@@ -23,9 +23,9 @@ void handleSIGABRT(int iSignNb)
 
 void gregoire()
 {
-	//CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\JePasse\\fichier00.txt");
+	CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\JePasse\\fichier04.txt");
 
-	//m.MATechelonnee().MATafficher();
+	m.MATafficher();
 }
 
 void robin()
@@ -56,7 +56,7 @@ void robin()
 int main(int argc, char * argv[])
 {
 	//robin();
-	//gregoire();
+	gregoire();
 
 	return 0;
 }
