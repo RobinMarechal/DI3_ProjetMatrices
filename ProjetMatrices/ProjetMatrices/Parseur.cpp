@@ -80,6 +80,11 @@ void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, unsigned int uiNb
 				uiIndiceCaractere++;
 			}
 
+			if (pcCoefficient[strlen(pcCoefficient) - 1] == '.')
+			{
+				pcCoefficient[strlen(pcCoefficient) - 1] = '\0';
+			}
+
 			dValeur = atof(pcCoefficient);
 
 			if (dValeur == 0.0 && pcCoefficient[0] != '.' && pcCoefficient[0] != '0')
@@ -121,8 +126,13 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 
 		pcTmp = strchr(pcLines, '=') + 1;
 
+		if (pcTmp == NULL)
+		{
+			throw Cexception(0, "Erreur de lecture du fichier, format invalide (un '=' semble manquer)");
+		}
+
 		// On avance jusqu'au prochain caractère qui n'est pas un espace
-		while(*pcTmp == ' ')
+		while(*pcTmp == ' ' || *pcTmp == '\t')
 		{
 			if (*pcTmp == '\0')
 			{
@@ -160,6 +170,14 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 	}
 
 	// VERIFICATIONS ET CONVERSIONS ////////////////////////////////////////////////////////////
+
+	// On enlève les espaces de fin.
+
+	while(ppcValeursBalises[0][strlen(ppcValeursBalises[0]) - 1] == ' '
+		  || ppcValeursBalises[0][strlen(ppcValeursBalises[0]) - 1] == '\t')
+	{
+		ppcValeursBalises[0][strlen(ppcValeursBalises[0]) - 1] = '\0';
+	}
 
 	if (strstr(ppcValeursBalises[0], "double") == NULL || strlen(ppcValeursBalises[0]) != strlen("double"))
 	{

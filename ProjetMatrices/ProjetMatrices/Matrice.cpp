@@ -971,15 +971,20 @@ std::ostream & operator<<(std::ostream & OSTflux, CMatrice<T>& MATmatrice)
 	unsigned int uiLigne;
 	unsigned int uiColonne;
 
+	OSTflux << " Matrice " << MATmatrice.MATgetNbLignes() << " x " << MATmatrice.MATgetNbColonnes() << " : ";
+	OSTflux << endl;
 	for (uiLigne = 0; uiLigne < MATmatrice.MATgetNbLignes(); uiLigne++)
 	{
+		OSTflux << " |\t";
 		for (uiColonne = 0; uiColonne < MATmatrice.MATgetNbColonnes(); uiColonne++)
 		{
-			OSTflux << MATmatrice(uiLigne, uiColonne) << " ";
+			OSTflux << MATmatrice(uiLigne, uiColonne) << "\t";
 		}
 
-		OSTflux << endl;
+		OSTflux << '|' << endl;
 	}
+
+	OSTflux << endl;
 
 	return OSTflux;
 }

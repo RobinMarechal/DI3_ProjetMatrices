@@ -7,7 +7,7 @@ using namespace std;
 #include <signal.h>
 
 // pour desactiver les tests : #define NDEBUG
-// #define NDEBUG
+#define NDEBUG
 
 #ifndef DEBUG
 
@@ -23,13 +23,39 @@ void handleSIGABRT(int iSignNb)
 
 void gregoire()
 {
-	CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
-
-	m.MATechelonnee().MATafficher();
+	CMatrice <double> m = CParseur::PARparserFichier("..\\JePasse\\fichier04.txt");
+	m.MATafficher();
 }
 
 void robin()
 {
+	// Passent :
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier00.txt");
+		cout << m << endl;
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier01.txt");
+		cout << m << endl;
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier02.txt");
+		cout << m << endl;
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier03.txt");
+		cout << m << endl;
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier04.txt");
+		cout << m << endl;
+	}
+	catch (Cexception e)
+	{
+		cout << e.EXCgetMessage() << endl;
+	}
+
+	// Passent pas :
+
+	try {
+
+	}
+	catch (Cexception EXCe)
+	{
+
+	}
 
 #ifndef NDEBUG
 
