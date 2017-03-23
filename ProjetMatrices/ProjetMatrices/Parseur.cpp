@@ -126,8 +126,13 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 
 		pcTmp = strchr(pcLines, '=') + 1;
 
+		if (pcTmp == NULL)
+		{
+			throw Cexception(0, "Erreur de lecture du fichier, format invalide (un '=' semble manquer)");
+		}
+
 		// On avance jusqu'au prochain caractère qui n'est pas un espace
-		while(*pcTmp == ' ')
+		while(*pcTmp == ' ' || *pcTmp == '\t')
 		{
 			if (*pcTmp == '\0')
 			{
