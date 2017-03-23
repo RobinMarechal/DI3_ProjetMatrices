@@ -447,7 +447,7 @@ public:
 	bool MATestInversible();
 	bool MATestSymetrique();
 	bool MATestAntiSymetrique();
-	static CMatrice<T> MATdiag(unsigned int uiDim, const T ptDiag[] = { 0 });
+	static CMatrice<T> MATdiag(unsigned int uiDim, const T ptDiag[uiDim]);
 
 	/*****************************************
 	Test de matrice nulle.

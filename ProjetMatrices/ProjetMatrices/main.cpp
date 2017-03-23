@@ -23,14 +23,14 @@ void handleSIGABRT(int iSignNb)
 
 void gregoire()
 {
-	CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\essai.txt");
+	//CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Desktop\\JePasse\\fichier00.txt");
 
-	m.MATechelonnee().MATafficher();
+	//m.MATechelonnee().MATafficher();
 }
 
 void robin()
 {
-	try {
+	/*try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\ProjetMatrices\\test.txt");
 		cout << m << endl;
 	}
@@ -49,13 +49,13 @@ void robin()
 	// Lancement des tests unitaires
 	CTestCMatrice::TMAstart();
 
-#endif
+#endif*/
 }
 
 
 int main(int argc, char * argv[])
 {
-	robin();
+	//robin();
 	//gregoire();
 
 	return 0;
