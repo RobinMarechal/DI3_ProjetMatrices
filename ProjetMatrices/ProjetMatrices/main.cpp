@@ -121,7 +121,7 @@ void robin()
 		cout << EXCe.EXCgetMessage() << endl;
 	}
 
-	/*try {
+	try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier18.txt");
 		cout << m << endl;
 	}
@@ -137,7 +137,7 @@ void robin()
 	catch (Cexception EXCe)
 	{
 		cout << EXCe.EXCgetMessage() << endl;
-	}*/
+	}
 
 #ifndef NDEBUG
 
