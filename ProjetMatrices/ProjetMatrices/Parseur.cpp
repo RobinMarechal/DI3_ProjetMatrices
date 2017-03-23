@@ -42,11 +42,13 @@ void CParseur::PARtoLowerString(char * pcStr)
 
 void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, unsigned int uiNbLignes, unsigned int uiNbColonnes, char * pcStrMatrice)
 {
-	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere;
+	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere, uiNbCoeffParLigne;
 	double dValeur;
 
 	for (uiBoucleL = 0; uiBoucleL < uiNbLignes; uiBoucleL++)
 	{
+		uiNbCoeffParLigne = 0;
+
 		for (uiBoucleC = 0; uiBoucleC < uiNbColonnes; uiBoucleC++)
 		{
 			char pcCoefficient[64] = { 0 };
@@ -57,6 +59,15 @@ void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, unsigned int uiNb
 			while (*pcStrMatrice == ' ' || *pcStrMatrice == '\t' || *pcStrMatrice == '\n' || *pcStrMatrice == '\0')
 			{
 				pcStrMatrice++;
+			}
+
+			uiNbCoeffParLigne++;
+
+			// On vérifie que le nombre de colonnes correspond à celui indiqué.
+
+			if (uiNbCoeffParLigne >= uiNbColonnes)
+			{
+				throw Cexception(0, "Erreur lors de la création de la matrice. Vérifiez le nombre de colonne indiqué ou le nombre de coefficients entré dans la matrice.");
 			}
 
 			// Si le nombre ressemble à ".3" ou ",3", on rajoute '0' devant pour qu'il ressemble a "0.3" ou "0,3"
