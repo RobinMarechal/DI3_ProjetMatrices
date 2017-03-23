@@ -178,8 +178,6 @@ T CMatriceCarree<T>::MACdet()
 
 		return tDeterminant;
 	}
-
-
 }
 
 

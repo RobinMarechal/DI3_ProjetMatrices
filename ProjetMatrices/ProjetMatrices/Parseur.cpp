@@ -6,9 +6,19 @@
 #include <stdlib.h>
 #include "Cexception.h"
 
-#define INDICE_VALEURS_NUMERIQUES_NB_LIGNES 0
-#define INDICE_VALEURS_NUMERIQUES_NB_COLONNES 1
-#define INDICE_VALEURS_BALISES_MATRICE 3
+#define NB_BALISES 4
+#define NB_VALEURS_NUMERIQUES 2
+#define INDICE_PREMIERE_LIGNE_A_VALEUR_NUMERIQUE 1
+#define VALEURS_NUMERIQUES_INDICE_NB_LIGNES 0
+#define VALEURS_NUMERIQUES_INDICE_NB_COLONNES 1
+#define VALEURS_BALISES_INDICE_MATRICE 3
+
+const char * CParseur::pcBalises[4] = {
+	"TypeMatrice",
+	"NBLignes",
+	"NBColonnes",
+	"Matrice"
+};
 
 /***********************************************
 	Constructeur par défaut.
@@ -83,76 +93,22 @@ void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, unsigned int uiNb
 	}
 }
 
-CParseur::CParseur() {}
-
-
-/***********************************************
-	Destructeur.
-
-************************************************
-	Entrée : rien.
-	Nécessite : rien.
-	Sortie : rien.
-	Entraine : rien.
-
-************************************************/
-CParseur::~CParseur() {}
-
-
-/***********************************************
-	Lecture d'un fichier.
-
-************************************************
-	Entrée : le chemin du fichier.
-	Nécessite : rien.
-	Sortie : un objet CMatrice.
-	Entraine : l'instanciation d'une matrice avec
-			   les élements lus dans le fichier.
-
-************************************************/
-
 CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 {   
 	// INITIALISATIONS ////////////////////////////////////////////////////////
 
-	char pcType[1024],
-         pcLignes[1024],
-         pcColonnes[1024],
-         pcDebutMatrice[1024],
-		 pcCoefficient[1024];
-
-	char pcBuffer[1024];
-
-	unsigned int uiLigne,
-				 uiColonne,
-				 uiIndiceCaractere,
-				 uiPARnombreLignes,
-				 uiPARnombreColonnes;
-
 	unsigned int uiBoucle;
 
-	const unsigned int uiNbBalises = 4;
-
-	char * pcBalises[] = {
-		"TypeMatrice", 
-		"NBLignes", 
-		"NBColonnes", 
-		"Matrice"
-	};
-
-	char ppcValeursBalises[uiNbBalises][1024] = {0};
-
-	const unsigned int uiNbValeursNumeriques = 2;
-	const unsigned int uiPremiereLigneAValeurNumerique = 1;
+	char ppcValeursBalises[NB_BALISES][1024] = {0};
 	
-	int pValeursNumeriques[uiNbValeursNumeriques];
+	int pValeursNumeriques[NB_VALEURS_NUMERIQUES];
 
 	ifstream fichier(pcFichier);
 
 	// TRAITEMENT /////////////////////////////////////////////////////////////////
 
 	// Pour chaque balise, on récupère la valeur sous forme de char * à traiter
-	for (uiBoucle = 0; uiBoucle < uiNbBalises; uiBoucle++)
+	for (uiBoucle = 0; uiBoucle < NB_BALISES; uiBoucle++)
 	{
 		char * pcTmp,
 			pcLines[1024] = { 0 };
@@ -199,7 +155,7 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 		else
 		{
 			PARtoLowerString(pcTmp);
-			strncpy(ppcValeursBalises[uiBoucle],pcTmp, strlen(pcTmp));
+			strncpy_s(ppcValeursBalises[uiBoucle], pcTmp, strlen(pcTmp));
 		}
 	}
 
@@ -211,10 +167,11 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 		throw Cexception(0, "Format invalide : le type de la matrice est invalide.");
 	}
 
-	// 
-	for (uiBoucle = 0; uiBoucle < uiNbValeursNumeriques; uiBoucle++)
+	// Remplissage du tableau contentant des valeurs numériques
+	// NBLignes, NBColonnes
+	for (uiBoucle = 0; uiBoucle < NB_VALEURS_NUMERIQUES; uiBoucle++)
 	{
-		pValeursNumeriques[uiBoucle] = atoi(ppcValeursBalises[uiBoucle + uiPremiereLigneAValeurNumerique]);
+		pValeursNumeriques[uiBoucle] = atoi(ppcValeursBalises[uiBoucle + INDICE_PREMIERE_LIGNE_A_VALEUR_NUMERIQUE]);
 		if (pValeursNumeriques[uiBoucle] <= 0)
 		{
 			throw Cexception(0, "Format invalide : dimensions de la matrice invalides (0 ou négatives).");
@@ -223,54 +180,11 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 
 	// CREATION DE LA MATRICE ///////////////////////////////////////////////////////
 
-	unsigned int uiNbLignes = pValeursNumeriques[INDICE_VALEURS_NUMERIQUES_NB_LIGNES];
-	unsigned int uiNbColonnes = pValeursNumeriques[INDICE_VALEURS_NUMERIQUES_NB_COLONNES];
+	unsigned int uiNbLignes = pValeursNumeriques[VALEURS_NUMERIQUES_INDICE_NB_LIGNES];
+	unsigned int uiNbColonnes = pValeursNumeriques[VALEURS_NUMERIQUES_INDICE_NB_COLONNES];
 	CMatrice<double> MATmatrice(uiNbLignes, uiNbColonnes);
 
-	PARremplirMatrice(MATmatrice, uiNbLignes, uiNbColonnes, ppcValeursBalises[INDICE_VALEURS_BALISES_MATRICE]);
+	PARremplirMatrice(MATmatrice, uiNbLignes, uiNbColonnes, ppcValeursBalises[VALEURS_BALISES_INDICE_MATRICE]);
 
 	return MATmatrice;
-
-	//////////////////////////////////////////
-    
-	
-	/*fichier.getline(pcLignes, 1024);
-	fichier.getline(pcColonnes, 1024);
-	fichier >> pcDebutMatrice;
-
-	// Récupérer le nombre de lignes.
-
-	uiPARnombreLignes = atoi(strstr(strchr(pcLignes, '=') + 1, "\0"));
-    
-	// Récupérer le nombre de colonnes.
-
-	uiPARnombreColonnes = atoi(strstr(strchr(pcColonnes, '=') + 1, "\0"));
-    
-    // Création de la matrice.
-
-	CMatrice <double> MATmatrice(uiPARnombreLignes, uiPARnombreColonnes);
-        
-	for (uiLigne = 0; uiLigne < uiPARnombreLignes; uiLigne++)
-    {
-		for (uiColonne = 0; uiColonne < uiPARnombreColonnes; uiColonne++)
-        {
-			fichier >> pcCoefficient;
-
-			// On gère le cas ou le coefficient est un double à virgule.
-
-			uiIndiceCaractere = 0;
-            
-			while(pcCoefficient[uiIndiceCaractere] != '\0')
-            {                
-				if (pcCoefficient[uiIndiceCaractere] == ',')
-					pcCoefficient[uiIndiceCaractere] = '.';
-                
-                uiIndiceCaractere++;
-            }
-
-			MATmatrice.MATsetValeur(uiLigne, uiColonne, atof(pcCoefficient));
-        }
-    }
-
-	return MATmatrice;*/
 }

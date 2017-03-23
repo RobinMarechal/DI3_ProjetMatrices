@@ -139,7 +139,7 @@ public:
 	Entraîne : rien.
 	*****************************************/
 
-	T & operator()(unsigned int uiLigne, unsigned int uiColonne) const;
+	T & operator()(unsigned int uiLigne, unsigned int uiColonne);
 
 
 	/*****************************************
@@ -191,7 +191,7 @@ public:
 			   ajout de la valeur passée en paramètre à toutes les cases de la matrice.
 	******************************************/
 
-	CMatrice<T> operator+(T tValeur);
+	CMatrice<T> operator+(const T & tValeur);
 
 
 	/*****************************************
@@ -203,7 +203,7 @@ public:
 	Entraîne : Allocation d'un nouvel objet CMatrice.
 	******************************************/
 
-	CMatrice<T> operator+(CMatrice MATmatrice);
+	CMatrice<T> operator+(CMatrice & MATmatrice);
 
 
 	/*****************************************
@@ -216,7 +216,7 @@ public:
 			   multiplication de la valeur passée en paramètre avec toutes les cases de la matrice.
 	******************************************/
 
-	CMatrice<T> operator*(T tValeur);
+	CMatrice<T> operator*(const T & tValeur);
 
 
 	/*****************************************
@@ -229,7 +229,7 @@ public:
 	Entraîne : Allocation d'un nouvel objet CMatrice.
 	******************************************/
 
-	CMatrice<T> operator*(CMatrice<T> MATmatrice);
+	CMatrice<T> operator*(CMatrice<T> & MATmatrice);
 
 
 	/*****************************************
@@ -242,7 +242,7 @@ public:
 			   soustraction de la valeur passée en paramètre avec toutes les cases de la matrice.
 	******************************************/
 
-	CMatrice<T> operator-(T tValeur);
+	CMatrice<T> operator-(const T & tValeur);
 	
 
 	/*****************************************
@@ -254,7 +254,7 @@ public:
 	Entraîne : Allocation d'un nouvel objet CMatrice.
 	******************************************/
 
-	CMatrice<T> operator-(CMatrice<T> MATmatrice);
+	CMatrice<T> operator-(CMatrice<T> & MATmatrice);
 
 
 	/*****************************************
@@ -267,7 +267,10 @@ public:
 			   division de la valeur passée en paramètre avec toutes les cases de la matrice.
 	******************************************/
 
-	CMatrice<T> operator/(T tValeur);
+	CMatrice<T> operator/(const T & tValeur);
+
+
+	CMatrice<T> operator^(int iPuissance);
 
 
 	// ----- Getters ----------------------------------------
@@ -293,7 +296,7 @@ public:
 	Entraîne : rien.
 	******************************************/
 
-	unsigned int MATgetNbColonnes() const;
+	unsigned int MATgetNbColonnes();
 
 
 	/*****************************************
@@ -305,7 +308,7 @@ public:
 	Entraîne : rien.
 	******************************************/
 
-	unsigned int MATgetNbLignes() const;
+	unsigned int MATgetNbLignes();
 
 
 	/*****************************************
@@ -317,7 +320,7 @@ public:
 	Sortie : le coefficient à la position (uiLigne, uiColonne).
 	Entraîne : rien.
 	******************************************/
-	T & MATgetValeur(unsigned int uiLigne, unsigned int uiColonne) const;
+	T & MATgetValeur(unsigned int uiLigne, unsigned int uiColonne);
 
 
 	/*****************************************
@@ -329,7 +332,7 @@ public:
 	Entraîne : rien.
 	******************************************/
 
-	T * MATgetLigne(unsigned int uiLigne) const;
+	T * MATgetLigne(unsigned int uiLigne);
 
 	
 	/*****************************************
@@ -341,7 +344,7 @@ public:
 	Entraîne : rien.
 	******************************************/
 
-	T * MATgetColonne(unsigned int uiColonne) const;
+	T * MATgetColonne(unsigned int uiColonne);
 
 
 	// ----- Setters ----------------------------------------
@@ -431,8 +434,20 @@ public:
 	Entraîne : //
 	******************************************/
 
-	CMatrice<T> MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne) const;
+	CMatrice<T> MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne);
 
+	T MATdet();
+	T MATtr();
+	CMatrice<T> MATcommatrice();
+	CMatrice<T> MATinverse();
+	bool MATestTriangulaire();
+	bool MATestTriangulaireSuperieure();
+	bool MATestTriangulaireInferieure();
+	bool MATestDiagonale();
+	bool MATestInversible();
+	bool MATestSymetrique();
+	bool MATestAntiSymetrique();
+	static CMatrice<T> MATdiag(unsigned int uiDim, const T ptDiag[] = { 0 });
 
 	/*****************************************
 	Test de matrice nulle.
@@ -444,7 +459,7 @@ public:
 			   OU (false : la matrice n'est pas nulle).
 	******************************************/
 
-	bool MATestNulle() const;
+	bool MATestNulle();
 };
 
 
@@ -462,7 +477,7 @@ Entraîne : Allocation d'un nouvel objet CMatrice,
 ******************************************/
 
 template <class T>
-CMatrice<T> operator+(const T tValeur, const CMatrice<T> & MATmatrice);
+CMatrice<T> operator+(const T & tValeur, const CMatrice<T> & MATmatrice);
 
 
 /*****************************************
@@ -477,7 +492,7 @@ Entraîne : Allocation d'un nouvel objet CMatrice,
 ******************************************/
 
 template <class T>
-CMatrice<T> operator-(const T tValeur, const CMatrice<T> & MATmatrice);
+CMatrice<T> operator-(const T & tValeur, const CMatrice<T> & MATmatrice);
 
 
 /*****************************************
@@ -492,7 +507,7 @@ Entraîne : Allocation d'un nouvel objet CMatrice,
 ******************************************/
 
 template <class T>
-CMatrice<T> operator*(const T tValeur, const CMatrice<T> & MATmatrice);
+CMatrice<T> operator*(const T & tValeur, const CMatrice<T> & MATmatrice);
 
 
 /*****************************************

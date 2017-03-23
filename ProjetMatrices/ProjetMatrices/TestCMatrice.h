@@ -16,6 +16,7 @@ private:
 	void TMAtestOperateursComparaison();
 	void TMAtestOperateurProduit();
 	void TMAtestOperateurDiviser();
+	void TMAtestOperateurPuissance();
 
 	void TMAtestOperateurs();
 
@@ -23,10 +24,25 @@ private:
 	void TMAtestCalculEchelonnee();
 	void TMAtestCalculTransposee();
 	void TMAtestCalculSousMatrice();
+	void TMAtestCalculDet();
+	void TMAtestCalculInverse();
+	void TMAtestCalculCommatrice();
+	void TMAtestCalculTrace();
 
 	void TMAtestCalculs();
 
 	void TMAtestEstNulle();
+	void TMAtestEstTriangulaire();
+	void TMAtestEstTriangulaireSuperieure();
+	void TMAtestEstTriangulaireInferieure();
+	void TMAtestEstDiagonale();
+	void TMAtestEstInversible();
+	void TMAtestEstSymetrique();
+	void TMAtestEstAntiSymetrique();
+
+	void TMAtestTestsMatriceCarree();
+
+	void TMAtestDiag();
 
 	void TMAtestExceptions();
 

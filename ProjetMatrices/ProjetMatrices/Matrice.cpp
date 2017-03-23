@@ -7,15 +7,6 @@ using namespace std;
 
 // ----- Constructeurs et destructeurs----------------------------------------
 
-/*****************************************
-Constructeur par défaut.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : rien.
-Entraîne : initialisation de l'objet.
-*****************************************/
-
 template <class T>
 CMatrice<T>::CMatrice()
 {
@@ -24,16 +15,6 @@ CMatrice<T>::CMatrice()
 	ppMATmatrice = nullptr;
 }
 
-/*****************************************
-Constructeur à deux arguments.
-******************************************
-Entrée : le nombre de lignes (unsigned int)
-		 le nombre de colonnes (unsigned in
-Nécessite : rien.
-Sortie : rien.
-Entraîne : Initialisation de l'objet.
-******************************************/
-
 template <class T>
 CMatrice<T>::CMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes)
 {
@@ -41,15 +22,6 @@ CMatrice<T>::CMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes)
 	uiMATnbColonnes = uiNbColonnes;
 	MATinitMatrice();
 }
-
-/****************************************
-Constructeur de recopie.
-*****************************************
-Entrée : instance de la classe CMatrice.
-Nécessite : rien.
-Sortie : rien.
-Entraîne : l'initialisation de l'objet.
-*****************************************/
 
 template <class T>
 CMatrice<T>::CMatrice(CMatrice<T> & MATmatrice)
@@ -71,16 +43,6 @@ CMatrice<T>::CMatrice(CMatrice<T> & MATmatrice)
 	}
 }
 
-/****************************************
-Destructeur.
-*****************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : rien.
-Entraîne : destruction de l'objet,
-		   désallocation du tableau 2D.
-****************************************/
-
 template <class T>
 CMatrice<T>::~CMatrice()
 {
@@ -90,18 +52,8 @@ CMatrice<T>::~CMatrice()
 
 // ----- Operateurs ----------------------------------------
 
-/*****************************************
-Opérateur ().
-******************************************
-Entrée : indice de la ligne (unsigned int)
-		 indice de la colonne (unsigned in
-Nécessite : rien.
-Sortie : valeur de la position (i, j) dans
-Entraîne : rien.
-*****************************************/
-
 template <class T>
-inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne) const
+inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne)
 {
 	if (uiLigne >= uiMATnbLignes || uiColonne >= uiMATnbColonnes)
 		throw Cexception(0, "Operator () : Indice invalide");
@@ -109,15 +61,6 @@ inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne)
 	return ppMATmatrice[uiColonne][uiLigne];
 }
 
-/*****************************************
-Operateur =.
-******************************************
-Entrée : instance de la classe CMatrice.
-Nécessite : rien.
-Sortie : instance de la classe CMatrice par référence,
-		 copie de celle en paramètre
-Entraîne : la recopie de l'objet en paramètre
-******************************************/
 
 template <class T>
 CMatrice<T> & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
@@ -138,19 +81,10 @@ CMatrice<T> & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
 			MATsetValeur(uiLigne, uiColonne, MATmatrice.MATgetValeur(uiLigne, uiColonne));
 		}
 	}
-	
+
 	return *this;
 }
 
-/*****************************************
-Operateur ==.
-******************************************
-Entrée : instance de la classe CMatrice.
-Nécessite : rien.
-Sortie : booléen.
-Entraîne : (true : les matrices sont identiques)
-		   OU (false : les matrices sont différentes).
-******************************************/
 
 template <class T>
 bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
@@ -174,34 +108,17 @@ bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
 	return true;
 }
 
-/*****************************************
-Operateur !=.
-******************************************
-Entrée : instance de la classe CMatrice.
-Necessite : rien.
-Sortie : booléen.
-Entraîne : (true : les matrices sont différentes)
-		   OU (false : les matrices sont identiques).
-******************************************/
 
 template <class T>
-bool CMatrice<T>::operator!=(CMatrice<T> & MATmatrice)
+bool CMatrice<T>::operator!=( CMatrice<T> & MATmatrice)
 {
 	return !(*this == MATmatrice);
 }
 
-/*****************************************
-Opérateur + à paramètre de type T. 
-******************************************
-Entrée : la valeur à ajouter (de type T).
-Nécessite : rien.
-Sortie : instance de la classe CMatrice contenant le résultat de la somme.
-Entraîne : Allocation d'un nouvel objet CMatrice,
-		   ajout de la valeur passée en paramètre à toutes les cases de la matrice.
-******************************************/
+
 
 template <class T>
-CMatrice<T> CMatrice<T>::operator+(T tValeur)
+CMatrice<T> CMatrice<T>::operator+(const T & tValeur)
 {
 	unsigned int uiLigne;
 	unsigned int uiColonne;
@@ -219,19 +136,18 @@ CMatrice<T> CMatrice<T>::operator+(T tValeur)
 	return MATmatrice;
 }
 
-/*****************************************
-Operateur + à paramètre de type CMatrice.
-******************************************
-Entrée : instance de la classe CMatrice.
-Nécessite : les matrices sont de même dimension.
-Sortie : instance de la classe CMatrice contenant le résultat de la somme.
-Entraîne : Allocation d'un nouvel objet CMatrice.
-******************************************/
+
 
 template <class T>
-CMatrice<T> CMatrice<T>::operator+(CMatrice<T> MATmatrice)
+CMatrice<T> CMatrice<T>::operator+( CMatrice<T> & MATmatrice)
 {
 	unsigned int uiBoucleL, uiBoucleC;
+
+	if (MATmatrice.uiMATnbColonnes != uiMATnbColonnes || MATmatrice.uiMATnbLignes != uiMATnbLignes)
+	{
+		throw Cexception(0, "operator+ : Dimensions invalides");
+	}
+
 	CMatrice<T> MATresultat(uiMATnbLignes, uiMATnbColonnes);
 
 	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
@@ -245,18 +161,10 @@ CMatrice<T> CMatrice<T>::operator+(CMatrice<T> MATmatrice)
 	return MATresultat;
 }
 
-/*****************************************
-Opérateur * à paramètre de type T.
-*****************************************
-Entree : la valeur à multiplier (de type T).
-Necessite : rien.
-Sortie : instance de la classe CMatrice contenant le résultat du produit.
-Entraîne : Allocation d'un nouvel objet CMatrice,
-		   multiplication de la valeur passée en paramètre avec toutes les cases de la matrice.
-******************************************/
+
 
 template <class T>
-CMatrice<T> CMatrice<T>::operator*(T tValeur)
+CMatrice<T> CMatrice<T>::operator*(const T & tValeur)
 {
 	unsigned int uiLigne;
 	unsigned int uiColonne;
@@ -274,18 +182,10 @@ CMatrice<T> CMatrice<T>::operator*(T tValeur)
 	return MATmatrice;
 }
 
-/*****************************************
-Operateur * à paramètre de type CMatrice.
-******************************************
-Entrée : instance de la classe CMatrice.
-Nécessite : le nombre de colonnes de la première matrice
-			et le nombre de lignes de la deuxième matrice sont identiques.
-Sortie : instance de la classe CMatrice contenant le résultat du produit.
-Entraîne : Allocation d'un nouvel objet CMatrice.
-******************************************/
+
 
 template <class T>
-CMatrice<T> CMatrice<T>::operator*(CMatrice<T> MATmatrice)
+CMatrice<T> CMatrice<T>::operator*( CMatrice<T> & MATmatrice)
 {
 	if(uiMATnbColonnes != MATmatrice.uiMATnbLignes)
 	{
@@ -315,18 +215,10 @@ CMatrice<T> CMatrice<T>::operator*(CMatrice<T> MATmatrice)
 	return MATresultat;
 }
 
-/*****************************************
-Opérateur - à paramètre de type T.
-******************************************
-Entree : la valeur à soustraire (de type T).
-Necessite : rien.
-Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
-Entraîne : Allocation d'un nouvel objet CMatrice,
-		   soustraction de la valeur passée en paramètre avec toutes les cases de la matrice.
-******************************************/
+
 
 template <class T>
-CMatrice<T> CMatrice<T>::operator-(T tValeur)
+CMatrice<T> CMatrice<T>::operator-(const T & tValeur)
 {
 	unsigned int uiLigne;
 	unsigned int uiColonne;
@@ -344,19 +236,18 @@ CMatrice<T> CMatrice<T>::operator-(T tValeur)
 	return MATmatrice;
 }
 
-/*****************************************
-Operateur - à paramètre de type CMatrice.
-******************************************
-Entrée : instance de la classe CMatrice.
-Nécessite : les matrices sont de même dimension.
-Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
-Entraîne : Allocation d'un nouvel objet CMatrice.
-******************************************/
+
 
 template <class T>
-CMatrice<T> CMatrice<T>::operator-(CMatrice<T> MATmatrice)
+CMatrice<T> CMatrice<T>::operator-(CMatrice<T> & MATmatrice)
 {
 	unsigned int uiBoucleL, uiBoucleC;
+
+	if (MATmatrice.uiMATnbColonnes != uiMATnbColonnes || MATmatrice.uiMATnbLignes != uiMATnbLignes)
+	{
+		throw Cexception(0, "operator- : Dimensions invalides");
+	}
+
 	CMatrice<T> MATresultat(*this);
 
 	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
@@ -370,18 +261,10 @@ CMatrice<T> CMatrice<T>::operator-(CMatrice<T> MATmatrice)
 	return MATresultat;
 }
 
-/*****************************************
-Opérateur / à paramètre de type T.
-******************************************
-Entree : la valeur à diviser (de type T).
-Necessite : tValeur doit être différente de 0.
-Sortie : instance de la classe CMatrice contenant le résultat de la division.
-Entraîne : Allocation d'un nouvel objet CMatrice,
-		   division de la valeur passée en paramètre avec toutes les cases de la matrice.
-******************************************/
+
 
 template <class T>
-CMatrice<T> CMatrice<T>::operator/(T tValeur)
+CMatrice<T> CMatrice<T>::operator/(const T & tValeur)
 {
 	if (tValeur == 0)
 	{
@@ -404,20 +287,48 @@ CMatrice<T> CMatrice<T>::operator/(T tValeur)
 	return MATmatrice;
 }
 
+template<class T>
+CMatrice<T> CMatrice<T>::operator^(int iPuissance)
+{
+	if (iPuissance == 0)
+	{
+		throw Cexception(0, "Impossible d'elever une matrice à la puissance 2 dans cette librairie.");
+	}
+
+	unsigned int uiBoucle;
+	bool bNegatif = false;
+
+	// Si la puissance est negative, on prend sa valeur absolue 
+	// car A^(-n) = A^(n^(-1))
+	if (iPuissance < 0)
+	{
+		iPuissance *= -1;
+		bNegatif = true;
+	}
+
+	CMatrice<T> MATresultat(*this);
+	for (uiBoucle = 1; uiBoucle < (unsigned int) iPuissance; uiBoucle++)
+	{
+		MATresultat = MATresultat * *this;
+	}
+
+	// Puis on inverse le resultat si la puissance etait negative
+	if (bNegatif)
+	{
+		MATresultat = MATresultat.MATinverse();
+	}
+
+	return MATresultat;
+}
+
+
 // ----- Getters ----------------------------------------
 
-/*****************************************
-Affichage d'une matrice.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : rien.
-Entraîne : l'affichage de la matrice.
-******************************************/
 
 template <class T>
 void CMatrice<T>::MATafficher()
 {
+	/*
 	unsigned int uiLigne;
 	unsigned int uiColonne;
 
@@ -430,65 +341,40 @@ void CMatrice<T>::MATafficher()
 
 		cout << endl;
 	}
+	*/
+
+	// Pour la maintenanabilité du code :
+	std::cout << *this;
 }
 
-/*****************************************
-Lecture du nombre de colonnes.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : le nombre de colonnes de la matrice (unsigned int).
-Entraîne : rien.
-******************************************/
+
 
 template <class T>
-inline unsigned int CMatrice<T>::MATgetNbColonnes() const
+inline unsigned int CMatrice<T>::MATgetNbColonnes()
 {
 	return uiMATnbColonnes;
 }
 
-/*****************************************
-Lecture du nombre de lignes.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : le nombre de lignes de la matrice (unsigned int).
-Entraîne : rien.
-******************************************/
+
 
 template <class T>
-inline unsigned int CMatrice<T>::MATgetNbLignes() const
+inline unsigned int CMatrice<T>::MATgetNbLignes()
 {
 	return uiMATnbLignes;
 }
 
-/*****************************************
-Lecture de la valeur d'un coefficient.
-******************************************
-Entéee : l'indice de la ligne (unsigned int),
-		 l'indice de la colonne (unsigned int).
-Nécessite : rien.
-Sortie : le coefficient à la position (uiLigne, uiColonne).
-Entraîne : rien.
-******************************************/
+
 
 template <class T>
-inline T & CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne) const
+inline T & CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne)
 {
 	return (*this)(uiLigne, uiColonne);
 }
 
-/*****************************************
-Lecture d'une ligne.
-******************************************
-Entrée : l'indice de la ligne (unsigned int).
-Nécessite : rien.
-Sortie : la ligne à l'indice uiLigne.
-Entraîne : rien.
-******************************************/
+
 
 template <class T>
-T * CMatrice<T>::MATgetLigne(unsigned int uiLigne) const
+T * CMatrice<T>::MATgetLigne(unsigned int uiLigne)
 {
 	unsigned int uiBoucleC;
 	T * tTab = new T[uiMATnbColonnes];
@@ -501,17 +387,10 @@ T * CMatrice<T>::MATgetLigne(unsigned int uiLigne) const
 	return tTab;
 }
 
-/*****************************************
-Lecture d'une colonne.
-******************************************
-Entrée : l'indice de la colonne (unsigned int).
-Nécessite : rien.
-Sortie : la colonne à l'indice uiColonne.
-Entraîne : rien.
-******************************************/
+
 
 template <class T>
-T * CMatrice<T>::MATgetColonne(unsigned int uiColonne) const
+T * CMatrice<T>::MATgetColonne(unsigned int uiColonne)
 {
 	unsigned int uiBoucleL;
 	T * tTab = new T[uiMATnbLignes];
@@ -524,18 +403,10 @@ T * CMatrice<T>::MATgetColonne(unsigned int uiColonne) const
 	return tTab;
 }
 
+
+
 // ----- Setters ----------------------------------------
 
-/*****************************************
-Mutateur pour la valeur.
-******************************************
-Entrée : l'indice de la ligne (unsigned int),
-		 l'indice de la colonne (unsigned int),
-		 la valeur définir (de type T).
-Nécessite : rien.
-Sortie : rien.
-Entraîne : un changement de valeur du coefficient (uiLigne, uiColonne).
-******************************************/
 
 template <class T>
 inline void CMatrice<T>::MATsetValeur(unsigned int uiLigne, unsigned int uiColonne, T tValeur)
@@ -543,14 +414,7 @@ inline void CMatrice<T>::MATsetValeur(unsigned int uiLigne, unsigned int uiColon
 	(*this)(uiLigne, uiColonne) = tValeur;
 }
 
-/*****************************************
-Mutateur pour le nombre de lignes.
-******************************************
-Entrée : le nombre de lignes (unsigned int).
-Nécessite : rien.
-Sortie : rien.
-Entraîne : une initialisation ou modification du nombre de lignes de la matrice.
-******************************************/
+
 
 template <class T>
 inline void CMatrice<T>::MATsetNbLignes(unsigned int uiNbLignes)
@@ -559,14 +423,7 @@ inline void CMatrice<T>::MATsetNbLignes(unsigned int uiNbLignes)
 	uiMATnbLignes = uiNbLignes;
 }
 
-/*****************************************
-Mutateur pour le nombre de colonnes.
-******************************************
-Entrée : le nombre de colonnes (unsigned int).
-Nécessite : rien.
-Sortie : rien.
-Entraîne : une initialisation ou modification du nombre de colonnes de la matrice.
-******************************************/
+
 
 template <class T>
 inline void CMatrice<T>::MATsetNbColonnes(unsigned int uiNbColonnes)
@@ -575,16 +432,9 @@ inline void CMatrice<T>::MATsetNbColonnes(unsigned int uiNbColonnes)
 	uiMATnbColonnes = uiNbColonnes;
 }
 
+
 // ----- Calculs ----------------------------------------
 
-/*****************************************
-Le rang de la matrice.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : le rang de la matrice (unsigned int).
-Entraîne : rien.
-******************************************/
 
 template <class T>
 unsigned int CMatrice<T>::MATrang()
@@ -600,14 +450,7 @@ unsigned int CMatrice<T>::MATrang()
 	return uiBoucleL;
 }
 
-/*****************************************
-Echelonnement de la matrice.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : une instance de CMatrice.
-Entraîne : l'échelonnement de la matrice.
-******************************************/
+
 
 template <class T>
 CMatrice<T> CMatrice<T>::MATechelonnee()
@@ -640,14 +483,7 @@ CMatrice<T> CMatrice<T>::MATechelonnee()
     return MATmatrice;
 }
 
-/*****************************************
-Transposée de la matrice.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : une instance de CMatrice.
-Entraîne : une transposition de la matrice.
-******************************************/
+
 
 template <class T>
 CMatrice<T> CMatrice<T>::MATtransposee()
@@ -667,35 +503,41 @@ CMatrice<T> CMatrice<T>::MATtransposee()
 	return MATresultat;
 }
 
-/*****************************************
-Calcul d'une sous-matrice.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : une instance de CMatrice.
-Entraîne : //
-******************************************/
+
 
 template <class T>
-CMatrice<T> CMatrice<T>::MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne) const
+CMatrice<T> CMatrice<T>::MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne)
 {
-	CMatrice<T> m(uiMATnbLignes - 1, uiMATnbColonnes - 1);
+	unsigned int uiBoucleL, uiBoucleC;
+	CMatrice<T> MATresultat(uiMATnbLignes - 1, uiMATnbColonnes - 1);
 
-	return m;
+	for (uiBoucleL = 0; uiBoucleL < MATresultat.uiMATnbLignes; uiBoucleL++)
+	{
+		for (uiBoucleC = 0; uiBoucleC < MATresultat.uiMATnbColonnes; uiBoucleC++)
+		{
+			unsigned int uiIndiceL = uiBoucleL, uiIndiceC = uiBoucleC;
+
+			if (uiBoucleL >= uiLigne)
+			{
+				uiIndiceL = uiBoucleL + 1;
+			}
+
+			if (uiBoucleC >= uiColonne)
+			{
+				uiIndiceC = uiBoucleC + 1;
+			}
+
+			MATresultat(uiBoucleL, uiBoucleC) = MATgetValeur(uiIndiceL, uiIndiceC);
+		}
+	}
+	
+	return MATresultat;
 }
 
-/*****************************************
-Test de matrice nulle.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : un booléen.
-Entraine : (true : la matrice est nulle)
-		   OU (false : la matrice n'est pas nulle).
-******************************************/
+
 
 template <class T>
-bool CMatrice<T>::MATestNulle() const
+bool CMatrice<T>::MATestNulle()
 {
 	unsigned int uiBoucleL, uiBoucleC;
 
@@ -713,14 +555,7 @@ bool CMatrice<T>::MATestNulle() const
 	return true;
 }
 
-/*****************************************
-Initialisation de la matrice.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : rien.
-Entraîne : initialisation de l'objet.
-******************************************/
+
 
 template <class T>
 void CMatrice<T>::MATinitMatrice()
@@ -744,15 +579,7 @@ void CMatrice<T>::MATinitMatrice()
 	}
 }
 
-/*****************************************
-Test d'une ligne nulle.
-******************************************
-Entrée : l'indice de la ligne (unsigned int).
-Nécessite : rien.
-Sortie : un booléen.
-Entraîne : (true : la ligne est nulle)
-		   OU (false : la ligne n'est pas nulle).
-******************************************/
+
 
 template<class T>
 bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
@@ -770,14 +597,7 @@ bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
 	return true;
 }
 
-/*****************************************
-Désalloue une matrice.
-******************************************
-Entrée : rien.
-Nécessite : rien.
-Sortie : rien.
-Entraîne : désalloue l'objet.
-******************************************/
+
 
 template <class T>
 void CMatrice<T>::MATdesallouerMatrice()
@@ -795,14 +615,7 @@ void CMatrice<T>::MATdesallouerMatrice()
 	ppMATmatrice = nullptr;
 }
 
-/*****************************************
-Ajoute une ou des colonnes.
-******************************************
-Entrée : le nombre de colonnes (int).
-Nécessite : rien.
-Sortie : rien.
-Entraîne : une réallocation du tableau 2D.
-******************************************/
+
 
 template<class T>
 void CMatrice<T>::MATajouterColonnes(int iNb)
@@ -835,14 +648,7 @@ void CMatrice<T>::MATajouterColonnes(int iNb)
 	}
 }
 
-/*****************************************
-Ajoute une ou plusieurs lignes.
-******************************************
-Entrée : le nombre de lignes (int).
-Nécessite : rien.
-Sortie : rien.
-Entraîne : une réallocation du tableau 2D.
-******************************************/
+
 
 template<class T>
 void CMatrice<T>::MATajouterLignes(int iNb)
@@ -872,71 +678,293 @@ void CMatrice<T>::MATajouterLignes(int iNb)
 
 
 
-// Operateurs complémentaires
+template <class T>
+T CMatrice<T>::MATdet()
+{
+	if (MATgetNbLignes() == 1)
+	{
+		return ppMATmatrice[0][0];
+	}
+	else
+	{
+		unsigned int uiBoucleL;
+		T tDeterminant = 0;
+		for (uiBoucleL = 0; uiBoucleL < MATgetNbLignes(); uiBoucleL++)
+		{
+			CMatrice<T> MATsousMat = MATsousMatrice(uiBoucleL, 0);
+			int iSignature = -1;
+			if ((uiBoucleL) % 2 == 0)
+				iSignature = 1;
 
-/*****************************************
-Opérateur +.
-******************************************
-Entrée : la valeur à ajouter (de type T),
-		 une instance de CMatrice.
-Nécessite : rien.
-Sortie : instance de la classe CMatrice contenant le résultat de la somme.
-Entraîne : Allocation d'un nouvel objet CMatrice,
-		   ajout de la valeur passée en paramètre à toutes les cases de la matrice.
-******************************************/
+			tDeterminant += MATgetValeur(uiBoucleL, 0) * MATsousMat.MATdet() * iSignature;
+		}
+
+		return tDeterminant;
+	}
+}
+
+
 
 template <class T>
-CMatrice<T> operator+(const T tValeur, CMatrice<T> & MATmatrice)
+T CMatrice<T>::MATtr()
+{
+	unsigned int uiBoucle;
+	T trace = 0;
+
+	for (uiBoucle = 0; uiBoucle < MATgetNbLignes(); uiBoucle++)
+	{
+		trace += ppMATmatrice[uiBoucle][uiBoucle];
+	}
+
+	return trace;
+}
+
+
+
+template <class T>
+CMatrice<T> CMatrice<T>::MATcommatrice()
+{
+	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiDim = MATgetNbLignes();
+	CMatrice<T> MATresultat(uiDim, uiDim);
+
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL++)
+	{
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC++)
+		{
+			CMatrice<T> MATsousMat = MATsousMatrice(uiBoucleL, uiBoucleC);
+			int iSignature = -1;
+			if ((uiBoucleL + uiBoucleC) % 2 == 0)
+				iSignature = 1;
+
+			MATresultat(uiBoucleL, uiBoucleC) = iSignature * MATsousMat.MATdet();
+		}
+	}
+
+	return MATresultat;
+}
+
+
+
+template <class T>
+CMatrice<T> CMatrice<T>::MATinverse()
+{
+	T det;
+	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiDim = MATgetNbLignes();
+	CMatrice<T> MATcomm, MATtransComm;
+
+	det = MATdet();
+
+	if (det == 0)
+	{
+		throw Cexception(0, "Calcul de l'inverse impossible : Déterminant nul.");
+	}
+
+	CMatrice<T> MATinv(uiDim, uiDim);
+	MATcomm = MATcommatrice();
+	MATtransComm = MATcomm.MATtransposee();
+
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL++)
+	{
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC++)
+		{
+			MATinv(uiBoucleL, uiBoucleC) = MATtransComm(uiBoucleL, uiBoucleC) / det;
+		}
+	}
+
+	return MATinv;
+}
+
+
+template <class T>
+bool CMatrice<T>::MATestTriangulaire()
+{
+	return (MATestTriangulaireInferieure() || MATestTriangulaireSuperieure());
+}
+
+
+
+template <class T>
+bool CMatrice<T>::MATestTriangulaireInferieure()
+{
+	unsigned int uiBoucleLigne, uiBoucleColonne;
+	for (uiBoucleColonne = 1; uiBoucleColonne < MATgetNbLignes(); uiBoucleColonne++)
+	{
+		for (uiBoucleLigne = 0; uiBoucleLigne < uiBoucleColonne; uiBoucleLigne++)
+		{
+			if (MATgetValeur(uiBoucleLigne, uiBoucleColonne) != 0)
+			{
+				// Si l'element dans le triangle inferieure est non nul
+				// Alors la matrice n'est pas triangulaire inferieure
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+
+template <class T>
+bool CMatrice<T>::MATestTriangulaireSuperieure()
+{
+	unsigned int uiBoucleLigne, uiBoucleColonne;
+	for (uiBoucleLigne = 1; uiBoucleLigne < MATgetNbLignes(); uiBoucleLigne++)
+	{
+		for (uiBoucleColonne = 0; uiBoucleColonne < uiBoucleLigne; uiBoucleColonne++)
+		{
+			if (MATgetValeur(uiBoucleLigne, uiBoucleColonne) != 0)
+			{
+				// Si l'element dans le triangle superiere est non nul
+				// Alors la matrice n'est pas triangulaire superieure
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+
+
+template <class T>
+bool CMatrice<T>::MATestDiagonale()
+{
+	/*
+	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiDim = MATgetNbLignes();
+
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL)
+	{
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC)
+		{
+			if (uiBoucleL != uiBoucleC && MATgetValeur(uiBoucleL, uiBoucleC) != 0)
+			{
+				// Si l'element n'est pas sur la diagonale 
+				// ET qu'il n'est pas nul
+				return false;
+			}
+		}
+	}
+
+	return true;
+	*/
+
+	// Pour la compréhension du code et la maintenabilité :
+	return (MATestTriangulaireInferieure() && MATestTriangulaireSuperieure());
+}
+
+
+template <class T>
+bool CMatrice<T>::MATestInversible()
+{
+	return (MATdet() != 0);
+}
+
+
+
+template <class T>
+bool CMatrice<T>::MATestSymetrique()
+{
+	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiDim = MATgetNbLignes();
+
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL++)
+	{
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC++)
+		{
+			if (uiBoucleL != uiBoucleC && MATgetValeur(uiBoucleL, uiBoucleC) != MATgetValeur(uiBoucleC, uiBoucleL))
+			{
+				// L'element a l'indice (uiBoucleL, uiBoucleC) n'est pas sur la diagonale
+				// et (*this)(uiBoucleL, uiBoucleC) != (*this)(uiBoucleC, uiBoucleL)
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+
+template <class T>
+bool CMatrice<T>::MATestAntiSymetrique()
+{
+	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiDim = MATgetNbLignes();
+
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL++)
+	{
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC++)
+		{
+			if (MATgetValeur(uiBoucleL, uiBoucleC) != (-1) * MATgetValeur(uiBoucleC, uiBoucleL))
+			{
+				// L'element a l'indice (uiBoucleL, uiBoucleC) n'est pas sur la diagonale
+				// et (*this)(uiBoucleL, uiBoucleC) != (-1) * (*this)(uiBoucleC, uiBoucleL)
+				return false;
+			}
+		}
+	}
+
+	return true;
+}
+
+// preconditions : ^0 défini
+template <class T>
+CMatrice<T> CMatrice<T>::MATdiag(unsigned int uiDim, const T ptDiag[])
+{
+	unsigned int uiBoucleL, uiBoucleC;
+	CMatrice<T> MATresultat(uiDim, uiDim);
+
+	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL++)
+	{
+		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC++)
+		{
+			if (uiBoucleL == uiBoucleC)
+			{
+				// On est sur la diagonale ==> valeur de ptDiag
+				MATresultat(uiBoucleL, uiBoucleC) = ptDiag[uiBoucleL];
+			}
+			else
+			{
+				// On est en dehors de la diagonale ==> 0
+				MATresultat(uiBoucleL, uiBoucleC) = 0;
+			}
+		}
+	}
+	return MATresultat;
+}
+
+
+// Operateurs complémentaires
+
+
+template <class T>
+CMatrice<T> operator+(const T & tValeur, CMatrice<T> & MATmatrice)
 {
 	return MATmatrice + tValeur;
 }
 
-/*****************************************
-Opérateur -.
-******************************************
-Entrée : la valeur à soustraire (de type T),
-		 une instance de CMatrice.
-Nécessite : rien.
-Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
-Entraîne : Allocation d'un nouvel objet CMatrice,
-		   soustraction de la valeur passée en paramètre avec toutes les cases de la matrice.
-******************************************/
+
 
 template <class T>
-CMatrice<T> operator-(const T tValeur, CMatrice<T> & MATmatrice)
+CMatrice<T> operator-(const T & tValeur, CMatrice<T> & MATmatrice)
 {
 	return (MATmatrice - tValeur) * (-1);
 }
 
-/*****************************************
-Opérateur *.
-******************************************
-Entrée : la valeur à multiplier (de type T),
-		 une instance de CMatrice.
-Nécessite : rien.
-Sortie : instance de la classe CMatrice contenant le résultat du produit.
-Entraîne : Allocation d'un nouvel objet CMatrice,
-		   multiplication de la valeur passée en paramètre avec toutes les cases de la matrice.
-******************************************/
+
 
 template <class T>
-CMatrice<T> operator*(const T tValeur, CMatrice<T> & MATmatrice)
+CMatrice<T> operator*(const T & tValeur, CMatrice<T> & MATmatrice)
 {
 	return MATmatrice * tValeur;
 }
 
-/*****************************************
-Opérateur <<.
-******************************************
-Entrée : un flux,
-		 une instance de CMatrice.
-Nécessite : rien.
-Sortie : un flux.
-Entraîne : l'affichage de la matrice.
-******************************************/
+
 
 template<class T>
-std::ostream & operator<<(std::ostream & OSTflux, const CMatrice<T>& MATmatrice)
+std::ostream & operator<<(std::ostream & OSTflux, CMatrice<T>& MATmatrice)
 {
 	unsigned int uiLigne;
 	unsigned int uiColonne;

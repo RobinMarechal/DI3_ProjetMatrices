@@ -13,6 +13,8 @@ using namespace std;
 #define assertNotEquals(param1, param2) CUSTOM_ASSERT((param1) != (param2))
 #define assertNull(expr) CUSTOM_ASSERT((expr) == nullptr)
 #define assertNotNull(expr) CUSTOM_ASSERT((expr) != nullptr)
+#define assertExceptionHasBeenThrown() CUSTOM_ASSERT(true == false)
+#define assertExceptionHasNotBeenThrown() CUSTOM_ASSERT(true == false)
 
 void CTestCMatrice::TMAtestAccesseurs()
 {
@@ -271,6 +273,39 @@ void CTestCMatrice::TMAtestOperateurDiviser()
 	cout << "OK" << endl;
 }
 
+void CTestCMatrice::TMAtestOperateurPuissance()
+{
+	cout << "TMAtestOperateurPuissance()";
+
+	// | 0 0 |
+	// | 0 0 |
+	CMatrice<double> MATnulle22(2, 2);
+
+	// | 1 2 |
+	// | 3 4 |
+	CMatrice<double> MATm22(2, 2);
+	MATm22(0, 0) = 1;
+	MATm22(0, 1) = 2;
+	MATm22(1, 0) = 3;
+	MATm22(1, 1) = 4;
+
+	// | 1 0 |
+	// | 0 1 |
+	CMatrice<double> MATid22(2, 2);
+	MATid22(0, 0) = 1;
+	MATid22(1, 1) = 1;
+
+	assertEquals(MATnulle22 ^ 2, MATnulle22);
+	assertEquals(MATm22 ^ 1, MATm22);
+	assertEquals(MATm22 ^(-1), MATm22.MATinverse());
+	assertEquals((MATm22 ^-1) ^ -1, MATm22);
+	assertEquals((MATm22 ^ 2) ^ 3, MATm22 ^ 6);
+	assertEquals(MATm22 ^ 2, MATm22 * MATm22);
+	assertEquals(MATid22 ^ 3, MATid22);
+
+	cout << "OK" << endl;
+}
+
 void CTestCMatrice::TMAtestOperateurs()
 {
 	TMAtestOperateursComparaison();
@@ -457,7 +492,8 @@ void CTestCMatrice::TMAtestCalculTransposee()
 
 void CTestCMatrice::TMAtestCalculSousMatrice()
 {
-	CMatrice<int> MATm22(2, 3);
+	cout << "TMAtestCalculSousMatrice()";
+	CMatrice<int> MATm22(2, 3), MATsousM11(1, 2);
 
 	// | 1  2  3 |
 	// | 4  5  6 |
@@ -468,10 +504,146 @@ void CTestCMatrice::TMAtestCalculSousMatrice()
 	MATm22(1, 1) = 5;
 	MATm22(1, 2) = 6;
 
+	// | 1  3 |
+	MATsousM11(0, 0) = 1;
+	MATsousM11(0, 1) = 3;
+
 	assertEquals(MATm22.MATsousMatrice(0, 0).MATgetNbLignes(), 1);
 	assertEquals(MATm22.MATsousMatrice(0, 0).MATgetNbColonnes(), 2);
-	assertEquals(MATm22.MATsousMatrice(0, 0)(0, 0), 5);
-	assertEquals(MATm22.MATsousMatrice(0, 0)(0, 1), 6);
+	assertEquals(MATm22.MATsousMatrice(1, 1), MATsousM11);
+
+	cout << "OK" << endl;
+}
+
+void CTestCMatrice::TMAtestCalculDet()
+{
+	cout << "TMAtestCalculDet()";
+	CMatrice<int> MATm22(2, 2);
+
+	assertEquals(MATm22.MATdet(), 0);
+
+	// | 1 0 |
+	// | 0 4 |
+	MATm22(0, 0) = 1;
+	MATm22(1, 1) = 4;
+
+	assertEquals(MATm22.MATdet(), 4);
+
+	// | 1 2 |
+	// | 0 4 |
+	MATm22(0, 1) = 2;
+
+	assertEquals(MATm22.MATdet(), 4);
+
+	// | 1 2 |
+	// | 3 4 |
+	MATm22(1, 0) = 3;
+	
+	assertEquals(MATm22.MATdet(), 1 * 4 - 2 * 3);
+
+	CMatrice<int> MATm22_2 = MATm22 + 2;
+
+	assertEquals((MATm22 * MATm22_2).MATdet(), MATm22.MATdet() * MATm22_2.MATdet());
+	
+	assertEquals((MATm22 * 3).MATdet(), MATm22.MATdet() * (3 * 3));
+
+	assertNotEquals((MATm22 + MATm22_2).MATdet(), MATm22.MATdet() + MATm22_2.MATdet());
+
+	cout << "OK" << endl;
+}
+
+void CTestCMatrice::TMAtestCalculInverse()
+{
+	cout << "TMAtestCalculInverse()";
+	// Le cas du déterminant nul est testé dans TMAtestExceptions()
+
+	CMatrice<double> MATm22(2, 2);
+	CMatrice<double> MATinv22(2, 2);
+
+	// 1  0
+	// 0  0.25
+	MATinv22(0, 0) = 1;
+	MATinv22(1, 1) = 0.25;
+
+	// 1 0
+	// 0 1
+	MATm22(0, 0) = 1;
+	MATm22(1, 1) = 1;
+
+	assertEquals(MATm22.MATinverse(), MATm22);
+
+	// 1 0
+	// 0 4
+	MATm22(1, 1) = 4;
+
+	assertEquals(MATm22.MATinverse(), MATinv22);
+
+	// 1 2
+	// 3 4
+	MATm22(0, 1) = 2;
+	MATm22(1, 0) = 3;
+
+	// -2    1
+	// -1.5 -0.5
+	MATinv22(0, 0) = -2;
+	MATinv22(0, 1) = 1;
+	MATinv22(1, 0) = 1.5;
+	MATinv22(1, 1) = -0.5;
+
+	assertEquals(MATm22.MATinverse().MATinverse(), MATm22);
+	assertEquals(MATm22.MATinverse(), MATinv22);
+
+	cout << "OK" << endl;
+}
+
+void CTestCMatrice::TMAtestCalculCommatrice()
+{
+	cout << "TMAtestCalculCommatrice()";
+	CMatrice<int> MATm22(2, 2);
+	CMatrice<int> MATcomm22(2, 2);
+
+	assertEquals(MATm22.MATcommatrice(), MATm22);
+
+	// | 1 2 |
+	// | 3 4 |
+	MATm22(0, 0) = 1;
+	MATm22(0, 1) = 2;
+	MATm22(1, 0) = 3;
+	MATm22(1, 1) = 4;
+
+	// 4 -3
+	// -2 1
+	MATcomm22(0, 0) = 4;
+	MATcomm22(0, 1) = -3;
+	MATcomm22(1, 0) = -2;
+	MATcomm22(1, 1) = 1;
+
+	assertEquals(MATm22.MATcommatrice(), MATcomm22);
+
+	cout << "OK" << endl;
+}
+
+void CTestCMatrice::TMAtestCalculTrace()
+{
+	cout << "TMAtestCalculTrace()";
+
+	CMatrice<int> MATm22(2, 2);
+
+	assertEquals(MATm22.MATtr(), 0);
+
+	// | 1 2 |
+	// | 3 4 |
+	MATm22(0, 0) = 1;
+	MATm22(0, 1) = 2;
+	MATm22(1, 0) = 3;
+	MATm22(1, 1) = 4;
+
+	assertEquals(MATm22.MATtr(), 5);
+	assertEquals(MATm22.MATtransposee().MATtr(), MATm22.MATtr());
+
+	CMatrice<int> MATm22_2 = MATm22 * 2 - 1;
+
+	assertEquals((MATm22 + MATm22_2).MATtr(), MATm22.MATtr() + MATm22_2.MATtr());
 
 	cout << "OK" << endl;
 }
@@ -482,6 +654,12 @@ void CTestCMatrice::TMAtestCalculs()
 	TMAtestCalculEchelonnee();
 	TMAtestCalculTransposee();
 	TMAtestCalculRang();
+
+	// Matrices carrees
+	TMAtestCalculDet();
+	TMAtestCalculInverse();
+	TMAtestCalculCommatrice();
+	TMAtestCalculTrace();
 }
 
 void CTestCMatrice::TMAtestEstNulle()
@@ -503,208 +681,354 @@ void CTestCMatrice::TMAtestEstNulle()
 	cout << "OK" << endl;
 }
 
+void CTestCMatrice::TMAtestEstTriangulaire()
+{
+	TMAtestEstTriangulaireSuperieure();
+	TMAtestEstTriangulaireInferieure();
+}
+
+void CTestCMatrice::TMAtestEstTriangulaireSuperieure()
+{
+	cout << "TMAtestEstTriangulaireSuperieure()";
+	// | 1 2 |
+	// | 0 4 |
+	CMatrice<int> MATm22(2, 2);
+	MATm22(0, 0) = 1;
+	MATm22(0, 1) = 2;
+	MATm22(1, 1) = 4;
+
+	assertTrue(MATm22.MATestTriangulaireSuperieure());
+	assertFalse(MATm22.MATestTriangulaireInferieure());
+
+	// | 1 2 |
+	// | 5 4 |
+	MATm22(1, 0) = 5;
+
+	assertFalse(MATm22.MATestTriangulaireSuperieure());
+
+	assertTrue((CMatrice<int>(2, 2)).MATestTriangulaireSuperieure());
+
+	cout << "OK" << endl;
+}
+
+void CTestCMatrice::TMAtestEstTriangulaireInferieure()
+{
+	cout << "TMAtestEstTriangulaireInferieure()";
+
+	// | 1 0 |
+	// | 3 4 |
+	CMatrice<int> MATm22(2, 2);
+	MATm22(0, 0) = 1;
+	MATm22(1, 0) = 3;
+	MATm22(1, 1) = 4;
+
+	assertTrue(MATm22.MATestTriangulaireInferieure());
+	assertFalse(MATm22.MATestTriangulaireSuperieure());
+
+	// | 1 5 |
+	// | 3 4 |
+	MATm22(0, 1) = 5;
+
+	assertFalse(MATm22.MATestTriangulaireInferieure());
+
+	assertTrue((CMatrice<int>(2, 2)).MATestTriangulaireInferieure());
+
+	cout << "OK" << endl;
+}
+
+void CTestCMatrice::TMAtestEstDiagonale()
+{
+	cout << "TMAtestEstDiagonale()";
+
+	CMatrice<int> MATm22(2, 2);
+	assertTrue(MATm22.MATestDiagonale());
+
+	// | 1 0 |
+	// | 0 4 |
+	MATm22(0, 0) = 1;
+	MATm22(1, 1) = 4;
+
+	assertTrue(MATm22.MATestDiagonale());
+
+	// | 1 2 |
+	// | 3 4 |
+	MATm22(0, 1) = 2;
+	MATm22(1, 0) = 3;
+
+	assertFalse(MATm22.MATestDiagonale());
+
+	cout << "OK" << endl;
+}
+
+void CTestCMatrice::TMAtestEstInversible()
+{
+	cout << "TMAtestEstInversible()";
+
+	CMatrice<int> MATm22(2, 2);
+
+	assertFalse(MATm22.MATestInversible());
+
+	// | 1 2 |
+	// | 3 4 |
+	MATm22(0, 0) = 1;
+	MATm22(0, 1) = 2;
+	MATm22(1, 0) = 3;
+	MATm22(1, 1) = 4;
+
+	assertTrue(MATm22.MATestInversible());
+
+	cout << "OK" << endl;
+}
+
+void CTestCMatrice::TMAtestEstSymetrique()
+{
+	cout << "TMAtestEstSymetrique()";
+
+	CMatrice<int> MATm22(2, 2);
+
+	assertTrue(MATm22.MATestSymetrique());
+
+	// | 1 2 |
+	// | 3 4 |
+	MATm22(0, 0) = 1;
+	MATm22(0, 1) = 2;
+	MATm22(1, 0) = 3;
+	MATm22(1, 1) = 4;
+
+	assertFalse(MATm22.MATestSymetrique());
+
+	// | 1 2 |
+	// | 2 4 |
+	MATm22(1, 0) = 2;
+
+	assertTrue(MATm22.MATestSymetrique());
+
+	cout << "OK" << endl;
+}
+
+void CTestCMatrice::TMAtestEstAntiSymetrique()
+{
+	cout << "TMAtestEstAntiSymetrique()";
+
+	CMatrice<int> MATm22(2, 2);
+
+	assertTrue(MATm22.MATestAntiSymetrique());
+
+	// | 1 2 |
+	// | 3 4 |
+	MATm22(0, 0) = 1;
+	MATm22(0, 1) = 2;
+	MATm22(1, 0) = 3;
+	MATm22(1, 1) = 4;
+
+	assertFalse(MATm22.MATestAntiSymetrique());
+
+	// | 1  2 |
+	// | -2 4 |
+	MATm22(1, 0) = -2;
+
+	assertFalse(MATm22.MATestAntiSymetrique());
+
+	// | 0  2 |
+	// | -2 0 |
+	MATm22(0, 0) = 0;
+	MATm22(1, 1) = 0;
+
+	assertTrue(MATm22.MATestAntiSymetrique());
+
+	cout << "OK" << endl;
+}
+
+void CTestCMatrice::TMAtestTestsMatriceCarree()
+{
+	TMAtestEstTriangulaire();
+	TMAtestEstDiagonale();
+	TMAtestEstInversible();
+	TMAtestEstSymetrique();
+	TMAtestEstAntiSymetrique();
+}
+
+void CTestCMatrice::TMAtestDiag()
+{
+	cout << "TMAtestDiag()";
+	const int iTab[] = { 1, 2, 4 };
+
+	CMatrice<int> MATm22 = CMatrice<int>::MATdiag(3, iTab);
+
+	assertEquals(MATm22.MATdet(), 8);
+	assertEquals(MATm22.MATtr(), 7);
+
+	cout << "OK" << endl;
+}
+
 void CTestCMatrice::TMAtestExceptions()
 {
 	cout << "TMAtestExceptions()";
 
-	bool bException = false;
+	CMatrice<int> MATm23(2, 3);
+	CMatrice<int> MATm33(3, 3);
 
-	CMatrice<int> MATm1(2, 3);
-	CMatrice<int> MATm2(3, 3);
-	CMatrice<int> MATm3(3, 2);
-
-	// operator()
-
-	// Doit lever une exception
-	try {
-		MATm1(3, 3);
-	}
-	catch (Cexception EXCe)
-	{
-		bException = true;
-	}
-
-	assertTrue(bException);
-
-	try {
-		MATm1(2, 1);
-	}
-	catch (Cexception EXCe)
-	{
-		bException = false;
-	}
-
-	assertFalse(bException);
-
-	bException = false;
 
 	// operator*
 
 	// Doit lever une exception
-	try
-	{
-		MATm2 * MATm1;
+	try	{
+		MATm33 * MATm23;
+		// le programme n'est pas censé atteindre cette ligne
+		assertExceptionHasBeenThrown();
 	}
-	catch (Cexception EXCe)
-	{
-		bException = true;
+	catch (Cexception EXCe)	{
+		cout << ".";
 	}
-
-	assertTrue(bException);
 
 	// Ne doit pas lever d'exception
-	try
-	{
-		MATm1 * MATm2;
+	try {
+		MATm23 * MATm33;
+		cout << ".";
 	}
-	catch (Cexception EXCe)
-	{
-		bException = false;
-	}
-
-	assertTrue(bException);
-
-	bException = false;
-
-	// operator+
-
-	// Doit lever une exception
-	try
-	{
-		MATm1 + MATm2;
-	}
-	catch (Cexception EXCe)
-	{
-		bException = true;
+	catch (Cexception EXCe) {
+		// Le programme n'est pas censé rentrer dans le catch
+		assertExceptionHasNotBeenThrown();
 	}
 
-	assertTrue(bException);
+	// operator+ //////////////////////////////////////////////
+	// Doit lever une exception (dimensions invalides)
+	try {
+		MATm23 + MATm33;
+		assertExceptionHasBeenThrown();
+	}
+	catch (Cexception EXCe) {
+		cout << ".";
+	}
 
 	// Ne doit pas lever d'exception
-	try
-	{
-		MATm1 + MATm1;
+	try {
+		MATm23 + MATm23;
+		cout << ".";
 	}
-	catch (Cexception EXCe)
-	{
-		bException = false;
+	catch (Cexception EXCe) {
+		assertExceptionHasNotBeenThrown();
 	}
-
-	assertTrue(bException);
-
-	bException = false;
 
 	// operator-
-
 	// Doit lever une exception
 	try
 	{
-		MATm1 - MATm2;
+		MATm23 - MATm33;
+		assertExceptionHasBeenThrown();
 	}
-	catch (Cexception EXCe)
-	{
-		bException = true;
+	catch (Cexception EXCe) {
+		cout << ".";
 	}
-
-	assertTrue(bException);
 
 	// Ne doit pas lever d'exception
-	try
-	{
-		MATm1 - MATm1;
+	try {
+		MATm23 - MATm23;
+		cout << ".";
 	}
-	catch (Cexception EXCe)
-	{
-		bException = false;
+	catch (Cexception EXCe) {
+		assertExceptionHasNotBeenThrown();
 	}
-
-	assertTrue(bException);
-
-	bException = false;
 
 	// operator/
 
 	// Doit lever une exception
 	try
 	{
-		MATm1 / 0;
+		MATm23 / 0;
+		assertExceptionHasBeenThrown();
 	}
-	catch (Cexception EXCe)
-	{
-		bException = true;
-	}
-
-	assertTrue(bException);
-
-	// Ne doit pas lever d'exception
-
-	bException = true;
-	try
-	{
-		MATm1 / 2;
-	}
-	catch (Cexception EXCe)
-	{
-		bException = false;
+	catch (Cexception EXCe) {
+		cout << ".";
 	}
 
-	assertTrue(bException);
+	// Ne doit pas lever d'exception 
+	try {
+		MATm23 / 2;
+		cout << ".";
+	}
+	catch (Cexception EXCe) {
+		assertExceptionHasNotBeenThrown();
+	}
 
-	bException = false;
-
-	// MATgetValeur
+	// operator ^
 
 	// Doit lever une exception
 	try
 	{
-		MATm1.MATgetValeur(3, 3);
+		MATm33 ^ 0;
+		assertExceptionHasBeenThrown();
 	}
-	catch (Cexception EXCe)
-	{
-		bException = true;
-	}
-
-	assertTrue(bException);
-
-	// Ne doit pas lever d'exception
-	try
-	{
-		MATm1.MATgetValeur(1, 2);
-	}
-	catch (Cexception EXCe)
-	{
-		bException = false;
+	catch (Cexception EXCe) {
+		cout << ".";
 	}
 
-	assertTrue(bException);
+	// Ne doit pas lever d'exception 
+	try {
+		MATm33 ^ 2;
+		cout << ".";
+	}
+	catch (Cexception EXCe) {
+		assertExceptionHasNotBeenThrown();
+	}
 
-	bException = false;
-
-	// MATsetValeur
-
+	// MATgetValeur()
 	// Doit lever une exception
 	try
 	{
-		MATm1.MATsetValeur(3, 3, 5);
+		MATm23.MATgetValeur(3, 3);
+		assertExceptionHasBeenThrown();
 	}
-	catch (Cexception EXCe)
-	{
-		bException = true;
+	catch (Cexception EXCe) {
+		cout << ".";
 	}
-
-	assertTrue(bException);
 
 	// Ne doit pas lever d'exception
-	try
-	{
-		MATm1.MATsetValeur(1, 2, 5);
+	try {
+		MATm23.MATgetValeur(1, 2);
+		cout << ".";
 	}
-	catch (Cexception EXCe)
-	{
-		bException = false;
+	catch (Cexception EXCe) {
+		assertExceptionHasNotBeenThrown();
+	} 
+
+	// MATsetValeur()
+	// Doit lever une exception
+	try {
+		MATm23.MATsetValeur(3, 3, 5);
+		assertExceptionHasBeenThrown();
+	}
+	catch (Cexception EXCe) {
+		cout << ".";
 	}
 
-	assertTrue(bException);
+	// Ne doit pas lever d'exception
+	try {
+		MATm23.MATsetValeur(1, 2, 5);
+		cout << ".";
+	}
+	catch (Cexception EXCe) {
+		assertExceptionHasNotBeenThrown();
+	}
+
+	// MATinverse()
+	// Doit lever une exception (Determinant nul)
+	try {
+		CMatrice<int>(3, 3).MATinverse();
+		assertExceptionHasBeenThrown();
+	}
+	catch (Cexception EXCe) {
+		cout << ".";
+	}
+	// Ne doit pas lever d'exception
+	try {
+		double pdTab[3] = { 1.5, 5.3, 3 };
+		CMatrice<double>::MATdiag(3, pdTab).MATinverse();
+		cout << ".";
+	}
+	catch (Cexception EXCe) {
+		assertExceptionHasNotBeenThrown();
+	}
 
 	cout << "OK" << endl;
 }
@@ -721,7 +1045,10 @@ void CTestCMatrice::TMAstart()
 	TMAtest.TMAtestAccesseurs();
 	TMAtest.TMAtestOperateurs();
 	TMAtest.TMAtestExceptions();
+	TMAtest.TMAtestTestsMatriceCarree();
+	TMAtest.TMAtestDiag();
 	TMAtest.TMAtestCalculs();
+	TMAtest.TMAtestOperateurPuissance();
 
 	cout << endl << "FIN DES TESTS DE CMATRICE" << endl;
 	cout << "------------------------------------------" << endl;

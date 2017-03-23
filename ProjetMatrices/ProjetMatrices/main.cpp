@@ -7,7 +7,7 @@ using namespace std;
 #include <signal.h>
 
 // pour desactiver les tests : #define NDEBUG
- // #define NDEBUG
+// #define NDEBUG
 
 #ifndef DEBUG
 
@@ -15,11 +15,9 @@ using namespace std;
 
 #endif
 
-
 void handleSIGABRT(int iSignNb)
 {
 	cout << "TESTS ECHOUES !" << endl;
-	exit(-1);
 }
 
 
@@ -42,8 +40,13 @@ void robin()
 	}
 
 #ifndef NDEBUG
+
+	// Permet d'éviter les messages de crash en cas d'appel a la fonction abort() par assert.h
 	_set_abort_behavior(0, _WRITE_ABORT_MSG);
+	// Récupère le signal SIGABRT envoyé par la fonction abort() et fait quelque chose... (un cout en l'occurrence)
 	signal(SIGABRT, &handleSIGABRT);
+
+	// Lancement des tests unitaires
 	CTestCMatrice::TMAstart();
 
 #endif
