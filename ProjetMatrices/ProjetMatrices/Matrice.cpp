@@ -223,6 +223,7 @@ CMatrice<T> CMatrice<T>::operator*( CMatrice<T> & MATmatrice)
 template <class T>
 CMatrice<T> CMatrice<T>::operator-(const T & tValeur)
 {
+	/*
 	unsigned int uiLigne;
 	unsigned int uiColonne;
 
@@ -235,8 +236,12 @@ CMatrice<T> CMatrice<T>::operator-(const T & tValeur)
 			MATmatrice(uiLigne, uiColonne) = MATmatrice(uiLigne, uiColonne) - tValeur;
 		}
 	}
-
+	
 	return MATmatrice;
+	*/
+
+	// plus maintenable
+	return operator+(-tValeur);
 }
 
 
@@ -244,6 +249,7 @@ CMatrice<T> CMatrice<T>::operator-(const T & tValeur)
 template <class T>
 CMatrice<T> CMatrice<T>::operator-(CMatrice<T> & MATmatrice)
 {
+	/*
 	unsigned int uiBoucleL, uiBoucleC;
 
 	if (MATmatrice.uiMATnbColonnes != uiMATnbColonnes || MATmatrice.uiMATnbLignes != uiMATnbLignes)
@@ -262,6 +268,11 @@ CMatrice<T> CMatrice<T>::operator-(CMatrice<T> & MATmatrice)
 	}
 
 	return MATresultat;
+	*/
+
+	// Plus maintenable
+
+	return operator+(MATmatrice * -1);
 }
 
 
@@ -269,6 +280,8 @@ CMatrice<T> CMatrice<T>::operator-(CMatrice<T> & MATmatrice)
 template <class T>
 CMatrice<T> CMatrice<T>::operator/(const T & tValeur)
 {
+	// On ne peux pas utiliser l'operateur * car il pose problème pour les types entiers
+	// Ex : M / 4 = M * 1/4, mais 1/4 = 0 en cas de type entier
 	if (tValeur == 0)
 	{
 		throw Cexception(0, "operator / : Division par 0");
@@ -395,6 +408,7 @@ T * CMatrice<T>::MATgetLigne(unsigned int uiLigne)
 template <class T>
 T * CMatrice<T>::MATgetColonne(unsigned int uiColonne)
 {
+	/*
 	unsigned int uiBoucleL;
 	T * tTab = new T[uiMATnbLignes];
 
@@ -404,6 +418,11 @@ T * CMatrice<T>::MATgetColonne(unsigned int uiColonne)
 	}
 
 	return tTab;
+	*/
+
+	// Maintenabilité...
+
+	return MATtransposee().MATgetLigne(uiColonne);
 }
 
 
@@ -445,6 +464,7 @@ unsigned int CMatrice<T>::MATrang()
 	CMatrice<T> MATech = MATechelonnee();
 	unsigned int uiBoucleL = 0;
 
+	// On échelonne la matrice et compte le nombre de lignes non nulles
 	while (uiBoucleL < uiMATnbLignes && !MATech.MATligneEstNulle(uiBoucleL))
 	{
 		uiBoucleL++;
@@ -472,13 +492,12 @@ CMatrice<T> CMatrice<T>::MATechelonnee()
         for (uiLignes = 1 + uiIndicePivot; uiLignes < uiMATnbLignes; uiLignes++)
         {
             iPivot = MATmatrice.MATgetValeur(uiIndicePivot, uiIndicePivot);
-            
             iCoefficientLigne = MATmatrice.MATgetValeur(uiLignes, uiIndicePivot);
             
             for (uiColonnes = 0; uiColonnes < uiMATnbColonnes; uiColonnes++)
             {
                 MATmatrice.MATsetValeur(uiLignes, uiColonnes, iPivot * MATmatrice.MATgetValeur(uiLignes, uiColonnes)
-                                        - iCoefficientLigne * MATmatrice.MATgetValeur(uiIndicePivot, uiColonnes));
+                                       - iCoefficientLigne * MATmatrice.MATgetValeur(uiIndicePivot, uiColonnes));
             }
         }
     }
@@ -493,7 +512,6 @@ CMatrice<T> CMatrice<T>::MATtransposee()
 {
 	unsigned int uiBoucleL, uiBoucleC;
 	CMatrice<T> MATresultat(uiMATnbColonnes, uiMATnbLignes);
-
 
 	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
 	{
@@ -564,6 +582,7 @@ template <class T>
 void CMatrice<T>::MATinitMatrice()
 {
 	unsigned int uiBoucle;
+	// On alloue uiMATnbColonnes colonnes
 	ppMATmatrice = (T **) malloc(sizeof(T *) * uiMATnbColonnes);
 
 	if (ppMATmatrice == nullptr)
@@ -571,8 +590,10 @@ void CMatrice<T>::MATinitMatrice()
 		throw Cexception(0, "MATinitMatrice() : Mallocation failed");
 	}
 
+	// Dans chaque colonne, on alloue uiMATnbLignes 'cases'
 	for (uiBoucle = 0; uiBoucle < uiMATnbColonnes; uiBoucle++)
 	{
+		// permet d'obtenir la matrice null directement
 		ppMATmatrice[uiBoucle] = (T *) calloc(uiMATnbLignes, sizeof(T));
 
 		if (ppMATmatrice[uiBoucle] == nullptr)
@@ -591,6 +612,7 @@ bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
 
 	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
 	{
+		// Si au moins une valeur est non nulle, alors la ligne n'est pas nulle
 		if (MATgetValeur(uiLigne, uiBoucleC) != 0)
 		{
 			return false;
@@ -623,6 +645,7 @@ void CMatrice<T>::MATdesallouerMatrice()
 template<class T>
 void CMatrice<T>::MATajouterColonnes(int iNb)
 {
+	/*
 	if (iNb < 0 && (unsigned int) (-iNb) >= uiMATnbColonnes)
 	{
 		throw Cexception(0, "MATajouterColonnes() : Argument invalide");
@@ -649,6 +672,13 @@ void CMatrice<T>::MATajouterColonnes(int iNb)
 			}
 		}
 	}
+	*/
+
+	// Ajouter une colonne revient a ajouter une ligne à la transposee
+	CMatrice<T> MATtmp = MATtransposee();
+	MATtmp.MATsetNbLignes(iNb + MATtmp.uiMATnbLignes);
+	
+	*this = MATtmp.MATtransposee();
 }
 
 
@@ -812,6 +842,7 @@ bool CMatrice<T>::MATestTriangulaireInferieure()
 template <class T>
 bool CMatrice<T>::MATestTriangulaireSuperieure()
 {
+	/*
 	unsigned int uiBoucleLigne, uiBoucleColonne;
 	for (uiBoucleLigne = 1; uiBoucleLigne < MATgetNbLignes(); uiBoucleLigne++)
 	{
@@ -827,6 +858,11 @@ bool CMatrice<T>::MATestTriangulaireSuperieure()
 	}
 
 	return true;
+	*/
+
+	// La transposée d'une matrice triangulaire supérieure est triangulaire inférieure
+	CMatrice<T> MATtmp = MATtransposee();
+	return MATtmp.MATestTriangulaireInferieure();
 }
 
 
@@ -868,6 +904,7 @@ bool CMatrice<T>::MATestInversible()
 template <class T>
 bool CMatrice<T>::MATestSymetrique()
 {
+	/*
 	unsigned int uiBoucleL, uiBoucleC;
 	unsigned int uiDim = MATgetNbLignes();
 
@@ -885,12 +922,16 @@ bool CMatrice<T>::MATestSymetrique()
 	}
 
 	return true;
+	*/
+
+	return (MATtransposee() == *this);
 }
 
 
 template <class T>
 bool CMatrice<T>::MATestAntiSymetrique()
 {
+	/*
 	unsigned int uiBoucleL, uiBoucleC;
 	unsigned int uiDim = MATgetNbLignes();
 
@@ -908,6 +949,9 @@ bool CMatrice<T>::MATestAntiSymetrique()
 	}
 
 	return true;
+	*/
+
+	return (MATtransposee() == (*this * -1));
 }
 
 // preconditions : ^0 défini
@@ -977,7 +1021,7 @@ std::ostream & operator<<(std::ostream & OSTflux, CMatrice<T>& MATmatrice)
 		OSTflux << " |\t";
 		for (uiColonne = 0; uiColonne < MATmatrice.MATgetNbColonnes(); uiColonne++)
 		{
-			OSTflux << MATmatrice(uiLigne, uiColonne) << "\t";
+			OSTflux << MATmatrice.MATgetValeur(uiLigne, uiColonne) << "\t";
 		}
 
 		OSTflux << '|' << endl;
