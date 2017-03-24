@@ -69,6 +69,7 @@ CMatrice<T> & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
 	unsigned int uiColonne;
 
 	// Initialisation
+
 	uiMATnbLignes = MATmatrice.uiMATnbLignes;
 	uiMATnbColonnes = MATmatrice.uiMATnbColonnes;
 	MATinitMatrice();
