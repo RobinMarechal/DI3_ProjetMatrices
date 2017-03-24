@@ -30,22 +30,26 @@ void gregoire()
 void robin()
 {
 	// Passent :
-	/*try {
-		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier00.txt");
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePasse\\fichier00.txt");
 		cout << m << endl;
-		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier01.txt");
-		cout << m << endl;
-		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier02.txt");
-		cout << m << endl;
-		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier03.txt");
-		cout << m << endl;
-		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier04.txt");
-		cout << m << endl;
+		CMatrice <double> m1 = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePasse\\fichier01.txt");
+		cout << m1 << endl;
+		CMatrice <double> m2 = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePasse\\fichier02.txt");
+		cout << m2 << endl;
+		CMatrice <double> m3 = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePasse\\fichier03.txt");
+		cout << m3 << endl;
+		CMatrice <double> m4 = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePasse\\fichier04.txt");
+		cout << m4 << endl;
+		CMatrice <double> m5 = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePasse\\fichier05.txt");
+		cout << m5 << endl;
+		CMatrice <double> m6 = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePasse\\fichier06.txt");
+		cout << m6 << endl;
 	}
 	catch (Cexception e)
 	{
 		cout << e.EXCgetMessage() << endl;
-	}*/
+	}
 
 	// Passent pas :
 
@@ -132,6 +136,86 @@ void robin()
 
 	try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier112.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier113.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier114.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier115.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier116.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier117.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier118.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier119.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier120.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier121.txt");
 		cout << m << endl;
 	}
 	catch (Cexception EXCe)

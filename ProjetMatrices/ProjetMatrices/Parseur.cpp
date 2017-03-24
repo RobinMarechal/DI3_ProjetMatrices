@@ -42,13 +42,11 @@ void CParseur::PARtoLowerString(char * pcStr)
 
 void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, unsigned int uiNbLignes, unsigned int uiNbColonnes, char * pcStrMatrice)
 {
-	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere, uiNbCoeffParLigne;
+	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere;
 	double dValeur;
 
 	for (uiBoucleL = 0; uiBoucleL < uiNbLignes; uiBoucleL++)
 	{
-		uiNbCoeffParLigne = 0;
-
 		for (uiBoucleC = 0; uiBoucleC < uiNbColonnes; uiBoucleC++)
 		{
 			char pcCoefficient[64] = { 0 };
@@ -59,15 +57,6 @@ void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, unsigned int uiNb
 			while (*pcStrMatrice == ' ' || *pcStrMatrice == '\t' || *pcStrMatrice == '\n' || *pcStrMatrice == '\0')
 			{
 				pcStrMatrice++;
-			}
-
-			uiNbCoeffParLigne++;
-
-			// On vérifie que le nombre de colonnes correspond à celui indiqué.
-
-			if (uiNbCoeffParLigne >= uiNbColonnes)
-			{
-				throw Cexception(0, "Format invalide : taille de la matrice.");
 			}
 
 			// Si le nombre ressemble à ".3" ou ",3", on rajoute '0' devant pour qu'il ressemble a "0.3" ou "0,3"
@@ -106,6 +95,22 @@ void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, unsigned int uiNb
 
 			MATmatrice(uiBoucleL, uiBoucleC) = dValeur;
 		}
+
+		//  On vérifie qu'il ne reste rien après la dernière colonne.
+		// Si c'est le cas, alors le format est invalide.
+
+		if (*pcStrMatrice != '\n' && *pcStrMatrice != '\0')	
+		{
+			while (*pcStrMatrice != '\n' || *pcStrMatrice != '\0')
+			{
+				if (*pcStrMatrice != ' ' && *pcStrMatrice != '\t')
+				{
+					throw Cexception(0, "Format invalide : taille de la matrice.");
+				}
+
+				pcStrMatrice++;
+			}
+		}
 	}
 }
 
@@ -118,6 +123,7 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 	char ppcValeursBalises[NB_BALISES][1024] = {0};
 	
 	int pValeursNumeriques[NB_VALEURS_NUMERIQUES];
+
 
 	ifstream fichier(pcFichier);
 
@@ -135,12 +141,14 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 
 		//
 
-		pcTmp = strchr(pcLines, '=') + 1;
+		pcTmp = strchr(pcLines, '=');
 
 		if (pcTmp == NULL)
 		{
 			throw Cexception(0, "Erreur de lecture du fichier, format invalide (un '=' semble manquer)");
 		}
+
+		pcTmp++;
 
 		// On avance jusqu'au prochain caractère qui n'est pas un espace
 		while(*pcTmp == ' ' || *pcTmp == '\t')
@@ -208,7 +216,7 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 
 		if (pValeursNumeriques[uiBoucle] <= 0 || strlen(pcReste) > 0)
 		{
-			throw Cexception(0, "Format invalide : dimensions de la matrice invalides (0 ou négatives).");
+			throw Cexception(0, "Format invalide : dimensions de la matrice invalides.");
 		}
 	}
 
@@ -216,7 +224,7 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 
 	unsigned int uiNbLignes = pValeursNumeriques[VALEURS_NUMERIQUES_INDICE_NB_LIGNES];
 
-	if (uiTotalLignes >= uiNbLignes)
+	if (uiTotalLignes != uiNbLignes)
 	{
 		throw Cexception(0, "Format invalide : taille de la matrice.");
 	}
