@@ -544,9 +544,7 @@ void CTestCMatrice::TMAtestCalculDet()
 	CMatrice<int> MATm22_2 = MATm22 + 2;
 
 	assertEquals((MATm22 * MATm22_2).MATdet(), MATm22.MATdet() * MATm22_2.MATdet());
-	
 	assertEquals((MATm22 * 3).MATdet(), MATm22.MATdet() * (3 * 3));
-
 	assertNotEquals((MATm22 + MATm22_2).MATdet(), MATm22.MATdet() + MATm22_2.MATdet());
 
 	cout << "OK" << endl;

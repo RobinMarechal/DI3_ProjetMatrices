@@ -714,25 +714,43 @@ void CMatrice<T>::MATajouterLignes(int iNb)
 template <class T>
 T CMatrice<T>::MATdet()
 {
-	if (MATgetNbLignes() == 1)
+	if (uiMATnbLignes == 1)
 	{
 		return ppMATmatrice[0][0];
 	}
 	else
 	{
-		unsigned int uiBoucleL;
 		T tDeterminant = 0;
-		for (uiBoucleL = 0; uiBoucleL < MATgetNbLignes(); uiBoucleL++)
+
+		// Le determinant d'une matrice triangulaire est le produit des élements de la diagonale
+		if (MATestTriangulaire())
 		{
-			CMatrice<T> MATsousMat = MATsousMatrice(uiBoucleL, 0);
-			int iSignature = -1;
-			if ((uiBoucleL) % 2 == 0)
-				iSignature = 1;
+			tDeterminant = MATgetValeur(0, 0);
+			unsigned int uiBoucle;
+			// Si a un moment donné tDeterminant = 0, on peut stopper la boucle et retourner 0
+			for (uiBoucle = 1; uiBoucle < uiMATnbColonnes && tDeterminant != 0; uiBoucle++)
+			{
+				tDeterminant = tDeterminant * MATgetValeur(uiBoucle, uiBoucle);
+			}
 
-			tDeterminant += MATgetValeur(uiBoucleL, 0) * MATsousMat.MATdet() * iSignature;
+			return tDeterminant;
 		}
+		else
+		{
+			unsigned int uiBoucleL;
+			// Formule de Leibniz
+			for (uiBoucleL = 0; uiBoucleL < MATgetNbLignes(); uiBoucleL++)
+			{
+				CMatrice<T> MATsousMat = MATsousMatrice(uiBoucleL, 0);
+				int iSignature = -1;
+				if ((uiBoucleL) % 2 == 0)
+					iSignature = 1;
 
-		return tDeterminant;
+				tDeterminant += MATgetValeur(uiBoucleL, 0) * MATsousMat.MATdet() * iSignature;
+			}
+
+			return tDeterminant;
+		}
 	}
 }
 
