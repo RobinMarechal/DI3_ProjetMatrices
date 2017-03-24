@@ -70,6 +70,8 @@ CMatrice<T> & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
 
 	// Initialisation
 
+	MATdesallouerMatrice();
+
 	uiMATnbLignes = MATmatrice.uiMATnbLignes;
 	uiMATnbColonnes = MATmatrice.uiMATnbColonnes;
 	MATinitMatrice();
@@ -334,14 +336,12 @@ void CMatrice<T>::MATafficher()
 	/*
 	unsigned int uiLigne;
 	unsigned int uiColonne;
-
 	for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
 	{
 		for (uiColonne = 0; uiColonne < uiMATnbColonnes; uiColonne++)
 		{
 			cout << MATgetValeur(uiLigne, uiColonne) << " ";
 		}
-
 		cout << endl;
 	}
 	*/
@@ -837,7 +837,6 @@ bool CMatrice<T>::MATestDiagonale()
 	/*
 	unsigned int uiBoucleL, uiBoucleC;
 	unsigned int uiDim = MATgetNbLignes();
-
 	for (uiBoucleL = 0; uiBoucleL < uiDim; uiBoucleL)
 	{
 		for (uiBoucleC = 0; uiBoucleC < uiDim; uiBoucleC)
@@ -850,7 +849,6 @@ bool CMatrice<T>::MATestDiagonale()
 			}
 		}
 	}
-
 	return true;
 	*/
 

@@ -23,14 +23,14 @@ void handleSIGABRT(int iSignNb)
 
 void gregoire()
 {
-	CMatrice <double> m = CParseur::PARparserFichier("..\\JePasse\\fichier04.txt");
-	m.MATafficher();
+	//CMatrice <double> m = CParseur::PARparserFichier("..\\JePasse\\fichier04.txt");
+	//m.MATafficher();
 }
 
 void robin()
 {
 	// Passent :
-	try {
+	/*try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier00.txt");
 		cout << m << endl;
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\JePasse\\fichier01.txt");
@@ -45,16 +45,98 @@ void robin()
 	catch (Cexception e)
 	{
 		cout << e.EXCgetMessage() << endl;
-	}
+	}*/
 
 	// Passent pas :
 
 	try {
-
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier10.txt");
+		cout << m << endl;
 	}
 	catch (Cexception EXCe)
 	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
 
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier11.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier12.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier13.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier14.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier15.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier16.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier17.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier18.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier112.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
 	}
 
 #ifndef NDEBUG
