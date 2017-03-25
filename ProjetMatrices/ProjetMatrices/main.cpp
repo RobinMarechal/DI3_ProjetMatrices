@@ -7,9 +7,9 @@ using namespace std;
 #include <signal.h>
 
 // pour desactiver les tests : #define NDEBUG
-#define NDEBUG
+// #define NDEBUG
 
-#ifndef DEBUG
+#ifndef NDEBUG
 
 #include "TestCMatrice.h"
 
@@ -29,6 +29,19 @@ void gregoire()
 
 void robin()
 {
+	CMatrice<int> m(2, 2);
+
+	m(0, 0) = 1;
+	m(0, 1) = 2;
+	m(1, 0) = 3;
+	m(1, 1) = 4;
+
+	cout << m << endl;
+
+	m.MATsetNbColonnes(3);
+
+	cout << m << endl;
+
 	// Passent :
 	try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePasse\\fichier00.txt");
@@ -52,7 +65,7 @@ void robin()
 	}
 
 	// Passent pas :
-
+	/*
 	try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier10.txt");
 		cout << m << endl;
@@ -142,6 +155,7 @@ void robin()
 	{
 		cout << EXCe.EXCgetMessage() << endl;
 	}
+	*/
 
 	try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier113.txt");
