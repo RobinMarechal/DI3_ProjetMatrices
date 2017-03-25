@@ -139,13 +139,44 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 
 		// VERIFICATION DE pcLines
 
-		//
-
 		pcTmp = strchr(pcLines, '=');
 
 		if (pcTmp == NULL)
 		{
 			throw Cexception(0, "Erreur de lecture du fichier, format invalide (un '=' semble manquer)");
+		}
+
+		// On compare le nom des balises.
+
+		unsigned int uiTaille = strlen(pcBalises[uiBoucle]);
+
+		unsigned int uiBoucle2, uiIndiceDepart = 0;
+
+		// On saute tous les espaces qui se trouvent au début de la balise.
+
+		while (pcLines[uiIndiceDepart] == ' ' || pcLines[uiIndiceDepart] == '\t')
+		{
+			uiIndiceDepart++;
+		}
+
+		for (uiBoucle2 = 0; uiBoucle2 < uiTaille; uiBoucle2++)
+		{
+			if (pcBalises[uiBoucle][uiBoucle2] != pcLines[uiBoucle2 + uiIndiceDepart])
+			{
+				throw Cexception(0, "Erreur de lecture du fichier, format invalide : vérifiez les balises.");
+			}
+		}
+
+		// On saute tous les espaces qui se trouvent entre la fin de la balise et le symbole '='.
+
+		while (pcLines[uiBoucle2 + uiIndiceDepart] == ' ' || pcLines[uiBoucle2 + uiIndiceDepart] == '\t')
+		{
+			uiBoucle2++;
+		}
+
+		if (pcLines[uiBoucle2 + uiIndiceDepart] != *pcTmp)
+		{
+			throw Cexception(0, "Erreur de lecture du fichier, format invalide : vérifiez les balises.");
 		}
 
 		pcTmp++;
@@ -167,9 +198,8 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 		{
 			fichier.getline(pcLines, 1024);
 
-			// Tant qu'on a pas trouvé le ']' de fin de matrice,
-			// ET qu'on est pas a la fin du fichier
-			while (strchr(pcLines, ']') == NULL && !fichier.eof())
+			// Tant qu'on n'est pas a la fin du fichier
+			while (!fichier.eof())
 			{
 				uiTotalLignes++;
 
@@ -182,6 +212,13 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 			}
 			// On retire le dernier \n
 			ppcValeursBalises[uiBoucle][strlen(ppcValeursBalises[uiBoucle]) - 1] = '\0';
+
+			// Si on a pas trouvé le ']' de fin de matrice, on soulève une erreur.
+
+			if (strchr(pcLines, ']') == nullptr)
+			{
+				throw Cexception(0, "Format invalide : borne de la matrice manquante.");
+			}
 		}
 		else
 		{

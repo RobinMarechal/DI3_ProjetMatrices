@@ -58,6 +58,8 @@ void robin()
 		cout << m5 << endl;
 		CMatrice <double> m6 = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePasse\\fichier06.txt");
 		cout << m6 << endl;
+		CMatrice <double> m7 = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePasse\\fichier07.txt");
+		cout << m7 << endl;
 	}
 	catch (Cexception e)
 	{
@@ -65,7 +67,7 @@ void robin()
 	}
 
 	// Passent pas :
-	/*
+	
 	try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier10.txt");
 		cout << m << endl;
@@ -148,6 +150,33 @@ void robin()
 	}
 
 	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier19.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier110.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier111.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+
+	try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier112.txt");
 		cout << m << endl;
 	}
@@ -155,7 +184,7 @@ void robin()
 	{
 		cout << EXCe.EXCgetMessage() << endl;
 	}
-	*/
+	
 
 	try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier113.txt");
@@ -230,6 +259,22 @@ void robin()
 	}
 	try {
 		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier121.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier122.txt");
+		cout << m << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		cout << EXCe.EXCgetMessage() << endl;
+	}
+	try {
+		CMatrice <double> m = CParseur::PARparserFichier("C:\\Users\\Greg\\Documents\\GitHub\\DI3_ProjetMatrices\\JePassePas\\fichier123.txt");
 		cout << m << endl;
 	}
 	catch (Cexception EXCe)
