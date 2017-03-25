@@ -146,6 +146,7 @@
     <ClInclude Include="Matrice.h" />
     <ClInclude Include="MatriceCarree.h" />
     <ClInclude Include="Parseur.h" />
+    <ClInclude Include="TableauAssociatif.h" />
     <ClInclude Include="TestCMatrice.h" />
   </ItemGroup>
   <ItemGroup>
@@ -160,6 +161,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="Parseur.cpp" />
+    <ClCompile Include="TableauAssociatif.cpp" />
     <ClCompile Include="TestCMatrice.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
