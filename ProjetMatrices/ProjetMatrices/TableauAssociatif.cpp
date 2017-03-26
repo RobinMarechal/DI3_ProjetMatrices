@@ -116,6 +116,9 @@ bool CTableauAssociatif::TABestNumerique(char * pcVal)
 	if (pcVal == NULL || *pcVal == '\0')
 		return false;
 
+	if (*pcVal == '-')
+		pcVal++;
+
 	while (*pcVal != '\0')
 	{
 		// S'il y a un point ou une virgule, on met bPoint à true pour s'assurer qu'il n'y ai qu'un/une

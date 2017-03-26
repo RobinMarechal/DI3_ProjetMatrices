@@ -57,7 +57,7 @@ void robin()
 
 	CMatrice<double> m;
 	try {
-		m = CParseur::PARparserFichier(s2);
+		m = CParseur::PARparserFichier(f1);
 	}
 	catch (Cexception e)
 	{
@@ -85,6 +85,12 @@ int main(unsigned int argc, char * argv[])
 {
 	robin();
 	//gregoire();
+
+	/*
+		TODO :
+		- automate pour les nombres dans CTableauAssociatif::TABestNumerique()
+		- Vérifier les nombres négatifs
+	*/
 
 	if (argc > 1)
 	{
