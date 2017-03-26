@@ -6,9 +6,10 @@ using namespace std;
 #include "Matrice.h"
 #include "Parseur.h"
 #include "TableauAssociatif.h"
+#include <fstream>
 
 // pour desactiver les tests : #define NDEBUG
-// #define NDEBUG
+ #define NDEBUG
 
 #ifndef NDEBUG
 
@@ -30,6 +31,42 @@ void gregoire()
 
 void robin()
 {
+
+	char * s2 = "..\\JePasse\\fichier01.txt";
+	char * s3 = "..\\JePasse\\fichier02.txt";
+	char * s4 = "..\\JePasse\\fichier03.txt";
+	char * s5 = "..\\JePasse\\fichier04.txt";
+	char * s6 = "..\\JePasse\\fichier05.txt";
+	char * s7 = "..\\JePasse\\fichier06.txt";
+	char * s8 = "..\\JePasse\\fichier07.txt";
+
+	char * f1 = "..\\TestsSyntaxe\\s1.txt";
+	char * f2 = "..\\TestsSyntaxe\\f2.txt";
+/*
+	try {
+		CParseur::PARanalyseSyntaxique(f2);
+		cout << "Succes" << endl;
+	}
+	catch (Cexception e)
+	{
+		cout << e.EXCgetMessage() << endl;
+	}
+
+	cout << "fin" << endl;
+	*/
+
+	CMatrice<double> m;
+	try {
+		m = CParseur::PARparserFichier(s2);
+	}
+	catch (Cexception e)
+	{
+		cout << e.EXCgetMessage() << endl;
+	}
+
+	cout << m << endl;
+
+
 #ifndef NDEBUG
 
 	// Permet d'éviter les messages de crash en cas d'appel a la fonction abort() par assert.h
@@ -44,9 +81,9 @@ void robin()
 }
 
 
-int main(int argc, char * argv[])
+int main(unsigned int argc, char * argv[])
 {
-	//robin();
+	robin();
 	//gregoire();
 
 	if (argc > 1)

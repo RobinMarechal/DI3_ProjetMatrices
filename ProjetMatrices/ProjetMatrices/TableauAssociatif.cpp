@@ -5,6 +5,11 @@
 
 #include "Cexception.h"
 
+#define NON_DEFINI 0
+#define ENTIER 1
+#define REEL 2
+#define CHAINE 3
+
 /*
 
 Valeur : {
@@ -17,7 +22,7 @@ Attributs :
 	char ** ppcTABcles;
 	Valeur * pvTABvaleurs;
 	unsigned int uiTABnbElements;
-
+	unsigned int * puiTypes;
 */
 
 
@@ -25,6 +30,7 @@ void CTableauAssociatif::TABinit()
 {
 	ppcTABcles = NULL;
 	pvTABvaleurs = NULL;
+	puiTypes = NULL;
 	uiTABnbElements = 0;
 }
 
@@ -35,10 +41,13 @@ void CTableauAssociatif::TABdetruire()
 	for (uiBoucle = 0; uiBoucle < uiTABnbElements; uiBoucle++)
 	{
 		free(ppcTABcles[uiBoucle]);
+		if(puiTypes[uiBoucle] == CHAINE)
+			free(pvTABvaleurs[uiBoucle].pcChaine);
 	}
 
 	free(ppcTABcles);
 	free(pvTABvaleurs);
+	free(puiTypes);
 }
 
 CTableauAssociatif::CTableauAssociatif() 
@@ -52,7 +61,7 @@ CTableauAssociatif::CTableauAssociatif(CTableauAssociatif & TABobjet)
 	TABinit();
 	for (uiBoucle = 0; uiBoucle < TABobjet.uiTABnbElements; uiBoucle++)
 	{
-		TABajouter(TABobjet.ppcTABcles[uiBoucle], TABobjet.pvTABvaleurs[uiBoucle]);
+		TABajouter(TABobjet.ppcTABcles[uiBoucle], TABobjet.pvTABvaleurs[uiBoucle], TABobjet.puiTypes[uiBoucle]);
 	}
 }
 
@@ -68,7 +77,7 @@ CTableauAssociatif & CTableauAssociatif::operator=(CTableauAssociatif & TABobjet
 	TABinit();
 	for (uiBoucle = 0; uiBoucle < TABobjet.uiTABnbElements; uiBoucle++)
 	{
-		TABajouter(TABobjet.ppcTABcles[uiBoucle], TABobjet.pvTABvaleurs[uiBoucle]);
+		TABajouter(TABobjet.ppcTABcles[uiBoucle], TABobjet.pvTABvaleurs[uiBoucle], TABobjet.puiTypes[uiBoucle]);
 	}
 
 	return *this;
@@ -81,13 +90,14 @@ Valeur & CTableauAssociatif::operator[](char * pcCle)
 	return pvTABvaleurs[uiPos];
 }
 
-void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur) 
+void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int uiType) 
 {
 	uiTABnbElements++;
 	ppcTABcles = (char **)realloc(ppcTABcles, uiTABnbElements * sizeof(char*));
 	pvTABvaleurs = (Valeur *)realloc(pvTABvaleurs, uiTABnbElements * sizeof(Valeur));
+	puiTypes = (unsigned int *)realloc(puiTypes, uiTABnbElements * sizeof(unsigned int));
 
-	if (ppcTABcles == NULL || pvTABvaleurs == NULL)
+	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
 	{
 		throw Cexception(0, "TABsupprimerElement() : Echec de reallocation");
 	}
@@ -95,6 +105,7 @@ void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur)
 
 	ppcTABcles[uiTABnbElements - 1] = _strdup(pcCle);
 	pvTABvaleurs[uiTABnbElements - 1] = vValeur;
+	puiTypes[uiTABnbElements - 1] = uiType;
 }
 
 bool CTableauAssociatif::TABestNumerique(char * pcVal)
@@ -133,6 +144,7 @@ bool CTableauAssociatif::TABestNumerique(char * pcVal)
 // precond : l'utilisateur a déjà verifié que la chaine est un nombre
 bool CTableauAssociatif::TABestEntier(char * pcVal)
 {
+	/*
 	// pcCle est un entier s'il n'y a ni point, ni virgule
 	if (strchr(pcVal, ',') == NULL && strchr(pcVal, '.') == NULL)
 	{
@@ -150,6 +162,8 @@ bool CTableauAssociatif::TABestEntier(char * pcVal)
 			return false;
 		}
 	}
+	*/
+	return (strchr(pcVal, ',') == NULL) && (strchr(pcVal, '.') == NULL);
 }
 
 void CTableauAssociatif::TABsupprimer(char * pcCle) 
@@ -157,18 +171,21 @@ void CTableauAssociatif::TABsupprimer(char * pcCle)
 	unsigned int uiBoucle;
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 
+	// On décale tout ce qui est à droite de uiPos d'une case vers la gauche
 	for (uiBoucle = uiPos; uiBoucle < uiTABnbElements - 1; uiBoucle++)
 	{
 		free(ppcTABcles[uiBoucle]);
 		ppcTABcles[uiBoucle] = _strdup(ppcTABcles[uiBoucle + 1]);
 		pvTABvaleurs[uiBoucle] = pvTABvaleurs[uiBoucle + 1];
+		puiTypes[uiBoucle] = puiTypes[uiBoucle + 1];
 	}
 
 	uiTABnbElements--;
 	ppcTABcles = (char **)realloc(ppcTABcles, uiTABnbElements * sizeof(char *));
 	pvTABvaleurs = (Valeur *)realloc(pvTABvaleurs, uiTABnbElements * sizeof(Valeur));
+	puiTypes = (unsigned int *)realloc(puiTypes, sizeof(unsigned int) * uiTABnbElements);
 
-	if (ppcTABcles == NULL || pvTABvaleurs == NULL)
+	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
 	{
 		throw Cexception(0, "TABsupprimerElement() : Echec de reallocation");
 	}
@@ -176,31 +193,32 @@ void CTableauAssociatif::TABsupprimer(char * pcCle)
 }
 
 // precond : pcCle est bien dans le tableau
-void CTableauAssociatif::TABmodifier(char * pcCle, Valeur vValeur) 
+void CTableauAssociatif::TABmodifier(char * pcCle, Valeur vValeur, unsigned int uiType) 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 	pvTABvaleurs[uiPos] = vValeur;
+	puiTypes[uiPos] = uiType;
 }
 
 void CTableauAssociatif::TABajouterEntier(char * pcCle, int iVal) 
 {
 	Valeur vVal;
 	vVal.iEntier = iVal;
-	TABajouter(pcCle, vVal);
+	TABajouter(pcCle, vVal, ENTIER);
 }
 
 void CTableauAssociatif::TABajouterReel(char * pcCle, double dVal) 
 {
 	Valeur vVal;
 	vVal.dReel = dVal;
-	TABajouter(pcCle, vVal);
+	TABajouter(pcCle, vVal, REEL);
 }
 
 void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal) 
 {
 	Valeur vVal;
 	vVal.pcChaine = pcVal;
-	TABajouter(pcCle, vVal);
+	TABajouter(pcCle, vVal, CHAINE);
 }
 
 void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
@@ -231,6 +249,11 @@ void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 
 			strcpy(pcStr + 1, pcVal);
 			*strchr(pcStr, '\0') = '0';
+
+			// On remplace ',' par '.' s'il faut
+			if (strchr(pcStr, ',') != NULL)
+				pcStr[strchr(pcStr, ',') - pcStr] = '.';
+
 			// On parse la chaine en double;
 			double dVal = atof(pcStr);
 			// on l'ajoute au tableau
@@ -285,19 +308,35 @@ Valeur CTableauAssociatif::TABgetValeurPos(unsigned int uiPos)
 	return pvTABvaleurs[uiPos];
 }
 
+// precond : 0 < uiPos < uiMATnbElements
+unsigned int CTableauAssociatif::TABgetValeurType(unsigned int uiPos)
+{
+	return puiTypes[uiPos];
+}
+
+// precond :pcCle est dans le tableau
+unsigned int CTableauAssociatif::TABgetValeurType(char * pcCle)
+{
+	unsigned int uiPos = TABgetIndiceCle(pcCle);
+	return TABgetValeurType(uiPos);
+}
+
+// precond :pcCle est dans le tableau
 int CTableauAssociatif::TABgetValeurEntier(char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 	return pvTABvaleurs[uiPos].iEntier;
 }
 
+// precond :pcCle est dans le tableau
 double CTableauAssociatif::TABgetValeurReel(char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 	return pvTABvaleurs[uiPos].dReel;
 }
 
-const char const * CTableauAssociatif::TABgetValeurChaine(char * pcCle) const 
+// precond :pcCle est dans le tableau
+char * CTableauAssociatif::TABgetValeurChaine(char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 	return pvTABvaleurs[uiPos].pcChaine;

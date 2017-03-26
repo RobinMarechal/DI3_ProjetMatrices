@@ -5,6 +5,11 @@
 #include <sstream>
 #include <stdlib.h>
 #include "Cexception.h"
+#include "Matrice.h"
+#include "TableauAssociatif.h"
+
+
+using namespace std;
 
 #define NB_BALISES 4
 #define NB_VALEURS_NUMERIQUES 2
@@ -13,7 +18,7 @@
 #define VALEURS_NUMERIQUES_INDICE_NB_COLONNES 1
 #define VALEURS_BALISES_INDICE_MATRICE 3
 
-const char * CParseur::pcBalises[4] = {
+const char * CParseur::ppcBalises[4] = {
 	"TypeMatrice",
 	"NBLignes",
 	"NBColonnes",
@@ -31,46 +36,175 @@ const char * CParseur::pcBalises[4] = {
 
 ************************************************/
 
-void CParseur::PARtoLowerString(char * pcStr)
+void CParseur::PARanalyseSyntaxique(char * pcFichier)
 {
-	unsigned int uiBoucle;
-	for (uiBoucle = 0; uiBoucle < strlen(pcStr); uiBoucle++)
+	bool bBalise = false,
+		bValeur = false,
+		bEgal = false,
+		bCrochetOuvrant = false,
+		bCrochetFermant = false,
+		bSucces = false;
+
+	int iLigne = 0;
+
+	ifstream IFSfichier(pcFichier);
+
+	// pour chaque ligne...
+	while (!IFSfichier.eof())
 	{
-		pcStr[uiBoucle] = tolower(pcStr[uiBoucle]);
+		char pcLigne[256] = { 0 };
+		char pcMsg[1024] = { 0 };
+		unsigned int uiBoucle = 0;
+		iLigne++;
+		IFSfichier.getline(pcLigne, 256);
+
+		// Préparation du message d'erreur au cas où
+		strcpy(pcMsg, "Erreur syntaxique a la ligne ");
+		sprintf(strchr(pcMsg, '\0'), "%d", iLigne);
+		strcpy(strchr(pcMsg, '\0'), " du fichier : ");
+		strcpy(strchr(pcMsg, '\0'), pcFichier);
+
+		// ...on analyse chaque caractere
+		while (pcLigne[uiBoucle] != '\n' && pcLigne[uiBoucle] != '\0')
+		{
+			char cChar = pcLigne[uiBoucle];
+
+			// Les espaces/tabulations ne nous interessent pas
+			if (cChar == ' ' || cChar == '\t')
+			{
+				uiBoucle++;
+				continue;
+			}
+
+
+			if (cChar == '[')
+				bCrochetOuvrant = true;
+			else if (cChar == ']')
+				bCrochetFermant = true;
+
+			if (cChar == '=')
+			{
+				if (bEgal)
+				{
+					// Il y a 2 '=' sur cette ligne.
+					strcpy(strchr(pcMsg, '\0'), ", deux '=' sur la meme ligne.");
+					throw Cexception(0, pcMsg);
+				}
+				bEgal = true;
+			}
+			else if (!bEgal)
+			{
+				// On est avant le '=' => balise
+				bBalise = true;
+			}
+			else
+			{
+				// On est après le '=' => valeur
+				bValeur = true;
+			}
+
+			// Ce qu'il y a a l'interieur des crochets ne nous interesse pas
+			if (bCrochetOuvrant && !bCrochetFermant)
+			{
+				uiBoucle++;
+				continue;
+			}
+
+			uiBoucle++;
+		}
+
+		// Si la syntaxe n'est pas [BALISE]=[VALEUR], syntaxe invalide
+		if (!bBalise || !bEgal || !bValeur)
+		{
+			strcpy(strchr(pcMsg, '\0'), ".");
+			throw Cexception(0, pcMsg);
+		}
+
+		// S'il y a un crochet fermant mais pas de crochet ouvrant, syntaxe invalide
+		if (bCrochetFermant && !bCrochetOuvrant)
+		{
+			strcpy(strchr(pcMsg, '\0'), ".");
+			throw Cexception(0, pcMsg);
+		}
+		
+		// Si il n'y a pas de crochet, ou qu'il y a un ouvrant et un fermant, c'est bon
+		if((bCrochetFermant && bCrochetOuvrant) || (!bCrochetOuvrant && !bCrochetFermant))
+		{
+			bBalise = false;
+			bValeur = false;
+			bEgal = false;
+			bCrochetOuvrant = false;
+			bCrochetFermant = false;
+			bSucces = true;
+		}
+	}
+
+
+	// Si les crochets sont ouvert mais jamais fermés, syntaxe invalide
+	if (bCrochetOuvrant && !bCrochetFermant && !bSucces)
+	{
+		char pcMsg[1024] = { 0 };
+		iLigne++;
+
+		strcpy(pcMsg, "Erreur syntaxique a la ligne ");
+		sprintf(strchr(pcMsg, '\0'), "%d", iLigne);
+		strcpy(strchr(pcMsg, '\0'), " du fichier ");
+		strcpy(strchr(pcMsg, '\0'), pcFichier);
+		strcpy(strchr(pcMsg, '\0'), " : '[' trouve mais aucun ']' trouve plus loin.");
+		throw Cexception(0, pcMsg);
 	}
 }
 
-void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, unsigned int uiNbLignes, unsigned int uiNbColonnes, char * pcStrMatrice)
+void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, char * pcStrMatrice)
 {
-	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere;
+	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere, uiTotalLignes = 0, uiNbValeur = 0;
 	double dValeur;
 
-	for (uiBoucleL = 0; uiBoucleL < uiNbLignes; uiBoucleL++)
+	for (uiBoucleL = 0; uiBoucleL < MATmatrice.MATgetNbLignes(); uiBoucleL++)
 	{
-		for (uiBoucleC = 0; uiBoucleC < uiNbColonnes; uiBoucleC++)
+		for (uiBoucleC = 0; uiBoucleC < MATmatrice.MATgetNbColonnes(); uiBoucleC++)
 		{
 			char pcCoefficient[64] = { 0 };
+
+			// Si ce n'est pas censé être la dernière valeur de la ligne...
+			//if (uiBoucleC < MATmatrice.MATgetNbColonnes() - 1)
+			//{
+				//char * pcTmp = pcStrMatrice;
+				// On avance jusqu'au premier caractère après la valeur
+				//while (*pcTmp != ' ' && *pcTmp != '\t')
+				//{
+				//	pcTmp++;
+				//}
+
+				// ...mais qu'il n'y en a pas d'autre après...
+				//do
+				//{
+				//	// ...alors le format est invalide
+				//	if (*pcTmp == '\n')
+				//	{
+				//		throw Cexception(0, "Format invalide : Au moins une ligne contient moins de valeurs que prevu.");
+				//	}
+				//	pcTmp++;
+				//} while (*pcTmp == ' ' || *pcTmp == '\t');
+			//}
 
 			// On gère le cas ou le coefficient est un double à virgule.
 			uiIndiceCaractere = 0;
 
-			while (*pcStrMatrice == ' ' || *pcStrMatrice == '\t' || *pcStrMatrice == '\n' || *pcStrMatrice == '\0')
+			while (isspace(*pcStrMatrice) || *pcStrMatrice == '\n' || *pcStrMatrice == '\0')
 			{
+				// Si on trouve '\n' ici alors qu'on a pas passé la dernière colonnes
+				if((*pcStrMatrice == '\n' || *pcStrMatrice == '\0') && uiBoucleC > 0)
+					throw Cexception(0, "Format invalide : Au moins une ligne contient moins de valeurs que prevu.");
 				pcStrMatrice++;
 			}
 
-			// Si le nombre ressemble à ".3" ou ",3", on rajoute '0' devant pour qu'il ressemble a "0.3" ou "0,3"
-			//if (*pcStrMatrice == '.' || *pcStrMatrice == ',')
-			//{
-			//	pcCoefficient[uiIndiceCaractere] = '0';
-			//	uiIndiceCaractere++;
-			//}
-
 			pcCoefficient[uiIndiceCaractere] = *pcStrMatrice;
 
-			while (*pcStrMatrice != '\0' && *pcStrMatrice != ' ' && *pcStrMatrice != '\t' && *pcStrMatrice != '\n')
+			while (*pcStrMatrice != '\0' && !isspace(*pcStrMatrice) && *pcStrMatrice != '\n')
 			{
 				pcCoefficient[uiIndiceCaractere] = *pcStrMatrice;
+				// On remplace les potentielles ',' par '.'
 				if (pcCoefficient[uiIndiceCaractere] == ',')
 				{
 					pcCoefficient[uiIndiceCaractere] = '.';
@@ -80,18 +214,13 @@ void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, unsigned int uiNb
 				uiIndiceCaractere++;
 			}
 
+			// Si le dernier caractère est un '.', on réduit la chaine d'un caractère
 			if (pcCoefficient[strlen(pcCoefficient) - 1] == '.')
 			{
 				pcCoefficient[strlen(pcCoefficient) - 1] = '\0';
 			}
 
 			dValeur = atof(pcCoefficient);
-
-			if (dValeur == 0.0 && pcCoefficient[0] != '.' && pcCoefficient[0] != '0')
-			{
-				// La conversion a echoué
-				throw Cexception(0, "Erreur lors de la création de la matrice. Vérifiez les valeurs dans la balise 'Matrice' du fichier.");
-			}
 
 			MATmatrice(uiBoucleL, uiBoucleC) = dValeur;
 		}
@@ -105,7 +234,7 @@ void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, unsigned int uiNb
 			{
 				if (*pcStrMatrice != ' ' && *pcStrMatrice != '\t')
 				{
-					throw Cexception(0, "Format invalide : taille de la matrice.");
+					throw Cexception(0, "Format invalide : Une ligne de la matrice contient plus de valeurs que le nombre de colonnes spécifié.");
 				}
 
 				pcStrMatrice++;
@@ -119,130 +248,89 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 	// INITIALISATIONS ////////////////////////////////////////////////////////
 
 	unsigned int uiBoucle, uiTotalLignes = 0;
-
-	char ppcValeursBalises[NB_BALISES][1024] = {0};
 	
-	int pValeursNumeriques[NB_VALEURS_NUMERIQUES];
+	CTableauAssociatif TABtab;
 
+	// Souleve une exception si la syntaxe est incorrecte
+	PARanalyseSyntaxique(pcFichier);
 
 	ifstream fichier(pcFichier);
 
 	// TRAITEMENT /////////////////////////////////////////////////////////////////
 
 	// Pour chaque balise, on récupère la valeur sous forme de char * à traiter
-	for (uiBoucle = 0; uiBoucle < NB_BALISES; uiBoucle++)
+	for (uiBoucle = 0; uiBoucle < NB_BALISES && !fichier.eof(); uiBoucle++)
 	{
 		char * pcTmp,
+			* pcFinBalise,
 			pcLines[1024] = { 0 };
+
+		char * pcBalise = NULL, *pcValeur = NULL;
 
 		fichier.getline(pcLines, 1024);
 
 		// VERIFICATION DE pcLines
 
 		pcTmp = strchr(pcLines, '=');
+		pcFinBalise = pcTmp;
 
-		if (pcTmp == NULL)
-		{
-			throw Cexception(0, "Erreur de lecture du fichier, format invalide (un '=' semble manquer)");
-		}
+		do {
+			pcFinBalise--;
+		} while (isspace(*pcFinBalise));
+		pcFinBalise++;
 
-		// On compare le nom des balises.
-
-		unsigned int uiTaille = strlen(pcBalises[uiBoucle]);
-
-		unsigned int uiBoucle2, uiIndiceDepart = 0;
-
-		// On saute tous les espaces qui se trouvent au début de la balise.
-
-		while (pcLines[uiIndiceDepart] == ' ' || pcLines[uiIndiceDepart] == '\t')
-		{
-			uiIndiceDepart++;
-		}
-
-		for (uiBoucle2 = 0; uiBoucle2 < uiTaille; uiBoucle2++)
-		{
-			if (pcBalises[uiBoucle][uiBoucle2] != pcLines[uiBoucle2 + uiIndiceDepart])
-			{
-				throw Cexception(0, "Erreur de lecture du fichier, format invalide : vérifiez les balises.");
-			}
-		}
-
-		// On saute tous les espaces qui se trouvent entre la fin de la balise et le symbole '='.
-
-		while (pcLines[uiBoucle2 + uiIndiceDepart] == ' ' || pcLines[uiBoucle2 + uiIndiceDepart] == '\t')
-		{
-			uiBoucle2++;
-		}
-
-		if (pcLines[uiBoucle2 + uiIndiceDepart] != *pcTmp)
-		{
-			throw Cexception(0, "Erreur de lecture du fichier, format invalide : vérifiez les balises.");
-		}
+		pcBalise = subString(pcLines, pcFinBalise);
 
 		pcTmp++;
 
 		// On avance jusqu'au prochain caractère qui n'est pas un espace
-		while(*pcTmp == ' ' || *pcTmp == '\t')
+		while(isspace(*pcTmp))
 		{
-			if (*pcTmp == '\0')
-			{
-				// la valeur de la balise est vide => format invalide
-				throw Cexception(0, "Format invalide : au moins une des valeurs est vide.");
-			}
-
 			pcTmp++;
 		}
 
-		ppcValeursBalises[uiBoucle][0] = '\0';
+		//ppcValeursBalises[uiBoucle][0] = '\0';
+		char pcValeurBalise[1024] = { 0 };
 		if (*pcTmp == '[')
 		{
 			fichier.getline(pcLines, 1024);
 
 			// Tant qu'on n'est pas a la fin du fichier
-			while (!fichier.eof())
+			while (strchr(pcLines, ']') == NULL)
 			{
 				uiTotalLignes++;
 
-				unsigned int uiNouvelleTaille = strlen(pcLines) + strlen(ppcValeursBalises[uiBoucle]) + 1;
+				unsigned int uiNouvelleTaille = strlen(pcLines) + strlen(pcValeurBalise) + 1;
 
-				strcat_s(ppcValeursBalises[uiBoucle], uiNouvelleTaille, pcLines);
-				strcat_s(ppcValeursBalises[uiBoucle], uiNouvelleTaille + 2, "\n");
+				strcat_s(pcValeurBalise, uiNouvelleTaille, pcLines);
+				strcat_s(pcValeurBalise, uiNouvelleTaille + 2, "\n");
 
 				fichier.getline(pcLines, 1024);
 			}
 			// On retire le dernier \n
-			ppcValeursBalises[uiBoucle][strlen(ppcValeursBalises[uiBoucle]) - 1] = '\0';
-
-			// Si on a pas trouvé le ']' de fin de matrice, on soulève une erreur.
-
-			if (strchr(pcLines, ']') == nullptr)
-			{
-				throw Cexception(0, "Format invalide : borne de la matrice manquante.");
-			}
+			pcValeurBalise[strlen(pcValeurBalise) - 1] = '\0';
 		}
 		else
 		{
-			PARtoLowerString(pcTmp);
-			strncpy_s(ppcValeursBalises[uiBoucle], pcTmp, strlen(pcTmp));
+			strncpy_s(pcValeurBalise, pcTmp, strlen(pcTmp));
 		}
+
+		TABtab.TABajouterAuto(pcBalise, _strdup(pcValeurBalise));
 	}
 
-	// VERIFICATIONS ET CONVERSIONS ////////////////////////////////////////////////////////////
 
-	// On enlève les espaces de fin.
-
-	while(ppcValeursBalises[0][strlen(ppcValeursBalises[0]) - 1] == ' '
-		  || ppcValeursBalises[0][strlen(ppcValeursBalises[0]) - 1] == '\t')
+	if (strcmp(TABtab.TABgetValeurChaine("TypeMatrice"), "double") != 0)
 	{
-		ppcValeursBalises[0][strlen(ppcValeursBalises[0]) - 1] = '\0';
+		throw Cexception(0, "Erreur : TypeMatrice != 'double'.");
 	}
 
-	if (strstr(ppcValeursBalises[0], "double") == NULL || strlen(ppcValeursBalises[0]) != strlen("double"))
-	{
-		// TypeMatrice ne vaut pas "double", peu importe la casse
-		throw Cexception(0, "Format invalide : le type de la matrice est invalide.");
-	}
+	CMatrice<double> MATmatrice(TABtab.TABgetValeurEntier("NBLignes"), TABtab.TABgetValeurEntier("NBColonnes"));
 
+	PARremplirMatrice(MATmatrice, TABtab.TABgetValeurChaine("Matrice"));
+
+	return MATmatrice;
+
+	/*
 	// Remplissage du tableau contentant des valeurs numériques
 	// NBLignes, NBColonnes
 	for (uiBoucle = 0; uiBoucle < NB_VALEURS_NUMERIQUES; uiBoucle++)
@@ -269,7 +357,101 @@ CMatrice <double> CParseur::PARparserFichier(char * pcFichier)
 	unsigned int uiNbColonnes = pValeursNumeriques[VALEURS_NUMERIQUES_INDICE_NB_COLONNES];
 	CMatrice<double> MATmatrice(uiNbLignes, uiNbColonnes);
 
-	PARremplirMatrice(MATmatrice, uiNbLignes, uiNbColonnes, ppcValeursBalises[VALEURS_BALISES_INDICE_MATRICE]);
+	PARremplirMatrice(MATmatrice, ppcValeursBalises[VALEURS_BALISES_INDICE_MATRICE]);
 
 	return MATmatrice;
+	*/
+}
+
+
+/*
+CMatrice<double> CParseur::PARparserFichier(char * pcFichier)
+{
+	unsigned int uiBoucle;
+	CTableauAssociatif TABtab;
+	ifstream IFSfichier(pcFichier);
+	bool bCrochet = false;
+	char pcContenuCrochets[1024] = { 0 };
+	char pcLigne[1024] = { 0 };
+	char pcBalise[1024] = { 0 };
+	char pcValeur[1024] = { 0 };
+	char *pcTrimBalise, *pcTrimValeur;
+
+	// Verification de la syntaxe, leve une exception si elle est incorrecte
+	PARanalyseSyntaxique(pcFichier);
+
+	// => la syntaxe est bonne
+
+	while (!IFSfichier.eof())
+	{
+		IFSfichier.getline(pcLigne, 1024);
+
+		if (bCrochet)
+		{
+			pcTrimValeur = NULL;
+			strcat(pcContenuCrochets, pcLigne);
+			strcat(pcContenuCrochets, "\n");
+		}
+		else
+		{
+			strcpy(pcValeur, strchr(pcLigne, '=') + 1);
+			pcBalise[strchr(pcLigne, '=') - pcBalise] = '\0';
+
+			pcTrimBalise = PARtrim(pcBalise);
+			pcTrimValeur = PARtrim(pcValeur);
+
+			TABtab.TABajouterAuto(pcTrimBalise, pcTrimValeur);
+		}
+
+		if (pcTrimValeur != NULL && *pcTrimValeur == '[')
+		{
+			bCrochet = true;
+		}
+		else if (pcTrimValeur != NULL && *pcTrimValeur == ']')
+		{
+			pcContenuCrochets[strlen(pcContenuCrochets) - 3] = '\0';
+			TABtab.TABajouterAuto(pcTrimBalise, pcContenuCrochets);
+			bCrochet = false;
+			pcContenuCrochets[1024] = { 0 };
+
+		}
+	}
+
+	cout << TABtab.TABgetValeurChaine("A") << endl;
+	cout << TABtab.TABgetValeurEntier("B") << endl;
+	cout << TABtab.TABgetValeurReel("C") << endl;
+}
+*/
+char * subString(const char * start, const char * end) {
+	int i = 0;
+	char * str = (char *)malloc(sizeof(char) * (size_t)(end - start + 1));
+	while (start + i != end && start[i] != '\0')
+	{
+		str[i] = start[i];
+		i++;
+	}
+	str[i] = '\0';
+
+	return str;
+}
+
+char * trim(char * pcStr)
+{
+	while (isspace(*pcStr)) 
+		pcStr++;
+
+	char* pcFin = pcStr + strlen(pcStr);
+	while (isspace(*--pcFin));
+	*(pcFin + 1) = '\0';
+
+	return pcStr;
+}
+
+void toLowerString(char * pcStr)
+{
+	unsigned int uiBoucle;
+	for (uiBoucle = 0; uiBoucle < strlen(pcStr); uiBoucle++)
+	{
+		pcStr[uiBoucle] = tolower(pcStr[uiBoucle]);
+	}
 }
