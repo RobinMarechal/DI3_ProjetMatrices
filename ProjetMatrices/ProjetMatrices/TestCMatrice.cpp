@@ -99,8 +99,7 @@ void CTestCMatrice::TMAtestOperateurMoins()
 	cout << "TMAtestOperateurMoins()";
 	CMatrice<int> MATm1(2, 2), MATm2(2, 2);
 
-	assertEquals((MATm1 - MATm2)(0, 0), 0);
-	assertEquals((MATm1 - MATm2)(1, 1), 0);
+	assertEquals(MATm1 - MATm2, MATm1);
 
 	// | 1  2 |
 	// | 3  4 |

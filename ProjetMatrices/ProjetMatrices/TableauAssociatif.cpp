@@ -5,10 +5,10 @@
 
 #include "Cexception.h"
 
-#define NON_DEFINI 0
-#define ENTIER 1
-#define REEL 2
-#define CHAINE 3
+#define TAB_TYPE_NON_DEFINI 0
+#define TAB_TYPE_ENTIER 1
+#define TAB_TYPE_REEL 2
+#define TAB_TYPE_CHAINE 3
 
 /*
 
@@ -41,7 +41,7 @@ void CTableauAssociatif::TABdetruire()
 	for (uiBoucle = 0; uiBoucle < uiTABnbElements; uiBoucle++)
 	{
 		free(ppcTABcles[uiBoucle]);
-		if(puiTypes[uiBoucle] == CHAINE)
+		if(puiTypes[uiBoucle] == TAB_TYPE_CHAINE)
 			free(pvTABvaleurs[uiBoucle].pcChaine);
 	}
 
@@ -61,7 +61,14 @@ CTableauAssociatif::CTableauAssociatif(CTableauAssociatif & TABobjet)
 	TABinit();
 	for (uiBoucle = 0; uiBoucle < TABobjet.uiTABnbElements; uiBoucle++)
 	{
-		TABajouter(TABobjet.ppcTABcles[uiBoucle], TABobjet.pvTABvaleurs[uiBoucle], TABobjet.puiTypes[uiBoucle]);
+		if (TABobjet.puiTypes[uiBoucle] == TAB_TYPE_CHAINE)
+		{
+			TABajouterChaine(TABobjet.ppcTABcles[uiBoucle], _strdup(TABobjet.pvTABvaleurs[uiBoucle].pcChaine));
+		}
+		else
+		{
+			TABajouter(TABobjet.ppcTABcles[uiBoucle], TABobjet.pvTABvaleurs[uiBoucle], TABobjet.puiTypes[uiBoucle]);
+		}
 	}
 }
 
@@ -207,21 +214,21 @@ void CTableauAssociatif::TABajouterEntier(char * pcCle, int iVal)
 {
 	Valeur vVal;
 	vVal.iEntier = iVal;
-	TABajouter(pcCle, vVal, ENTIER);
+	TABajouter(pcCle, vVal, TAB_TYPE_ENTIER);
 }
 
 void CTableauAssociatif::TABajouterReel(char * pcCle, double dVal) 
 {
 	Valeur vVal;
 	vVal.dReel = dVal;
-	TABajouter(pcCle, vVal, REEL);
+	TABajouter(pcCle, vVal, TAB_TYPE_REEL);
 }
 
 void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal) 
 {
 	Valeur vVal;
 	vVal.pcChaine = pcVal;
-	TABajouter(pcCle, vVal, CHAINE);
+	TABajouter(pcCle, vVal, TAB_TYPE_CHAINE);
 }
 
 void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
@@ -241,7 +248,7 @@ void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 		{
 			// On rajoute un 0 au début et à la fin pour etre sur d'éviter les problèmes pour convertir
 			unsigned int uiBoucle;
-			int iTaille = strlen(pcVal);
+			unsigned int iTaille = strlen(pcVal);
 			char * pcStr = new char[iTaille + 3];
 
 			for (uiBoucle = 0; uiBoucle < iTaille + 2; uiBoucle++)
@@ -250,7 +257,7 @@ void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 			}
 			pcStr[iTaille + 2] = '\0';
 
-			strcpy(pcStr + 1, pcVal);
+			strcpy_s(pcStr + 1, strlen(pcVal), pcVal);
 			*strchr(pcStr, '\0') = '0';
 
 			// On remplace ',' par '.' s'il faut
@@ -268,7 +275,7 @@ void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 	else
 	{
 		// on ajoute simplement la chaine
-		TABajouterChaine(pcCle, pcVal);
+		TABajouterChaine(pcCle, _strdup(pcVal));
 	}
 }
 
@@ -293,7 +300,7 @@ int CTableauAssociatif::TABgetIndiceCle(char * pcCle) const
 }
 
 // precond : 0 < uiPos < uiTABnbElements
-const char const * CTableauAssociatif::TABgetCle(unsigned int uiPos) const 
+char * CTableauAssociatif::TABgetCle(unsigned int uiPos) const 
 {
 	return ppcTABcles[uiPos];
 }

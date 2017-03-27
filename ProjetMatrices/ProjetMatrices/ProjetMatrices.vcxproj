@@ -144,7 +144,6 @@
   <ItemGroup>
     <ClInclude Include="Cexception.h" />
     <ClInclude Include="Matrice.h" />
-    <ClInclude Include="MatriceCarree.h" />
     <ClInclude Include="Parseur.h" />
     <ClInclude Include="TableauAssociatif.h" />
     <ClInclude Include="TestCMatrice.h" />
@@ -153,10 +152,6 @@
     <ClCompile Include="Cexception.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrice.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="MatriceCarree.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
     </ClCompile>

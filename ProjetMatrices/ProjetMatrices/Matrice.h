@@ -1,7 +1,14 @@
 ﻿#ifndef CMATRICE_H
 #define CMATRICE_H
 
+#define TAB_TYPE_NON_DEFINI 0
+#define TAB_TYPE_ENTIER 1
+#define TAB_TYPE_REEL 2
+#define TAB_TYPE_CHAINE 3
+
 #include <iostream>
+#include "TableauAssociatif.h"
+#include "Cexception.h"
 
 template <class T>
 class CMatrice
@@ -10,6 +17,8 @@ private:
 	unsigned int uiMATnbColonnes;
 	unsigned int uiMATnbLignes;
 	T ** ppMATmatrice;
+
+	static void MATverifierContenuTableau(CTableauAssociatif TABtab);
 
 	/*****************************************
 	Initialisation de la matrice.
@@ -447,7 +456,12 @@ public:
 	bool MATestInversible();
 	bool MATestSymetrique();
 	bool MATestAntiSymetrique();
+
+	// Factory
+
 	static CMatrice<T> MATdiag(unsigned int uiDim, const T ptDiag[]);
+
+	static CMatrice<T> MATparser(CTableauAssociatif TABtab);
 
 	/*****************************************
 	Test de matrice nulle.

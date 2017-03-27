@@ -9,7 +9,7 @@ using namespace std;
 #include <fstream>
 
 // pour desactiver les tests : #define NDEBUG
- #define NDEBUG
+ //#define NDEBUG
 
 #ifndef NDEBUG
 
@@ -55,7 +55,7 @@ void robin()
 	cout << "fin" << endl;
 	*/
 
-	CMatrice<double> m;
+	/*CMatrice<double> m;
 	try {
 		m = CParseur::PARparserFichier(f1);
 	}
@@ -64,7 +64,23 @@ void robin()
 		cout << e.EXCgetMessage() << endl;
 	}
 
-	cout << m << endl;
+	cout << m << endl;*/
+	try {
+		CTableauAssociatif TABtab = CParseur::PARparserFichier(f1);
+		cout << TABtab.TABgetValeurChaine("Matrice") << endl;
+		if (strcmp(TABtab.TABgetValeurChaine("TypeMatrice"), "double") != 0)
+		{
+			throw Cexception(0, "TypeMatrice != 'double'.");
+		}
+
+		CMatrice<double> m = CMatrice<double>::MATparser(TABtab);
+
+		cout << m << endl;
+	}
+	catch (Cexception e)
+	{
+		cout << e.EXCgetMessage() << endl;
+	}
 
 
 #ifndef NDEBUG
@@ -81,7 +97,7 @@ void robin()
 }
 
 
-int main(unsigned int argc, char * argv[])
+int main(unsigned int argc, char * argv2[])
 {
 	robin();
 	//gregoire();
@@ -92,17 +108,36 @@ int main(unsigned int argc, char * argv[])
 		- Vérifier les nombres négatifs
 	*/
 
+	argc = 4;
+	char * argv[4] = { "", "..\\01.txt", "..\\02.txt", "..\\03.txt" };
+	
+	cout << argc << endl;
+	for (unsigned int i = 1; i < argc; i++)
+	{
+		cout << argv[i] << endl;
+	}
+	
+	
 	if (argc > 1)
 	{
-		int iValeur;
+		double iValeur;
 
-		CMatrice <double> * pcMATmatrices = (CMatrice <double> *) malloc(argc * sizeof(CMatrice <double>));
+		CMatrice <double> * pcMATmatrices = new CMatrice<double>[argc];
 
 		unsigned int uiBoucle;
 
 		for (uiBoucle = 1; uiBoucle < argc; uiBoucle++)
 		{
-			pcMATmatrices[uiBoucle - 1] = CParseur::PARparserFichier(argv[uiBoucle]);
+			CTableauAssociatif TABtab = CParseur::PARparserFichier(argv[uiBoucle]);
+			pcMATmatrices[uiBoucle - 1] = CMatrice<double>();
+			pcMATmatrices[uiBoucle - 1] = CMatrice<double>::MATparser(TABtab);
+		}
+
+		cout << "Matrices construites : " << endl;
+
+		for (uiBoucle = 0; uiBoucle < argc - 1; uiBoucle++)
+		{
+			cout << pcMATmatrices[uiBoucle] << endl;
 		}
 
 		cout << "Veuillez entrer une valeur : ";
@@ -110,59 +145,60 @@ int main(unsigned int argc, char * argv[])
 		cin >> iValeur;
 
 		// Affichage de la multiplication.
-
-		for (uiBoucle = 0; uiBoucle < argc; uiBoucle++)
+		cout << "Matrice + Entier : " << endl;
+		
+		for (uiBoucle = 0; uiBoucle < argc - 1; uiBoucle++)
 		{
-			(pcMATmatrices[uiBoucle] * iValeur).MATafficher();
+			CMatrice<double> MATtmp = pcMATmatrices[uiBoucle] * iValeur;
+			cout << MATtmp << endl;
 		}
 
 		// Affichage de la division.
+		cout << "Matrice / Entier : " << endl;
 
-		for (uiBoucle = 0; uiBoucle < argc; uiBoucle++)
+		for (uiBoucle = 0; uiBoucle < argc - 1; uiBoucle++)
 		{
-			(pcMATmatrices[uiBoucle] / iValeur).MATafficher();
+			CMatrice<double> MATtmp = pcMATmatrices[uiBoucle] / iValeur;
+			cout << MATtmp << endl;
 		}
 
 		// Affichage de l'addition de toutes les matrices entre elles.
+		cout << "M1 + M2 + M3 +.... : " << endl;
 
-		CMatrice <double> MATmatrice1;
+		CMatrice <double> MATsomme = pcMATmatrices[0];
 
-		for (uiBoucle = 0; uiBoucle < argc; uiBoucle++)
+		for (uiBoucle = 1; uiBoucle < argc - 1; uiBoucle++)
 		{
-			MATmatrice1 = MATmatrice1 + pcMATmatrices[uiBoucle];
+			MATsomme = MATsomme + pcMATmatrices[uiBoucle];
 		}
 
-		MATmatrice1.MATafficher();
+		cout << MATsomme << endl;
 
 		// Affichage de l'opération M1 - M2 + M3 - M4...
+		cout << "M1 + M2 - M3 +.... : " << endl;
+		CMatrice <double> MATsommeSoustraction = pcMATmatrices[0];
 
-		CMatrice <double> MATmatrice2;
-
-		for (uiBoucle = 0; uiBoucle < argc; uiBoucle++)
+		for (uiBoucle = 1; uiBoucle < argc - 1; uiBoucle++)
 		{
+			// -1 si uiBoucle impair, 1 sinon
+			double iCoeff = -1;
 			if (uiBoucle % 2 == 0)
-			{
-				MATmatrice2 = MATmatrice2 + pcMATmatrices[uiBoucle];
-			}
-
-			else
-			{
-				MATmatrice2 = MATmatrice2 - pcMATmatrices[uiBoucle];
-			}
+				iCoeff = 1;
+			MATsommeSoustraction = MATsommeSoustraction + iCoeff * pcMATmatrices[uiBoucle];
 		}
 
-		(MATmatrice2).MATafficher();
+		cout << MATsommeSoustraction << endl;
 
 		// Affichage de la multiplication de toutes les matrices entre elles.
+		cout << "M1 * M2 * M3 *.... : " << endl;
+		CMatrice <double> MATproduit = pcMATmatrices[0];
 
-		CMatrice <double> MATmatrice3;
-
-		for (uiBoucle = 0; uiBoucle < argc; uiBoucle++)
+		for (uiBoucle = 1; uiBoucle < argc - 1; uiBoucle++)
 		{
-			MATmatrice3 = MATmatrice3 * pcMATmatrices[uiBoucle];
+			MATproduit = MATproduit * pcMATmatrices[uiBoucle];
 		}
 
-		(MATmatrice3).MATafficher();
+		cout << MATproduit << endl;
 	}
 
 	return 0;

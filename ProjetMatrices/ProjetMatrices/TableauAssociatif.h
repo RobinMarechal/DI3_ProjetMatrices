@@ -1,9 +1,10 @@
 #ifndef TABLEAU_ASSOCIATIF_H
 #define TABLEAU_ASSOCIATIF_H
 
-#define ENTIER 0
-#define REEL 1
-#define CHAINE 2
+#define TAB_TYPE_NON_DEFINI 0
+#define TAB_TYPE_ENTIER 1
+#define TAB_TYPE_REEL 2
+#define TAB_TYPE_CHAINE 3
 
 typedef union {
 	double dReel;
@@ -44,7 +45,7 @@ public:
 
 	unsigned int TABgetNbElements() const;
 	int TABgetIndiceCle(char * pcCle) const;
-	const char const * TABgetCle(unsigned int uiPos) const;
+	char * TABgetCle(unsigned int uiPos) const;
 	Valeur TABgetValeur(char * pcCle) const;
 	Valeur TABgetValeurPos(unsigned int uiPos);
 	unsigned int TABgetValeurType(unsigned int uiPos);

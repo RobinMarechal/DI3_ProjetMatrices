@@ -1,5 +1,11 @@
 #include "Matrice.h"
 #include "Cexception.h"
+#include "TableauAssociatif.h"
+
+#define TAB_TYPE_NON_DEFINI 0
+#define TAB_TYPE_ENTIER 1
+#define TAB_TYPE_REEL 2
+#define TAB_TYPE_CHAINE 3
 
 #include <iostream>
 
@@ -576,7 +582,27 @@ bool CMatrice<T>::MATestNulle()
 	return true;
 }
 
+template<class T>
+void CMatrice<T>::MATverifierContenuTableau(CTableauAssociatif TABtab)
+{
+	if (TABtab.TABgetIndiceCle("NBLignes") == -1)
+		throw Cexception(0, "Erreur : champs 'NBLignes' non renseigné.");
 
+	if (TABtab.TABgetIndiceCle("NBColonnes") == -1)
+		throw Cexception(0, "Erreur : champs 'NBColonnes' non renseigné.");
+
+	if (TABtab.TABgetIndiceCle("Matrice") == -1)
+		throw Cexception(0, "Erreur : champs 'Matrice' non renseigné.");
+
+	if (TABtab.TABgetValeurType("NBLignes") != TAB_TYPE_ENTIER)
+		throw Cexception(0, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier.");
+
+	if (TABtab.TABgetValeurType("NBColonnes") != TAB_TYPE_ENTIER)
+		throw Cexception(0, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier.");
+
+	if (TABtab.TABgetValeurType("Matrice") != TAB_TYPE_CHAINE)
+		throw Cexception(0, "Erreur de creation de la matrice : La valeur de 'Matrice' doit etre une chaine de caractère ou une liste ('[....]')");
+}
 
 template <class T>
 void CMatrice<T>::MATinitMatrice()
@@ -996,6 +1022,87 @@ CMatrice<T> CMatrice<T>::MATdiag(unsigned int uiDim, const T ptDiag[])
 		}
 	}
 	return MATresultat;
+}
+
+template<class T>
+CMatrice<T> CMatrice<T>::MATparser(CTableauAssociatif TABtab)
+{
+	const char * pcStrMatrice;
+	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere;
+
+	// soulève une exception en cas de contenu non conforme
+	CMatrice<T>::MATverifierContenuTableau(TABtab);
+	CMatrice<T> MATmatrice(TABtab.TABgetValeurEntier("NBLignes"), TABtab.TABgetValeurEntier("NBColonnes"));
+
+	pcStrMatrice = TABtab.TABgetValeurChaine("Matrice");
+	// On décale la chaine pour ne pas prendre en compte le '[' restant
+	pcStrMatrice++;
+
+	/////////////////////////////////unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere, uiTotalLignes = 0, uiNbValeur = 0;
+	double dValeur;
+
+	for (uiBoucleL = 0; uiBoucleL < MATmatrice.MATgetNbLignes(); uiBoucleL++)
+	{
+		for (uiBoucleC = 0; uiBoucleC < MATmatrice.MATgetNbColonnes(); uiBoucleC++)
+		{
+			char pcCoefficient[64] = { 0 };
+
+			// On gère le cas ou le coefficient est un double à virgule.
+			uiIndiceCaractere = 0;
+
+			while (isspace(*pcStrMatrice) || *pcStrMatrice == '\n' || *pcStrMatrice == '\0')
+			{
+				// Si on trouve '\n' ici alors qu'on a pas passé la dernière colonnes
+				if ((*pcStrMatrice == '\n' || *pcStrMatrice == '\0') && uiBoucleC > 0)
+					throw Cexception(0, "Format invalide : Au moins une ligne contient moins de valeurs que prevu.");
+				pcStrMatrice++;
+			}
+
+			pcCoefficient[uiIndiceCaractere] = *pcStrMatrice;
+
+			while (*pcStrMatrice != '\0' && !isspace(*pcStrMatrice) && *pcStrMatrice != '\n')
+			{
+				pcCoefficient[uiIndiceCaractere] = *pcStrMatrice;
+				// On remplace les potentielles ',' par '.'
+				if (pcCoefficient[uiIndiceCaractere] == ',')
+				{
+					pcCoefficient[uiIndiceCaractere] = '.';
+				}
+
+				pcStrMatrice++;
+				uiIndiceCaractere++;
+			}
+
+			// Si le dernier caractère est un '.', on réduit la chaine d'un caractère
+			if (pcCoefficient[strlen(pcCoefficient) - 1] == '.')
+			{
+				pcCoefficient[strlen(pcCoefficient) - 1] = '\0';
+			}
+
+			dValeur = atof(pcCoefficient);
+
+			MATmatrice(uiBoucleL, uiBoucleC) = dValeur;
+		}
+
+		//  On vérifie qu'il ne reste rien après la dernière colonne.
+		// Si c'est le cas, alors le format est invalide.
+
+		if (*pcStrMatrice != '\n' && *pcStrMatrice != '\0')
+		{
+			while (*pcStrMatrice != '\n' || *pcStrMatrice != '\0')
+			{
+				if (*pcStrMatrice != ' ' && *pcStrMatrice != '\t')
+				{
+					throw Cexception(0, "Format invalide : Une ligne de la matrice contient plus de valeurs que le nombre de colonnes specifie.");
+				}
+
+				pcStrMatrice++;
+			}
+		}
+	}
+	/////////////////////////////////
+
+	return MATmatrice;
 }
 
 
