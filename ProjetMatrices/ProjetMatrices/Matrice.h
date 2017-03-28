@@ -9,6 +9,8 @@
 #include <iostream>
 #include "TableauAssociatif.h"
 #include "Cexception.h"
+#include "helpers.h"
+#include "constantes.h"
 
 template <class T>
 class CMatrice

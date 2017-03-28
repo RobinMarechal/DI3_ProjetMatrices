@@ -7,6 +7,8 @@ using namespace std;
 #include "Parseur.h"
 #include "TableauAssociatif.h"
 #include <fstream>
+#include "helpers.h"
+#include "constantes.h"
 
 // pour desactiver les tests : #define NDEBUG
  //#define NDEBUG
@@ -99,15 +101,27 @@ void robin()
 
 int main(unsigned int argc, char * argv2[])
 {
-	robin();
+	//robin();
 	//gregoire();
+
+	cout << "1\t=>\t" << getType("1") << endl;
+	cout << "1.50\t=>\t" << getType("1.50") << endl;
+	cout << "1.\t=>\t" << getType("1.") << endl;
+	cout << ".1\t=>\t" << getType(".1") << endl;
+	cout << "-50.23\t=>\t" << getType("-50.23") << endl;
+	cout << "-50\t=>\t" << getType("-50") << endl;
+	cout << "-0.23\t=>\t" << getType("-0.23") << endl;
+	cout << "-0.23\t=>\t" << getType("-0.23") << endl;
+	cout << "27e+23\t=>\t" << getType("27e+23") << endl;
+	cout << "32e-23\t=>\t" << getType("32e-23") << endl;
+	cout << "32e-23\t=>\t" << getType("abc") << endl;
 
 	/*
 		TODO :
 		- automate pour les nombres dans CTableauAssociatif::TABestNumerique()
 		- Vérifier les nombres négatifs
 	*/
-
+	/*
 	argc = 4;
 	char * argv[4] = { "", "..\\01.txt", "..\\02.txt", "..\\03.txt" };
 	
@@ -200,6 +214,6 @@ int main(unsigned int argc, char * argv2[])
 
 		cout << MATproduit << endl;
 	}
-
+	*/
 	return 0;
 }

@@ -4,6 +4,8 @@
 
 #include <string.h>
 #include <stdlib.h>
+#include "helpers.h"
+#include "constantes.h"
 
 class Cexception
 {

@@ -2,8 +2,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "helpers.h"
 
 #include "Cexception.h"
+#include "constantes.h"
 
 #define TAB_TYPE_NON_DEFINI 0
 #define TAB_TYPE_ENTIER 1
@@ -114,7 +116,7 @@ void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int u
 	pvTABvaleurs[uiTABnbElements - 1] = vValeur;
 	puiTypes[uiTABnbElements - 1] = uiType;
 }
-
+/*
 bool CTableauAssociatif::TABestNumerique(char * pcVal)
 {
 	bool bPoint = false;
@@ -151,30 +153,7 @@ bool CTableauAssociatif::TABestNumerique(char * pcVal)
 	return true;
 }
 
-// precond : l'utilisateur a déjà verifié que la chaine est un nombre
-bool CTableauAssociatif::TABestEntier(char * pcVal)
-{
-	/*
-	// pcCle est un entier s'il n'y a ni point, ni virgule
-	if (strchr(pcVal, ',') == NULL && strchr(pcVal, '.') == NULL)
-	{
-		return true;
-	}
-	else
-	{
-		// ...ou si il/elle est placé à la fin (rien derrière)
-		if (pcVal[strlen(pcVal) - 1] == '.' || pcVal[strlen(pcVal) - 1] == ',')
-		{
-			return true;
-		}
-		else
-		{
-			return false;
-		}
-	}
-	*/
-	return (strchr(pcVal, ',') == NULL) && (strchr(pcVal, '.') == NULL);
-}
+*/
 
 void CTableauAssociatif::TABsupprimer(char * pcCle) 
 {
@@ -233,6 +212,7 @@ void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal)
 
 void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 {
+	/*
 	if (TABestNumerique(pcVal))
 	{
 		// Format : XX
@@ -277,6 +257,7 @@ void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 		// on ajoute simplement la chaine
 		TABajouterChaine(pcCle, _strdup(pcVal));
 	}
+	*/
 }
 
 unsigned int CTableauAssociatif::TABgetNbElements() const 

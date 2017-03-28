@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include "Cexception.h"
 #include "TableauAssociatif.h"
+#include "helpers.h"
+#include "constantes.h"
 
 class CParseur
 {
@@ -22,10 +24,5 @@ private:
 	CParseur() {};
 	~CParseur() {};
 };
-
-
-char * subString(const char * start, const char * end);
-void toLowerString(char * pcStr);
-char * trim(char pcStr[]);
 
 #endif

@@ -1,10 +1,13 @@
 #ifndef TABLEAU_ASSOCIATIF_H
 #define TABLEAU_ASSOCIATIF_H
 
-#define TAB_TYPE_NON_DEFINI 0
-#define TAB_TYPE_ENTIER 1
-#define TAB_TYPE_REEL 2
-#define TAB_TYPE_CHAINE 3
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "Cexception.h"
+#include "helpers.h"
+#include "constantes.h"
 
 typedef union {
 	double dReel;
@@ -24,8 +27,6 @@ class CTableauAssociatif
 	void TABdetruire();
 	void TABajouter(char * pcCle, Valeur vValeur, unsigned int uiType);
 
-	bool TABestNumerique(char * pcCle);
-	bool TABestEntier(char * pcCle);
 
 public:
 	CTableauAssociatif();
@@ -55,5 +56,7 @@ public:
 	double TABgetValeurReel(char * pcCle) const;
 	char * TABgetValeurChaine(char * pcCle) const;
 };
+
+int getType(char * pcCle);
 
 #endif

@@ -3,6 +3,8 @@
 
 #include <assert.h>
 #include "Matrice.h"
+#include "helpers.h"
+#include "constantes.h"
 
 class CTestCMatrice
 {

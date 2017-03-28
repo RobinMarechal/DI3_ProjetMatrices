@@ -1,6 +1,8 @@
 #include "Matrice.h"
 #include "Cexception.h"
 #include "TableauAssociatif.h"
+#include "helpers.h"
+#include "constantes.h"
 
 #define TAB_TYPE_NON_DEFINI 0
 #define TAB_TYPE_ENTIER 1

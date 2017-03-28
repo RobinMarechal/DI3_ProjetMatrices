@@ -7,6 +7,8 @@
 #include "Cexception.h"
 #include "Matrice.h"
 #include "TableauAssociatif.h"
+#include "helpers.h"
+#include "constantes.h"
 
 
 using namespace std;
@@ -163,7 +165,6 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 	while(!fichier.eof())
 	{
 		char * pcTmp,
-			* pcFinBalise,
 			pcLines[1024] = { 0 };
 
 		char pcBalise[1024] = { 0 }, pcValeur[1024] = { 0 };
@@ -210,43 +211,4 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 	}
 
 	return TABtab;
-}
-
-
-char * subString(const char * start, const char * end) {
-	int i = 0;
-	char * str = (char *)malloc(sizeof(char) * (size_t)(end - start + 1));
-	while (start + i != end && start[i] != '\0')
-	{
-		str[i] = start[i];
-		i++;
-	}
-	str[i] = '\0';
-
-	return str;
-}
-
-void toLowerString(char * pcStr)
-{
-	unsigned int uiBoucle;
-	for (uiBoucle = 0; uiBoucle < strlen(pcStr); uiBoucle++)
-	{
-		pcStr[uiBoucle] = tolower(pcStr[uiBoucle]);
-	}
-}
-
-char * trim(char pcStr[])
-{
-	// On suprime les espaces avant le début du mot
-	while (isspace(*pcStr))
-		pcStr++;
-
-	char * pcTmp = strchr(pcStr, '\0') - 1;
-	// On supprime les espaces après la fin du mot
-	while (isspace(*pcTmp))
-		pcTmp--;
-
-	pcTmp[1] = '\0';
-
-	return pcStr;
 }

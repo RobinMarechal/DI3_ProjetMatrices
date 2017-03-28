@@ -3,6 +3,8 @@
 #include "Cexception.h"
 #include <assert.h>
 #include <iostream>
+#include "helpers.h"
+#include "constantes.h"
 
 using namespace std;
 
