@@ -440,28 +440,176 @@ public:
 	Entrée : rien.
 	Nécessite : rien.
 	Sortie : une instance de CMatrice.
-	Entraîne : //
+	Entraîne : création d'une matrice de dimension 
 	******************************************/
 
 	CMatrice<T> MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne);
 
+
+	/*****************************************
+	Calcul du déterminant d'une matrice.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : la valeur du déterminant (de type T).
+	Entraîne : rien.
+	******************************************/
+
 	T MATdet();
+
+
+	/*****************************************
+	Calcul de la trace d'une matrice.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : la valeur de la trace (de type T).
+	Entraîne : rien.
+	******************************************/
+
 	T MATtr();
+
+
+	/*****************************************
+	Calcul de la commatrice.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : une instance de CMatrice.
+	Entraîne : la création d'une matrice.
+	******************************************/
+
 	CMatrice<T> MATcommatrice();
+
+
+	/*****************************************
+	Calcul de l'inverse d'une matrice.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : une instance de CMatrice.
+	Entraîne : la création de la matrice inverse.
+	******************************************/
+
 	CMatrice<T> MATinverse();
+
+
+	/*****************************************
+	Teste si la matrice est triangulaire.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : un booléen.
+	Entraîne : (true : la matrice est triangulaire)
+			   OU (false : la matrice n'est pas triangulaire).
+	******************************************/
+
 	bool MATestTriangulaire();
+
+
+	/*****************************************
+	Teste si la matrice est triangulaire supérieur.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : un booléen.
+	Entraîne : (true : la matrice est triangulaire supérieur)
+			   OU (false : la matrice n'est pas triangulaire supérieur).
+	******************************************/
+
 	bool MATestTriangulaireSuperieure();
+
+
+	/*****************************************
+	Teste si la matrice est triangulaire inférieur.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : un booléen.
+	Entraîne : (true : la matrice est triangulaire inférieur)
+			   OU (false : la matrice n'est pas triangulaire inférieur).
+	******************************************/
+
 	bool MATestTriangulaireInferieure();
+
+
+	/*****************************************
+	Teste si la matrice est diagonale.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : un booléen.
+	Entraîne : (true : la matrice est diagonale)
+			   OU (false : la matrice n'est pas diagonale).
+	******************************************/
+
 	bool MATestDiagonale();
+
+
+	/*****************************************
+	Teste si la matrice est inversible.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : un booléen.
+	Entraîne : (true : la matrice est inversible)
+			   OU (false : la matrice n'est pas inversible).
+	******************************************/
+
 	bool MATestInversible();
+
+
+	/*****************************************
+	Teste si la matrice est symétrique.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : un booléen.
+	Entraîne : (true : la matrice est symétrique)
+			   OU (false : la matrice n'est pas symétrique).
+	******************************************/
+
 	bool MATestSymetrique();
+
+
+	/*****************************************
+	Teste si la matrice est antisymétrique.
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : un booléen.
+	Entraîne : (true : la matrice est antisymétrique)
+			   OU (false : la matrice n'est pas antisymétrique).
+	******************************************/
+
 	bool MATestAntiSymetrique();
 
 	// Factory
 
+	/*****************************************
+	Création d'une matrice diagonale.
+	******************************************
+	Entrée : la dimension (unsigned int),
+			 un tableau de valeurs (de type T).
+	Nécessite : la dimension du tableau est >= à la dimension souhaitée.
+	Sortie : une instance de CMatrice.
+	Entraîne : la création d'une matrice diagonale.
+	******************************************/
+
 	static CMatrice<T> MATdiag(unsigned int uiDim, const T ptDiag[]);
 
-	static CMatrice<T> MATparser(CTableauAssociatif TABtab);
+
+	/*****************************************
+	Génération d'une matrice .
+	******************************************
+	Entrée : une instance de CTableauAssociatif.
+	Nécessite : rien.
+	Sortie : une instance de CMatrice.
+	Entraîne : la création d'une matrice.
+	******************************************/
+
+	static CMatrice<T> MATgenerer(CTableauAssociatif TABtab);
+
 
 	/*****************************************
 	Test de matrice nulle.
