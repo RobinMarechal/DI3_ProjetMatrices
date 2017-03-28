@@ -1027,7 +1027,7 @@ CMatrice<T> CMatrice<T>::MATdiag(unsigned int uiDim, const T ptDiag[])
 }
 
 template<class T>
-CMatrice<T> CMatrice<T>::MATparser(CTableauAssociatif TABtab)
+CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 {
 	const char * pcStrMatrice;
 	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere;

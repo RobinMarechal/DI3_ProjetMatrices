@@ -13,16 +13,6 @@
 
 using namespace std;
 
-/***********************************************
-	Constructeur par défaut.
-
-************************************************
-	Entrée : rien.
-	Nécessite : rien.
-	Sortie : rien.
-	Entraine : initialisation de l'objet.
-
-************************************************/
 
 void CParseur::PARanalyseSyntaxique(char * pcFichier)
 {
@@ -143,10 +133,6 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 	}
 }
 
-void CParseur::PARremplirMatrice(CMatrice<double>& MATmatrice, char * pcStrMatrice)
-{
-	
-}
 
 CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 {   
