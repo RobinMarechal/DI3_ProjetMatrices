@@ -66,7 +66,7 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 				{
 					// Il y a 2 '=' sur cette ligne.
 					strcpy_s(strchr(pcMsg, '\0'), strlen(", deux '=' sur la meme ligne."), ", deux '=' sur la meme ligne.");
-					throw Cexception(0, pcMsg);
+					throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 				}
 				bEgal = true;
 			}
@@ -95,14 +95,14 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		if (!bBalise || !bEgal || !bValeur)
 		{
 			strcpy_s(strchr(pcMsg, '\0'), strlen("."), ".");
-			throw Cexception(0, pcMsg);
+			throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 		}
 
 		// S'il y a un crochet fermant mais pas de crochet ouvrant, syntaxe invalide
 		if (bCrochetFermant && !bCrochetOuvrant)
 		{
 			strcpy_s(strchr(pcMsg, '\0'), strlen("."), ".");
-			throw Cexception(0, pcMsg);
+			throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 		}
 		
 		// Si il n'y a pas de crochet, ou qu'il y a un ouvrant et un fermant, c'est bon
@@ -129,7 +129,7 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		strcpy_s(strchr(pcMsg, '\0'), strlen(" du fichier "), " du fichier ");
 		strcpy_s(strchr(pcMsg, '\0'), strlen(pcFichier), pcFichier);
 		strcpy_s(strchr(pcMsg, '\0'), strlen(" : '[' trouve mais aucun ']' trouve plus loin."), " : '[' trouve mais aucun ']' trouve plus loin.");
-		throw Cexception(0, pcMsg);
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 	}
 }
 

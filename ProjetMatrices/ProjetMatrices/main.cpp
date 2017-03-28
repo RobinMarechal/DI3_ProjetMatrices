@@ -26,6 +26,17 @@ void handleSIGABRT(int iSignNb)
 
 void robin()
 {
+	CTableauAssociatif t;
+
+	t.TABajouterAuto("key1", "5");
+	t.TABajouterAuto("key2", "5.2");
+	t.TABajouterAuto("key3", "abc");
+
+	cout << t.TABgetValeurEntier("key1") << endl;
+	cout << t.TABgetValeurReel("key2") << endl;
+	cout << t.TABgetValeurChaine("key3") << endl;
+
+	exit(-1);
 
 	char * s2 = "..\\JePasse\\fichier01.txt";
 	char * s3 = "..\\JePasse\\fichier02.txt";
@@ -37,29 +48,7 @@ void robin()
 
 	char * f1 = "..\\TestsSyntaxe\\s1.txt";
 	char * f2 = "..\\TestsSyntaxe\\f2.txt";
-/*
-	try {
-		CParseur::PARanalyseSyntaxique(f2);
-		cout << "Succes" << endl;
-	}
-	catch (Cexception e)
-	{
-		cout << e.EXCgetMessage() << endl;
-	}
 
-	cout << "fin" << endl;
-	*/
-
-	/*CMatrice<double> m;
-	try {
-		m = CParseur::PARparserFichier(f1);
-	}
-	catch (Cexception e)
-	{
-		cout << e.EXCgetMessage() << endl;
-	}
-
-	cout << m << endl;*/
 	try {
 		CTableauAssociatif TABtab = CParseur::PARparserFichier(f1);
 		cout << TABtab.TABgetValeurChaine("Matrice") << endl;

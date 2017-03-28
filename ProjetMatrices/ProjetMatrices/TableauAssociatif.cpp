@@ -160,52 +160,48 @@ void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal)
 
 void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 {
-	/*
-	if (TABestNumerique(pcVal))
+	// Format : XX
+	int iType = getType(pcVal);
+	if (iType == TAB_TYPE_ENTIER)
 	{
-		// Format : XX
-		if (TABestEntier(pcVal))
+		// On parse la chaine en int
+		int iVal = atoi(pcVal);
+		// on l'ajoute au tableau
+		TABajouterEntier(pcCle, iVal);
+	}
+	// Format : XX.XX || XX,XX
+	else if(iType == TAB_TYPE_REEL)
+	{
+		// On rajoute un 0 au début et à la fin pour etre sur d'éviter les problèmes pour convertir
+		unsigned int uiBoucle;
+		unsigned int iTaille = strlen(pcVal);
+		char * pcStr = new char[iTaille + 3];
+
+		for (uiBoucle = 0; uiBoucle < iTaille + 2; uiBoucle++)
 		{
-			// On parse la chaine en int
-			int iVal = atoi(pcVal);
-			// on l'ajoute au tableau
-			TABajouterEntier(pcCle, iVal);
+			pcStr[uiBoucle] = '0';
 		}
-		// Format : XX.XX || XX,XX
-		else
-		{
-			// On rajoute un 0 au début et à la fin pour etre sur d'éviter les problèmes pour convertir
-			unsigned int uiBoucle;
-			unsigned int iTaille = strlen(pcVal);
-			char * pcStr = new char[iTaille + 3];
+		pcStr[iTaille + 2] = '\0';
 
-			for (uiBoucle = 0; uiBoucle < iTaille + 2; uiBoucle++)
-			{
-				pcStr[uiBoucle] = '0';
-			}
-			pcStr[iTaille + 2] = '\0';
+		strcpy_s(pcStr + 1, strlen(pcVal)+1, pcVal);
+		*strchr(pcStr, '\0') = '0';
 
-			strcpy_s(pcStr + 1, strlen(pcVal), pcVal);
-			*strchr(pcStr, '\0') = '0';
+		// On remplace ',' par '.' s'il faut
+		if (strchr(pcStr, ',') != NULL)
+			pcStr[strchr(pcStr, ',') - pcStr] = '.';
 
-			// On remplace ',' par '.' s'il faut
-			if (strchr(pcStr, ',') != NULL)
-				pcStr[strchr(pcStr, ',') - pcStr] = '.';
+		// On parse la chaine en double;
+		double dVal = atof(pcStr);
+		// on l'ajoute au tableau
+		TABajouterReel(pcCle, dVal);
 
-			// On parse la chaine en double;
-			double dVal = atof(pcStr);
-			// on l'ajoute au tableau
-			TABajouterReel(pcCle, dVal);
-
-			delete[] pcStr;
-		}
+		delete[] pcStr;
 	}
 	else
 	{
 		// on ajoute simplement la chaine
 		TABajouterChaine(pcCle, _strdup(pcVal));
 	}
-	*/
 }
 
 unsigned int CTableauAssociatif::TABgetNbElements() const 
