@@ -6,6 +6,15 @@
 #include "constantes.h"
 
 
+
+/*****************************************
+Constructeur par défaut.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'initialisation de l'objet.
+*****************************************/
 Cexception::Cexception()
 {
 	uiEXCValeur = 0;
@@ -13,6 +22,14 @@ Cexception::Cexception()
 }
 
 
+/*****************************************
+Constructeur de recopie.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'initialisation de l'objet par copie de l'objet en paramètre.
+*****************************************/
 Cexception::Cexception(Cexception &EXCexception)
 {
 	uiEXCValeur = EXCexception.uiEXCValeur;
@@ -20,6 +37,14 @@ Cexception::Cexception(Cexception &EXCexception)
 }
 
 
+/*****************************************
+Constructeur à un argument.
+******************************************
+Entrée : un code d'erreur
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'initialisation de l'objet.
+*****************************************/
 Cexception::Cexception(const unsigned int uiValeur)
 {
 	uiEXCValeur = uiValeur;
@@ -27,6 +52,16 @@ Cexception::Cexception(const unsigned int uiValeur)
 }
 
 
+
+/*****************************************
+Constructeur à deux arguments.
+******************************************
+Entrée : un code d'erreur
+Entrée : un message d'erreur.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'initialisation de l'objet.
+******************************************/
 Cexception::Cexception(const unsigned int uiValeur, char * pcMessage)
 {
 	uiEXCValeur = uiValeur;
@@ -34,12 +69,28 @@ Cexception::Cexception(const unsigned int uiValeur, char * pcMessage)
 }
 
 
+/*****************************************
+Destructeur.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : Libération de la mémoire allouée pour pcEXCMessage.
+******************************************/
 Cexception::~Cexception()
 {
 	free(pcEXCMessage);
 }
 
 
+/*****************************************
+Opérateur =.
+******************************************
+Entrée : instance de la classe Cexception à copier.
+Nécessite : rien.
+Sortie : l'objet recopié.
+Entraîne : la recopie de l'objet en paramètre.
+******************************************/
 Cexception & Cexception::operator=(Cexception EXCexception)
 {
 	uiEXCValeur = EXCexception.uiEXCValeur;

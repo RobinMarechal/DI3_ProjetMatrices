@@ -1,44 +1,55 @@
 #ifndef HERLPERS_H
 #define HERLPERS_H
 
+#include "helpers.h"
 #include "constantes.h"
-
-int getType(char * pcCle);
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <iostream>
 
 /*****************************************
-Récupère une partie d'une chaîne de caractères.
+Retourne le type correspondant à la chaine en paramètre
+******************************************
+Entrée : la chaine à analyser
+Nécessite : rien
+Sortie : l'entier correspondant au type de la chaine
+Entraîne : (0 = entier) || (1 = réel) || (3 = chaine)
+******************************************/
+int getType(char * pcCle);
+
+
+/*****************************************
+Extraction d'une sous chaine
 ******************************************
 Entrée : un pointeur sur le début de la sous-chaîne,
-un pointeur sur la fin de la sous-chaîne.
-Nécessite : 'end' est située après 'start'.
+Entrée : un pointeur sur la fin de la sous-chaîne.
+Nécessite : 'end' >= 'start'.
 Sortie : la sous-chaîne souhaitée (de type char *).
-Entraîne : rien.
+Entraîne : Allocation dynamique d'un char * (malloc)
 ******************************************/
-
 char * subString(const char * start, const char * end);
 
 
 /*****************************************
-Suppression de la casse.
+transformation d'une chaine de caratères en minuscule.
 ******************************************
 Entrée : une chaîne de caractères.
 Nécessite : rien.
 Sortie : rien.
-Entraîne : la suppression de la casse sur la chaîne de caractères.
+Entraîne : la chaine est en minuscule.
 ******************************************/
-
 void toLowerString(char * pcStr);
 
 
 /*****************************************
-Suppression des espaces.
+Suppression des espaces en début et fin de chaine.
 ******************************************
 Entrée : une chaîne de caractères.
 Nécessite : rien.
 Sortie : une chaîne de caractères.
 Entraîne : la suppression des espaces au début et à la fin de la chaîne.
 ******************************************/
-
 char * trim(char pcStr[]);
 
 #endif;

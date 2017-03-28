@@ -7,10 +7,24 @@
 #include "helpers.h"
 #include "constantes.h"
 
+/*************************************
+Classe de gestion d'exceptions
+**************************************
+Permet de gérer des exceptions soulevées
+dans le programme, avec un code d'erreur
+et un message d'erreur particulier.
+**************************************/
 class Cexception
 {
 private:
+	/**********************
+	Code d'erreur
+	***********************/
 	unsigned int uiEXCValeur;
+
+	/**********************
+	Message d'erreur
+	***********************/
 	char * pcEXCMessage;
 
 public:
@@ -23,7 +37,6 @@ public:
 	Sortie : rien.
 	Entraîne : l'initialisation de l'objet.
 	*****************************************/
-
 	Cexception();
 
 
@@ -35,32 +48,29 @@ public:
 	Sortie : rien.
 	Entraîne : l'initialisation de l'objet par copie de l'objet en paramètre.
 	*****************************************/
-
 	Cexception(Cexception &EXCexception);
 
 
 	/*****************************************
 	Constructeur à un argument.
 	******************************************
-	Entrée : un code d'erreur (unsigned int).
+	Entrée : un code d'erreur
 	Nécessite : rien.
 	Sortie : rien.
 	Entraîne : l'initialisation de l'objet.
 	*****************************************/
-
 	Cexception(const unsigned int uiValeur);
 
 
 	/*****************************************
 	Constructeur à deux arguments.
 	******************************************
-	Entrée : un code d'erreur (unsigned int),
-			 un message d'erreur (char *).
+	Entrée : un code d'erreur
+	Entrée : un message d'erreur.
 	Nécessite : rien.
 	Sortie : rien.
 	Entraîne : l'initialisation de l'objet.
 	******************************************/
-
 	Cexception(const unsigned int uivaleur, char * pcMessage);
 
 
@@ -70,22 +80,19 @@ public:
 	Entrée : rien.
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : la destruction de l'objet
-			   ET la libération de la mémoire réservée pour pcEXCMessage.
+	Entraîne : Libération de la mémoire allouée pour pcEXCMessage.
 	******************************************/
-
 	~Cexception();
 
 
 	/*****************************************
-	Surcharge de l'opérateur =.
+	Opérateur =.
 	******************************************
-	Entrée : instance de la classe Cexception.
+	Entrée : instance de la classe Cexception à copier.
 	Nécessite : rien.
 	Sortie : l'objet recopié.
 	Entraîne : la recopie de l'objet en paramètre.
 	******************************************/
-
 	Cexception & operator=(Cexception EXCexception);
 
 
@@ -94,46 +101,42 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : un code d'erreur (unsigned int).
+	Sortie : le code d'erreur
 	Entraîne : rien.
 	******************************************/
-
 	unsigned int EXCgetValeur() const { return uiEXCValeur; }
 
 
 	/*****************************************
 	Accesseur pour pcEXCMessage.
 	******************************************
-	Entrée : rien.
-	Nécessite : rien.
-	Sortie : un message d'erreur (char *).
-	Entraîne : rien.
+	Entrée : rien
+	Nécessite : rien
+	Sortie : un message d'erreur
+	Entraîne : rien
 	******************************************/
-
 	char * EXCgetMessage() const { return pcEXCMessage; }
 
 
 	/*****************************************
 	Mutateur pour pcEXCMessage.
 	******************************************
-	Entrée : un code d'erreur (unsigned int).
-	Nécessite : rien.
-	Sortie : rien.
-	Entraîne : la modification de uiEXCValeur.
+	Entrée : un code d'erreur
+	Nécessite : rien
+	Sortie : rien
+	Entraîne : la modification du code d'erreur
 	******************************************/
-
 	void EXCsetValeur(unsigned int uiValeur) { uiEXCValeur = uiValeur; }
 
 
 	/*****************************************
 	Mutateur pour pcEXCMessage.
 	******************************************
-	Entrée : un message d'erreur (char *).
-	Nécessite : rien.
-	Sortie : rien.
-	Entraîne : la modification de pcEXCMessage.
+	Entrée : un message d'erreur
+	Nécessite : rien
+	Sortie : rien
+	Entraîne : la modification du message d'erreur
 	******************************************/
-
 	void EXCsetMessage(char * pcMessage) { free(pcEXCMessage); pcEXCMessage = _strdup(pcMessage); }
 };
 

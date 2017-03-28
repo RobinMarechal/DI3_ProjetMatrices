@@ -1,17 +1,16 @@
 #include <iostream>
-#include <signal.h>
-
-using namespace std;
+#include <fstream>
 
 #include "Matrice.h"
 #include "Parseur.h"
 #include "TableauAssociatif.h"
-#include <fstream>
 #include "helpers.h"
 #include "constantes.h"
 
+using namespace std;
+
 // pour desactiver les tests : #define NDEBUG
- //#define NDEBUG
+//#define NDEBUG
 
 #ifndef NDEBUG
 
@@ -19,32 +18,8 @@ using namespace std;
 
 #endif
 
-void handleSIGABRT(int iSignNb)
-{
-	cout << "TESTS ECHOUES !" << endl;
-}
-
-
-void gregoire()
-{
-	//CMatrice <double> m = CParseur::PARparserFichier("..\\JePasse\\fichier04.txt");
-	//m.MATafficher();
-}
-
 void robin()
 {
-	CTableauAssociatif t;
-
-	t.TABajouterAuto("key1", "5");
-	t.TABajouterAuto("key2", "5.2");
-	t.TABajouterAuto("key3", "abc");
-
-	cout << t.TABgetValeurEntier("key1") << endl;
-	cout << t.TABgetValeurReel("key2") << endl;
-	cout << t.TABgetValeurChaine("key3") << endl;
-
-	exit(-1);
-
 	char * s2 = "..\\JePasse\\fichier01.txt";
 	char * s3 = "..\\JePasse\\fichier02.txt";
 	char * s4 = "..\\JePasse\\fichier03.txt";
@@ -114,18 +89,6 @@ int main(unsigned int argc, char * argv2[])
 {
 	robin();
 	//gregoire();
-
-	cout << "1\t=>\t" << getType("1") << endl;
-	cout << "1.50\t=>\t" << getType("1.50") << endl;
-	cout << "1.\t=>\t" << getType("1.") << endl;
-	cout << ".1\t=>\t" << getType(".1") << endl;
-	cout << "-50.23\t=>\t" << getType("-50.23") << endl;
-	cout << "-50\t=>\t" << getType("-50") << endl;
-	cout << "-0.23\t=>\t" << getType("-0.23") << endl;
-	cout << "-0.23\t=>\t" << getType("-0.23") << endl;
-	cout << "27e+23\t=>\t" << getType("27e+23") << endl;
-	cout << "32e-23\t=>\t" << getType("32e-23") << endl;
-	cout << "32e-23\t=>\t" << getType("abc") << endl;
 
 	/*
 		TODO :

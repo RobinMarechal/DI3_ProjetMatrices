@@ -5,44 +5,15 @@
 #include <string.h>
 #include <iostream>
 
-char * subString(const char * start, const char * end) {
-	int i = 0;
-	char * str = (char *)malloc(sizeof(char) * (size_t)(end - start + 1));
-	while (start + i != end && start[i] != '\0')
-	{
-		str[i] = start[i];
-		i++;
-	}
-	str[i] = '\0';
 
-	return str;
-}
-
-void toLowerString(char * pcStr)
-{
-	unsigned int uiBoucle;
-	for (uiBoucle = 0; uiBoucle < strlen(pcStr); uiBoucle++)
-	{
-		pcStr[uiBoucle] = tolower(pcStr[uiBoucle]);
-	}
-}
-
-char * trim(char pcStr[])
-{
-	// On suprime les espaces avant le début du mot
-	while (isspace(*pcStr))
-		pcStr++;
-
-	char * pcTmp = strchr(pcStr, '\0') - 1;
-	// On supprime les espaces après la fin du mot
-	while (isspace(*pcTmp))
-		pcTmp--;
-
-	pcTmp[1] = '\0';
-
-	return pcStr;
-}
-
+/*****************************************
+Retourne le type correspondant à la chaine en paramètre
+******************************************
+Entrée : la chaine à analyser
+Nécessite : rien
+Sortie : l'entier correspondant au type de la chaine
+Entraîne : (0 = entier) || (1 = réel) || (3 = chaine)
+******************************************/
 int getType(char * pcVal)
 {
 	int iEtat = 0;
@@ -114,3 +85,70 @@ int getType(char * pcVal)
 
 	return iType;
 }
+
+
+/*****************************************
+Extraction d'une sous chaine
+******************************************
+Entrée : un pointeur sur le début de la sous-chaîne,
+Entrée : un pointeur sur la fin de la sous-chaîne.
+Nécessite : 'end' >= 'start'.
+Sortie : la sous-chaîne souhaitée (de type char *).
+Entraîne : Allocation dynamique d'un char * (malloc)
+******************************************/
+char * subString(const char * start, const char * end) {
+	int i = 0;
+	char * str = (char *)malloc(sizeof(char) * (size_t)(end - start + 1));
+	while (start + i != end && start[i] != '\0')
+	{
+		str[i] = start[i];
+		i++;
+	}
+	str[i] = '\0';
+
+	return str;
+}
+
+
+/*****************************************
+transformation d'une chaine de caratères en minuscule.
+******************************************
+Entrée : une chaîne de caractères.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : la chaine est en minuscule.
+******************************************/
+void toLowerString(char * pcStr)
+{
+	unsigned int uiBoucle;
+	for (uiBoucle = 0; uiBoucle < strlen(pcStr); uiBoucle++)
+	{
+		pcStr[uiBoucle] = tolower(pcStr[uiBoucle]);
+	}
+}
+
+
+/*****************************************
+Suppression des espaces en début et fin de chaine.
+******************************************
+Entrée : une chaîne de caractères.
+Nécessite : rien.
+Sortie : une chaîne de caractères.
+Entraîne : la suppression des espaces au début et à la fin de la chaîne.
+******************************************/
+char * trim(char pcStr[])
+{
+	// On suprime les espaces avant le début du mot
+	while (isspace(*pcStr))
+		pcStr++;
+
+	char * pcTmp = strchr(pcStr, '\0') - 1;
+	// On supprime les espaces après la fin du mot
+	while (isspace(*pcTmp))
+		pcTmp--;
+
+	pcTmp[1] = '\0';
+
+	return pcStr;
+}
+

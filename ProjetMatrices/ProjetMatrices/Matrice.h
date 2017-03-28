@@ -12,14 +12,43 @@
 #include "helpers.h"
 #include "constantes.h"
 
+/*************************************
+Classe pour gérer des matrices
+**************************************
+Permet la créations de matrices
+et fournis un ensemble d'opérations
+mathématiques courantes
+**************************************/
 template <class T>
 class CMatrice
 {
 private:
+	/*****************************
+	Le nombre de colonnes de la matrice
+	******************************/
 	unsigned int uiMATnbColonnes;
+
+	/*****************************
+	Le nombre de lignes de la matrice
+	******************************/
 	unsigned int uiMATnbLignes;
+
+	/*****************************
+	le tableau 2D représentant la matrice
+	******************************/
 	T ** ppMATmatrice;
 
+
+	/*****************************************
+	Vérifie le contenu d'une instance de CTableauAssociatif
+	pour créer un objet CMatrice
+	******************************************
+	Entrée : Une instance de CTableauAssociatif.
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : une exception si le tableau de contient pas "NBColonnes", "NBLignes" et "Matrice", 
+			et que les types correspondants sont incorrects (resp. Entier, Entier, Chaine)
+	******************************************/
 	static void MATverifierContenuTableau(CTableauAssociatif TABtab);
 
 	/*****************************************
@@ -30,7 +59,6 @@ private:
 	Sortie : rien.
 	Entraîne : initialisation de l'objet.
 	******************************************/
-
 	void MATinitMatrice();
 
 
