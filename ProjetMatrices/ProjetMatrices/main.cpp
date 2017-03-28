@@ -24,13 +24,6 @@ void handleSIGABRT(int iSignNb)
 	cout << "TESTS ECHOUES !" << endl;
 }
 
-
-void gregoire()
-{
-	//CMatrice <double> m = CParseur::PARparserFichier("..\\JePasse\\fichier04.txt");
-	//m.MATafficher();
-}
-
 void robin()
 {
 
@@ -75,7 +68,7 @@ void robin()
 			throw Cexception(0, "TypeMatrice != 'double'.");
 		}
 
-		CMatrice<double> m = CMatrice<double>::MATparser(TABtab);
+		CMatrice<double> m = CMatrice<double>::MATgenerer(TABtab);
 
 		cout << m << endl;
 	}
@@ -101,27 +94,6 @@ void robin()
 
 int main(unsigned int argc, char * argv2[])
 {
-	//robin();
-	//gregoire();
-
-	cout << "1\t=>\t" << getType("1") << endl;
-	cout << "1.50\t=>\t" << getType("1.50") << endl;
-	cout << "1.\t=>\t" << getType("1.") << endl;
-	cout << ".1\t=>\t" << getType(".1") << endl;
-	cout << "-50.23\t=>\t" << getType("-50.23") << endl;
-	cout << "-50\t=>\t" << getType("-50") << endl;
-	cout << "-0.23\t=>\t" << getType("-0.23") << endl;
-	cout << "-0.23\t=>\t" << getType("-0.23") << endl;
-	cout << "27e+23\t=>\t" << getType("27e+23") << endl;
-	cout << "32e-23\t=>\t" << getType("32e-23") << endl;
-	cout << "32e-23\t=>\t" << getType("abc") << endl;
-
-	/*
-		TODO :
-		- automate pour les nombres dans CTableauAssociatif::TABestNumerique()
-		- Vérifier les nombres négatifs
-	*/
-	/*
 	argc = 4;
 	char * argv[4] = { "", "..\\01.txt", "..\\02.txt", "..\\03.txt" };
 	
@@ -144,7 +116,7 @@ int main(unsigned int argc, char * argv2[])
 		{
 			CTableauAssociatif TABtab = CParseur::PARparserFichier(argv[uiBoucle]);
 			pcMATmatrices[uiBoucle - 1] = CMatrice<double>();
-			pcMATmatrices[uiBoucle - 1] = CMatrice<double>::MATparser(TABtab);
+			pcMATmatrices[uiBoucle - 1] = CMatrice<double>::MATgenerer(TABtab);
 		}
 
 		cout << "Matrices construites : " << endl;
@@ -214,6 +186,6 @@ int main(unsigned int argc, char * argv2[])
 
 		cout << MATproduit << endl;
 	}
-	*/
+	
 	return 0;
 }

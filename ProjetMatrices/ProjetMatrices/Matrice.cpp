@@ -156,7 +156,7 @@ CMatrice<T> CMatrice<T>::operator+( CMatrice<T> & MATmatrice)
 
 	if (MATmatrice.uiMATnbColonnes != uiMATnbColonnes || MATmatrice.uiMATnbLignes != uiMATnbLignes)
 	{
-		throw Cexception(0, "operator+ : Dimensions invalides");
+		throw Cexception(EXC_DIMENSIONS_INVALIDES, "operator+ : Dimensions invalides");
 	}
 
 	CMatrice<T> MATresultat(uiMATnbLignes, uiMATnbColonnes);
@@ -200,7 +200,7 @@ CMatrice<T> CMatrice<T>::operator*( CMatrice<T> & MATmatrice)
 {
 	if(uiMATnbColonnes != MATmatrice.uiMATnbLignes)
 	{
-		throw Cexception(0, "Operator * : Dimensions invalides");
+		throw Cexception(EXC_DIMENSIONS_INVALIDES, "Operator * : Dimensions invalides");
 	}
 
 	unsigned int uiBoucleL, uiBoucleC, uiBouclePdt;
@@ -257,29 +257,6 @@ CMatrice<T> CMatrice<T>::operator-(const T & tValeur)
 template <class T>
 CMatrice<T> CMatrice<T>::operator-(CMatrice<T> & MATmatrice)
 {
-	/*
-	unsigned int uiBoucleL, uiBoucleC;
-
-	if (MATmatrice.uiMATnbColonnes != uiMATnbColonnes || MATmatrice.uiMATnbLignes != uiMATnbLignes)
-	{
-		throw Cexception(0, "operator- : Dimensions invalides");
-	}
-
-	CMatrice<T> MATresultat(*this);
-
-	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
-	{
-		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
-		{
-			MATresultat(uiBoucleL, uiBoucleC) = MATgetValeur(uiBoucleL, uiBoucleC) - MATmatrice(uiBoucleL, uiBoucleC);
-		}
-	}
-
-	return MATresultat;
-	*/
-
-	// Plus maintenable
-
 	return operator+(MATmatrice * -1);
 }
 
@@ -292,7 +269,7 @@ CMatrice<T> CMatrice<T>::operator/(const T & tValeur)
 	// Ex : M / 4 = M * 1/4, mais 1/4 = 0 en cas de type entier
 	if (tValeur == 0)
 	{
-		throw Cexception(0, "operator / : Division par 0");
+		throw Cexception(EXC_DIVISION_PAR_ZERO, "operator / : Division par 0");
 	}
 
 	unsigned int uiLigne;
@@ -318,7 +295,7 @@ CMatrice<T> CMatrice<T>::operator^(int iPuissance)
 	if (iPuissance == 0)
 	{
 		// Impossible dans certains cas...
-		throw Cexception(0, "Cette librairie ne permet pas d'élever une matrice à la puissance 0.");
+		throw Cexception(EXC_PUISSANCE_ZERO, "Cette librairie ne permet pas d'élever une matrice à la puissance 0.");
 	}
 
 	unsigned int uiBoucle;
@@ -588,22 +565,22 @@ template<class T>
 void CMatrice<T>::MATverifierContenuTableau(CTableauAssociatif TABtab)
 {
 	if (TABtab.TABgetIndiceCle("NBLignes") == -1)
-		throw Cexception(0, "Erreur : champs 'NBLignes' non renseigné.");
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'NBLignes' non renseigné.");
 
 	if (TABtab.TABgetIndiceCle("NBColonnes") == -1)
-		throw Cexception(0, "Erreur : champs 'NBColonnes' non renseigné.");
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'NBColonnes' non renseigné.");
 
 	if (TABtab.TABgetIndiceCle("Matrice") == -1)
-		throw Cexception(0, "Erreur : champs 'Matrice' non renseigné.");
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'Matrice' non renseigné.");
 
 	if (TABtab.TABgetValeurType("NBLignes") != TAB_TYPE_ENTIER)
-		throw Cexception(0, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier.");
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier.");
 
 	if (TABtab.TABgetValeurType("NBColonnes") != TAB_TYPE_ENTIER)
-		throw Cexception(0, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier.");
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier.");
 
 	if (TABtab.TABgetValeurType("Matrice") != TAB_TYPE_CHAINE)
-		throw Cexception(0, "Erreur de creation de la matrice : La valeur de 'Matrice' doit etre une chaine de caractère ou une liste ('[....]')");
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'Matrice' doit etre une chaine de caractère ou une liste ('[....]')");
 }
 
 template <class T>
@@ -615,7 +592,7 @@ void CMatrice<T>::MATinitMatrice()
 
 	if (ppMATmatrice == nullptr)
 	{
-		throw Cexception(0, "MATinitMatrice() : Mallocation failed");
+		throw Cexception(EXC_ECHEC_ALLOCATION, "MATinitMatrice() : Mallocation failed");
 	}
 
 	// Dans chaque colonne, on alloue uiMATnbLignes 'cases'
@@ -626,7 +603,7 @@ void CMatrice<T>::MATinitMatrice()
 
 		if (ppMATmatrice[uiBoucle] == nullptr)
 		{
-			throw Cexception(0, "MATinitMatrice() : Callocation failed");
+			throw Cexception(EXC_ECHEC_ALLOCATION, "MATinitMatrice() : Callocation failed");
 		}
 	}
 }
@@ -673,35 +650,6 @@ void CMatrice<T>::MATdesallouerMatrice()
 template<class T>
 void CMatrice<T>::MATajouterColonnes(int iNb)
 {
-	/*
-	if (iNb < 0 && (unsigned int) (-iNb) >= uiMATnbColonnes)
-	{
-		throw Cexception(0, "MATajouterColonnes() : Argument invalide");
-	}
-
-	ppMATmatrice = (T **)realloc(ppMATmatrice, (uiMATnbColonnes + iNb) * sizeof(T *));
-
-	if (ppMATmatrice == nullptr)
-	{
-		throw Cexception(0, "MATajouterColonnes() : Echec de reallocation");
-	}
-
-	if (iNb > 0)
-	{
-		unsigned int uiBoucleC;
-
-		for (uiBoucleC = uiMATnbColonnes; uiBoucleC < uiMATnbColonnes + iNb; uiBoucleC++)
-		{
-			ppMATmatrice[uiBoucleC] = (T *)calloc(uiMATnbLignes, sizeof(T));
-
-			if (ppMATmatrice[uiBoucleC] == nullptr)
-			{
-				throw Cexception(0, "MATajouterColonnes() : Callocation failed");
-			}
-		}
-	}
-	*/
-
 	// Ajouter une colonne revient a ajouter une ligne à la transposee
 	CMatrice<T> MATtmp = MATtransposee();
 	MATtmp.MATsetNbLignes(iNb + MATtmp.uiMATnbLignes);
@@ -716,7 +664,7 @@ void CMatrice<T>::MATajouterLignes(int iNb)
 {
 	if (iNb < 0 && (unsigned int)(-iNb) >= uiMATnbLignes)
 	{
-		throw Cexception(0, "MATajouterLignes() : Argument invalide");
+		throw Cexception(EXC_ACCES_MEMOIRE, "MATajouterLignes() : Argument invalide");
 	}
 
 	unsigned int uiBoucleC, uiBoucleL;
@@ -727,7 +675,7 @@ void CMatrice<T>::MATajouterLignes(int iNb)
 
 		if (ppMATmatrice[uiBoucleC] == nullptr)
 		{
-			throw Cexception(0, "MATajouterColonnes() : Reallocation failed");
+			throw Cexception(EXC_ECHEC_ALLOCATION, "MATajouterColonnes() : Reallocation failed");
 		}
 
 		for (uiBoucleL = uiMATnbLignes; uiBoucleL < uiMATnbLignes + iNb; uiBoucleL++)
@@ -837,7 +785,7 @@ CMatrice<T> CMatrice<T>::MATinverse()
 
 	if (det == 0)
 	{
-		throw Cexception(0, "Calcul de l'inverse impossible : Déterminant nul.");
+		throw Cexception(EXC_DIVISION_PAR_ZERO, "Calcul de l'inverse impossible : Déterminant nul.");
 	}
 
 	CMatrice<T> MATinv(uiDim, uiDim);
@@ -1056,7 +1004,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 			{
 				// Si on trouve '\n' ici alors qu'on a pas passé la dernière colonnes
 				if ((*pcStrMatrice == '\n' || *pcStrMatrice == '\0') && uiBoucleC > 0)
-					throw Cexception(0, "Format invalide : Au moins une ligne contient moins de valeurs que prevu.");
+					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Au moins une ligne contient moins de valeurs que prevu.");
 				pcStrMatrice++;
 			}
 
@@ -1095,7 +1043,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 			{
 				if (*pcStrMatrice != ' ' && *pcStrMatrice != '\t')
 				{
-					throw Cexception(0, "Format invalide : Une ligne de la matrice contient plus de valeurs que le nombre de colonnes specifie.");
+					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Une ligne de la matrice contient plus de valeurs que le nombre de colonnes specifie.");
 				}
 
 				pcStrMatrice++;

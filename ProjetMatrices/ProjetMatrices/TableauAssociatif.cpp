@@ -12,21 +12,6 @@
 #define TAB_TYPE_REEL 2
 #define TAB_TYPE_CHAINE 3
 
-/*
-
-Valeur : {
-	double dReel;
-	int iEntier;
-	char * pcChaine;
-} Valeur;
-
-Attributs :
-	char ** ppcTABcles;
-	Valeur * pvTABvaleurs;
-	unsigned int uiTABnbElements;
-	unsigned int * puiTypes;
-*/
-
 
 void CTableauAssociatif::TABinit() 
 {
@@ -108,7 +93,7 @@ void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int u
 
 	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
 	{
-		throw Cexception(0, "TABsupprimerElement() : Echec de reallocation");
+		throw Cexception(EXC_ECHEC_ALLOCATION, "TABsupprimerElement() : Echec de reallocation");
 	}
 
 
@@ -116,44 +101,7 @@ void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int u
 	pvTABvaleurs[uiTABnbElements - 1] = vValeur;
 	puiTypes[uiTABnbElements - 1] = uiType;
 }
-/*
-bool CTableauAssociatif::TABestNumerique(char * pcVal)
-{
-	bool bPoint = false;
 
-	// si le pointeur est null, ou la chaine est vide, ce n'est pas un nombre
-	if (pcVal == NULL || *pcVal == '\0')
-		return false;
-
-	if (*pcVal == '-')
-		pcVal++;
-
-	while (*pcVal != '\0')
-	{
-		// S'il y a un point ou une virgule, on met bPoint à true pour s'assurer qu'il n'y ai qu'un/une
-		// Si le charactère est un point ou une virgule et que bPoint est true, alors ce n'est pas un bombre
-		if (*pcVal == '.' || *pcVal == ',')
-		{
-			if (bPoint)
-				return false;
-			else
-				bPoint = true;
-		}
-		// Si le caractère n'est pas un point ou une virgule, et qu'il n'est pas compris
-		// entre 0 et 9, alors ce n'est pas un nombre
-		else if (*pcVal < '0' || *pcVal > '9')
-		{
-			return false;
-		}
-
-		pcVal++;
-	}
-
-	// Tout s'est bien passé, c'est donc un nombre
-	return true;
-}
-
-*/
 
 void CTableauAssociatif::TABsupprimer(char * pcCle) 
 {
@@ -176,7 +124,7 @@ void CTableauAssociatif::TABsupprimer(char * pcCle)
 
 	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
 	{
-		throw Cexception(0, "TABsupprimerElement() : Echec de reallocation");
+		throw Cexception(EXC_ECHEC_ALLOCATION, "TABsupprimerElement() : Echec de reallocation");
 	}
 
 }
