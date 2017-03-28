@@ -143,6 +143,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Cexception.h" />
+    <ClInclude Include="constantes.h" />
+    <ClInclude Include="helpers.h" />
     <ClInclude Include="Matrice.h" />
     <ClInclude Include="Parseur.h" />
     <ClInclude Include="TableauAssociatif.h" />
@@ -150,6 +152,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cexception.cpp" />
+    <ClCompile Include="helpers.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Matrice.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>

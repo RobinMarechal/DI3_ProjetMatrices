@@ -116,44 +116,6 @@ void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int u
 	pvTABvaleurs[uiTABnbElements - 1] = vValeur;
 	puiTypes[uiTABnbElements - 1] = uiType;
 }
-/*
-bool CTableauAssociatif::TABestNumerique(char * pcVal)
-{
-	bool bPoint = false;
-
-	// si le pointeur est null, ou la chaine est vide, ce n'est pas un nombre
-	if (pcVal == NULL || *pcVal == '\0')
-		return false;
-
-	if (*pcVal == '-')
-		pcVal++;
-
-	while (*pcVal != '\0')
-	{
-		// S'il y a un point ou une virgule, on met bPoint à true pour s'assurer qu'il n'y ai qu'un/une
-		// Si le charactère est un point ou une virgule et que bPoint est true, alors ce n'est pas un bombre
-		if (*pcVal == '.' || *pcVal == ',')
-		{
-			if (bPoint)
-				return false;
-			else
-				bPoint = true;
-		}
-		// Si le caractère n'est pas un point ou une virgule, et qu'il n'est pas compris
-		// entre 0 et 9, alors ce n'est pas un nombre
-		else if (*pcVal < '0' || *pcVal > '9')
-		{
-			return false;
-		}
-
-		pcVal++;
-	}
-
-	// Tout s'est bien passé, c'est donc un nombre
-	return true;
-}
-
-*/
 
 void CTableauAssociatif::TABsupprimer(char * pcCle) 
 {
@@ -212,52 +174,48 @@ void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal)
 
 void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 {
-	/*
-	if (TABestNumerique(pcVal))
+	// Format : XX
+	int iType = getType(pcVal);
+	if (iType == TAB_TYPE_ENTIER)
 	{
-		// Format : XX
-		if (TABestEntier(pcVal))
+		// On parse la chaine en int
+		int iVal = atoi(pcVal);
+		// on l'ajoute au tableau
+		TABajouterEntier(pcCle, iVal);
+	}
+	// Format : XX.XX || XX,XX
+	else if(iType == TAB_TYPE_REEL)
+	{
+		// On rajoute un 0 au début et à la fin pour etre sur d'éviter les problèmes pour convertir
+		unsigned int uiBoucle;
+		unsigned int iTaille = strlen(pcVal);
+		char * pcStr = new char[iTaille + 3];
+
+		for (uiBoucle = 0; uiBoucle < iTaille + 2; uiBoucle++)
 		{
-			// On parse la chaine en int
-			int iVal = atoi(pcVal);
-			// on l'ajoute au tableau
-			TABajouterEntier(pcCle, iVal);
+			pcStr[uiBoucle] = '0';
 		}
-		// Format : XX.XX || XX,XX
-		else
-		{
-			// On rajoute un 0 au début et à la fin pour etre sur d'éviter les problèmes pour convertir
-			unsigned int uiBoucle;
-			unsigned int iTaille = strlen(pcVal);
-			char * pcStr = new char[iTaille + 3];
+		pcStr[iTaille + 2] = '\0';
 
-			for (uiBoucle = 0; uiBoucle < iTaille + 2; uiBoucle++)
-			{
-				pcStr[uiBoucle] = '0';
-			}
-			pcStr[iTaille + 2] = '\0';
+		strcpy_s(pcStr + 1, strlen(pcVal)+1, pcVal);
+		*strchr(pcStr, '\0') = '0';
 
-			strcpy_s(pcStr + 1, strlen(pcVal), pcVal);
-			*strchr(pcStr, '\0') = '0';
+		// On remplace ',' par '.' s'il faut
+		if (strchr(pcStr, ',') != NULL)
+			pcStr[strchr(pcStr, ',') - pcStr] = '.';
 
-			// On remplace ',' par '.' s'il faut
-			if (strchr(pcStr, ',') != NULL)
-				pcStr[strchr(pcStr, ',') - pcStr] = '.';
+		// On parse la chaine en double;
+		double dVal = atof(pcStr);
+		// on l'ajoute au tableau
+		TABajouterReel(pcCle, dVal);
 
-			// On parse la chaine en double;
-			double dVal = atof(pcStr);
-			// on l'ajoute au tableau
-			TABajouterReel(pcCle, dVal);
-
-			delete[] pcStr;
-		}
+		delete[] pcStr;
 	}
 	else
 	{
 		// on ajoute simplement la chaine
 		TABajouterChaine(pcCle, _strdup(pcVal));
 	}
-	*/
 }
 
 unsigned int CTableauAssociatif::TABgetNbElements() const 

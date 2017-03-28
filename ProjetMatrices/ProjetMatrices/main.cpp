@@ -33,6 +33,17 @@ void gregoire()
 
 void robin()
 {
+	CTableauAssociatif t;
+
+	t.TABajouterAuto("key1", "5");
+	t.TABajouterAuto("key2", "5.2");
+	t.TABajouterAuto("key3", "abc");
+
+	cout << t.TABgetValeurEntier("key1") << endl;
+	cout << t.TABgetValeurReel("key2") << endl;
+	cout << t.TABgetValeurChaine("key3") << endl;
+
+	exit(-1);
 
 	char * s2 = "..\\JePasse\\fichier01.txt";
 	char * s3 = "..\\JePasse\\fichier02.txt";
@@ -75,7 +86,7 @@ void robin()
 			throw Cexception(0, "TypeMatrice != 'double'.");
 		}
 
-		CMatrice<double> m = CMatrice<double>::MATparser(TABtab);
+		CMatrice<double> m = CMatrice<double>::MATgenerer(TABtab);
 
 		cout << m << endl;
 	}
@@ -101,7 +112,7 @@ void robin()
 
 int main(unsigned int argc, char * argv2[])
 {
-	//robin();
+	robin();
 	//gregoire();
 
 	cout << "1\t=>\t" << getType("1") << endl;
