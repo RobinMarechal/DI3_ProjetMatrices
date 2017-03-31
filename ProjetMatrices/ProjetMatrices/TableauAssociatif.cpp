@@ -389,8 +389,6 @@ int CTableauAssociatif::TABgetIndiceCle(char * pcCle) const
 		}
 	}
 
-	throw Cexception(EXC_ACCES_MEMOIRE, "Une balise n'est pas au bon format.");
-
 	return -1;
 }
 
