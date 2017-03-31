@@ -81,18 +81,8 @@ void robin()
 }
 
 
-int main(unsigned int argc, char * argv2[])
+int main(unsigned int argc, char * argv[])
 {
-	argc = 4;
-	char * argv[4] = { "", "..\\01.txt", "..\\02.txt", "..\\03.txt" };
-	
-	cout << argc << endl;
-	for (unsigned int i = 1; i < argc; i++)
-	{
-		cout << argv[i] << endl;
-	}
-	
-	
 	if (argc > 1)
 	{
 		double iValeur;
@@ -109,7 +99,7 @@ int main(unsigned int argc, char * argv2[])
 		}
 
 		cout << "Matrices construites : " << endl;
-
+		 
 		for (uiBoucle = 0; uiBoucle < argc - 1; uiBoucle++)
 		{
 			cout << pcMATmatrices[uiBoucle] << endl;
@@ -120,7 +110,7 @@ int main(unsigned int argc, char * argv2[])
 		cin >> iValeur;
 
 		// Affichage de la multiplication.
-		cout << "Matrice + Entier : " << endl;
+		cout << "Matrice * Entier : " << endl;
 		
 		for (uiBoucle = 0; uiBoucle < argc - 1; uiBoucle++)
 		{
@@ -150,7 +140,7 @@ int main(unsigned int argc, char * argv2[])
 		cout << MATsomme << endl;
 
 		// Affichage de l'opération M1 - M2 + M3 - M4...
-		cout << "M1 + M2 - M3 +.... : " << endl;
+		cout << "M1 - M2 + M3 - ... : " << endl;
 		CMatrice <double> MATsommeSoustraction = pcMATmatrices[0];
 
 		for (uiBoucle = 1; uiBoucle < argc - 1; uiBoucle++)
@@ -168,12 +158,20 @@ int main(unsigned int argc, char * argv2[])
 		cout << "M1 * M2 * M3 *.... : " << endl;
 		CMatrice <double> MATproduit = pcMATmatrices[0];
 
-		for (uiBoucle = 1; uiBoucle < argc - 1; uiBoucle++)
+		try
 		{
-			MATproduit = MATproduit * pcMATmatrices[uiBoucle];
+			for (uiBoucle = 1; uiBoucle < argc - 1; uiBoucle++)
+			{
+				MATproduit = MATproduit * pcMATmatrices[uiBoucle];
+			}
+					
+			cout << MATproduit << endl;
+
+		} catch(Cexception EXCe)
+		{
+			cout << EXCe.EXCgetMessage() << endl;
 		}
 
-		cout << MATproduit << endl;
 	}
 	
 	return 0;
