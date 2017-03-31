@@ -42,7 +42,7 @@ private:
 	Nécessite : rien.
 	Sortie : rien.
 	Entraîne : une exception si le tableau de contient pas "NBColonnes", "NBLignes" et "Matrice", 
-			et que les types correspondants sont incorrects (resp. Entier, Entier, Chaine)
+			ou que les types correspondants sont incorrects (resp. Entier, Entier, Chaine)
 	******************************************/
 	static void MATverifierContenuTableau(CTableauAssociatif TABtab);
 
@@ -52,7 +52,7 @@ private:
 	Entrée : rien.
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : initialisation de l'objet.
+	Entraîne : Allocation sur le tas du tableau 2D contenant la matrice
 	******************************************/
 	void MATinitMatrice();
 
@@ -62,9 +62,8 @@ private:
 	******************************************
 	Entrée : l'indice de la ligne
 	Nécessite : rien
-	Sortie : un booléen
-	Entraîne : (true : la ligne est nulle)
-			   OU (false : la ligne n'est pas nulle)
+	Sortie : un booléen. True : ligne nulle, False : la ligne n'est pas nulle.
+	Entraîne : rien
 	******************************************/
 	bool MATligneEstNulle(unsigned int uiLigne);
 
@@ -73,9 +72,9 @@ private:
 	Libère la mémoire rerservée par l'instance de CMatrice<T>
 	******************************************
 	Entrée : rien
-	Nécessite : Nombres de 'colonnes' de pptMatrice = uiMATnbColonnes 
+	Nécessite : rien
 	Sortie : rien
-	Entraîne : désalloue l'objet.
+	Entraîne :libère la mémoire allouée au tableau 2D.
 	******************************************/
 	void MATdesallouerMatrice();
 
@@ -86,7 +85,7 @@ private:
 	Entrée : le nombre de colonnes à ajouter (par défaut = 1).
 	Nécessite : rien
 	Sortie : rien
-	Entraîne : une réallocation du tableau 2D
+	Entraîne : Réallocation du tableau 2D
 	******************************************/
 	void MATajouterColonnes(int iNb = 1);
 
@@ -97,7 +96,7 @@ private:
 	Entrée : le nombre de lignes à ajouter (par défaut = 1).
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : une réallocation du tableau 2D.
+	Entraîne : Réallocation du tableau 2D.
 	******************************************/
 	void MATajouterLignes(int iNb = 1);
 
@@ -145,7 +144,7 @@ public:
 	Entrée : rien.
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : Libération de la mémoire allouée pour pptMATmatrice
+	Entraîne : Destruction de l'objet et libération de la mémoire allouée
 	****************************************/
 	~CMatrice();
 
@@ -158,7 +157,7 @@ public:
 	Entrée : indice de la ligne,
 	Entrée : indice de la colonne.
 	Nécessite : rien.
-	Sortie : valeur de la position (i, j) dans la matrice.
+	Sortie : Référence de la valeur à la position (i, j) dans la matrice.
 	Entraîne : rien.
 	*****************************************/
 	T & operator()(unsigned int uiLigne, unsigned int uiColonne);
@@ -180,9 +179,8 @@ public:
 	******************************************
 	Entrée : instance de la classe CMatrice.
 	Nécessite : rien.
-	Sortie : booléen.
-	Entraîne : (true : les matrices sont identiques)
-			   OU (false : les matrices sont différentes).
+	Sortie : booléen : true = les matrices sont identiques, false = les matrices sont différentes
+	Entraîne : rien
 	******************************************/
 	bool operator==(CMatrice<T> & MATmatrice);
 
@@ -191,10 +189,9 @@ public:
 	Operateur !=.
 	******************************************
 	Entrée : instance de la classe CMatrice.
-	Necessite : rien.
-	Sortie : booléen.
-	Entraîne : (true : les matrices sont différentes)
-			   OU (false : les matrices sont identiques).
+	Nécessite : rien.
+	Sortie : booléen : true = les matrices sont différentes, false = les matrices sont identiques
+	Entraîne : rien
 	******************************************/
 	bool operator!=(CMatrice<T> & MATmatrice);
 
@@ -204,8 +201,8 @@ public:
 	******************************************
 	Entrée : la valeur à ajouter.
 	Nécessite : rien.
-	Sortie : objet CMatrice<T>.
-	Entraîne : création d'un nouvel objet CMatrice<T> résultant de la somme
+	Sortie : objet CMatrice<T> résultant de la somme.
+	Entraîne : rien
 	******************************************/
 	CMatrice<T> operator+(const T & tValeur);
 
@@ -216,9 +213,8 @@ public:
 	Entrée : instance de la classe CMatrice.
 	Nécessite : les matrices sont de même dimension.
 	Sortie : instance de la classe CMatrice contenant le résultat de la somme.
-	Entraîne : Allocation d'un nouvel objet CMatrice.
+	Entraîne : rien
 	******************************************/
-
 	CMatrice<T> operator+(CMatrice & MATmatrice);
 
 
@@ -228,10 +224,8 @@ public:
 	Entree : la valeur à multiplier (de type T).
 	Necessite : rien.
 	Sortie : instance de la classe CMatrice contenant le résultat du produit.
-	Entraîne : Allocation d'un nouvel objet CMatrice,
-			   multiplication de la valeur passée en paramètre avec toutes les cases de la matrice.
+	Entraîne : rien
 	******************************************/
-
 	CMatrice<T> operator*(const T & tValeur);
 
 
@@ -242,22 +236,19 @@ public:
 	Nécessite : le nombre de colonnes de la première matrice
 				et le nombre de lignes de la deuxième matrice sont identiques.
 	Sortie : instance de la classe CMatrice contenant le résultat du produit.
-	Entraîne : Allocation d'un nouvel objet CMatrice.
+	Entraîne : rien
 	******************************************/
-
 	CMatrice<T> operator*(CMatrice<T> & MATmatrice);
 
 
 	/*****************************************
 	Opérateur - à paramètre de type T.
 	******************************************
-	Entree : la valeur à soustraire (de type T).
+	Entree : la valeur à soustraire.
 	Necessite : rien.
 	Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
-	Entraîne : Allocation d'un nouvel objet CMatrice,
-			   soustraction de la valeur passée en paramètre avec toutes les cases de la matrice.
+	Entraîne : rien
 	******************************************/
-
 	CMatrice<T> operator-(const T & tValeur);
 	
 
@@ -267,9 +258,8 @@ public:
 	Entrée : instance de la classe CMatrice.
 	Nécessite : les matrices sont de même dimension.
 	Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
-	Entraîne : Allocation d'un nouvel objet CMatrice.
+	Entraîne : rien
 	******************************************/
-
 	CMatrice<T> operator-(CMatrice<T> & MATmatrice);
 
 
@@ -279,13 +269,19 @@ public:
 	Entree : la valeur à diviser (de type T).
 	Necessite : tValeur doit être différente de 0.
 	Sortie : instance de la classe CMatrice contenant le résultat de la division.
-	Entraîne : Allocation d'un nouvel objet CMatrice,
-			   division de la valeur passée en paramètre avec toutes les cases de la matrice.
+	Entraîne : rien
 	******************************************/
-
 	CMatrice<T> operator/(const T & tValeur);
 
 
+	/*****************************************
+	Opérateur ^ 
+	******************************************
+	Entree : la puissance
+	Necessite : iPuissance != 0
+	Sortie : instance de la classe CMatrice contenant le résultat de M^(iPuissance).
+	Entraîne : rien
+	******************************************/
 	CMatrice<T> operator^(int iPuissance);
 
 
@@ -297,9 +293,8 @@ public:
 	Entrée : rien.
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : l'affichage de la matrice.
+	Entraîne : rien
 	******************************************/
-
 	void MATafficher();
 
 
@@ -308,10 +303,9 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : le nombre de colonnes de la matrice (unsigned int).
+	Sortie : le nombre de colonnes de la matrice.
 	Entraîne : rien.
 	******************************************/
-
 	unsigned int MATgetNbColonnes();
 
 
@@ -320,20 +314,20 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : le nombre de lignes de la matrice (unsigned int).
+	Sortie : le nombre de lignes de la matrice.
 	Entraîne : rien.
 	******************************************/
-
 	unsigned int MATgetNbLignes();
 
 
 	/*****************************************
 	Lecture de la valeur d'un coefficient.
 	******************************************
-	Entéee : l'indice de la ligne (unsigned int),
-			 l'indice de la colonne (unsigned int).
-	Nécessite : rien.
-	Sortie : le coefficient à la position (uiLigne, uiColonne).
+	Entéee : l'indice de la ligne,
+	Entrée : l'indice de la colonne.
+	Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
+	Nécessite : uiColonne >= 0 et est inferieur au nombre de de colonnes de la matrice.
+	Sortie : le coefficient à la position (uiLigne, uiColonne) par référence.
 	Entraîne : rien.
 	******************************************/
 	T & MATgetValeur(unsigned int uiLigne, unsigned int uiColonne);
@@ -342,24 +336,22 @@ public:
 	/*****************************************
 	Lecture d'une ligne.
 	******************************************
-	Entrée : l'indice de la ligne (unsigned int).
-	Nécessite : rien.
-	Sortie : la ligne à l'indice uiLigne.
-	Entraîne : rien.
+	Entrée : l'indice de la ligne.
+	Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
+	Sortie : un tableau contant la ligne uiLigne.
+	Entraîne : allocation (via l'operateur new) d'un tableau.
 	******************************************/
-
 	T * MATgetLigne(unsigned int uiLigne);
 
 	
 	/*****************************************
 	Lecture d'une colonne.
 	******************************************
-	Entrée : l'indice de la colonne (unsigned int).
-	Nécessite : rien.
-	Sortie : la colonne à l'indice uiColonne.
-	Entraîne : rien.
+	Entrée : l'indice de la colonne.
+	Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
+	Sortie : un tableau contant la colonnes uiColonne.
+	Entraîne : allocation (via l'operateur new) d'un tableau.
 	******************************************/
-
 	T * MATgetColonne(unsigned int uiColonne);
 
 
@@ -368,38 +360,36 @@ public:
 	/*****************************************
 	Mutateur pour la valeur.
 	******************************************
-	Entrée : l'indice de la ligne (unsigned int),
-			 l'indice de la colonne (unsigned int),
-			 la valeur définir (de type T).
-	Nécessite : rien.
+	Entrée : l'indice de la ligne.
+	Entrée : l'indice de la colonne.
+	Entrée : la valeur définir.
+	Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
+	Nécessite : uiColonne >= 0 et est inferieur au nombre de de colonnes de la matrice.
 	Sortie : rien.
-	Entraîne : un changement de valeur du coefficient (uiLigne, uiColonne).
+	Entraîne : un changement de valeur du coefficient à la position (uiLigne, uiColonne).
 	******************************************/
-
 	void MATsetValeur(unsigned int uiLigne, unsigned int uiColonne, T tValeur);
 
 
 	/*****************************************
 	Mutateur pour le nombre de lignes.
 	******************************************
-	Entrée : le nombre de lignes (unsigned int).
-	Nécessite : rien.
+	Entrée : le nombre de lignes.
+	Nécessite : uiNbLignes > 0.
 	Sortie : rien.
-	Entraîne : une initialisation ou modification du nombre de lignes de la matrice.
+	Entraîne : une réallocation du tableau 2D.
 	******************************************/
-
 	void MATsetNbLignes(unsigned int uiNbLignes);
 
 
 	/*****************************************
 	Mutateur pour le nombre de colonnes.
 	******************************************
-	Entrée : le nombre de colonnes (unsigned int).
-	Nécessite : rien.
+	Entrée : le nombre de colonnes.
+	Nécessite : uiNbColonnes > 0.
 	Sortie : rien.
-	Entraîne : une initialisation ou modification du nombre de colonnes de la matrice.
+	Entraîne : une réallocation du tableau 2D.
 	******************************************/
-
 	void MATsetNbColonnes(unsigned int uiNbColonnes);
 
 
@@ -410,10 +400,9 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : le rang de la matrice (unsigned int).
+	Sortie : le rang de la matrice.
 	Entraîne : rien.
 	******************************************/
-
 	unsigned int MATrang();
 
 
@@ -422,10 +411,9 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : une instance de CMatrice.
-	Entraîne : l'échelonnement de la matrice.
+	Sortie : une matrice échelonnées (non réduite => change le déterminant).
+	Entraîne : rien.
 	******************************************/
-
 	CMatrice<T> MATechelonnee();
 
 
@@ -434,34 +422,35 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : une instance de CMatrice.
-	Entraîne : une transposition de la matrice.
+	Sortie : la transposée de la matrice
+	Entraîne : rien.
 	******************************************/
-
 	CMatrice<T> MATtransposee();
 
 
 	/*****************************************
 	Calcul d'une sous-matrice.
 	******************************************
-	Entrée : rien.
-	Nécessite : rien.
-	Sortie : une instance de CMatrice.
-	Entraîne : création d'une matrice de dimension 
+	Entrée : l'indice de la ligne.
+	Entrée : l'indice de la colonne.
+	Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
+	Nécessite : uiColonne >= 0 et est inferieur au nombre de de colonnes de la matrice.
+	Sortie : une instance de CMatrice possédant une ligne et une colonne de moins
+	contenant les valeurs de la matrice qui ne sont pas sur la lige uiLigne ou
+	sur la colonne uiColonne.
+	Entraîne : rien.
 	******************************************/
-
 	CMatrice<T> MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne);
 
 
 	/*****************************************
-	Calcul du déterminant d'une matrice.
+	Calcul du déterminant.
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : la valeur du déterminant (de type T).
+	Sortie : la valeur du déterminant.
 	Entraîne : rien.
 	******************************************/
-
 	T MATdet();
 
 
@@ -623,11 +612,9 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : un booléen.
-	Entraine : (true : la matrice est nulle)
-			   OU (false : la matrice n'est pas nulle).
+	Sortie : un booléen : True = la matrice est nulle, False = la matrice n'est pas nulle.
+	Entraine : rien
 	******************************************/
-
 	bool MATestNulle();
 };
 
