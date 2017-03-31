@@ -157,8 +157,8 @@ void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal)
 	vVal.pcChaine = pcVal;
 	TABajouter(pcCle, vVal, TAB_TYPE_CHAINE);
 }
-#include <iostream>
-using namespace std;
+
+
 void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 {
 	// Format : XX
@@ -220,6 +220,8 @@ unsigned int CTableauAssociatif::TABgetNbElements() const
 	return uiTABnbElements;
 }
 
+
+
 int CTableauAssociatif::TABgetIndiceCle(char * pcCle) const 
 {
 	unsigned int uiBoucle;
@@ -231,6 +233,8 @@ int CTableauAssociatif::TABgetIndiceCle(char * pcCle) const
 			return uiBoucle;
 		}
 	}
+
+	throw Cexception(EXC_ACCES_MEMOIRE, "Une balise n'est pas au bon format.");
 
 	return -1;
 }
