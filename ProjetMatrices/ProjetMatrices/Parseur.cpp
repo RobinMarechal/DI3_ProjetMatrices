@@ -104,7 +104,7 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 			strcpy_s(strchr(pcMsg, '\0'), strlen(".") + 1, ".");
 			throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 		}
-		
+
 		// Si il n'y a pas de crochet, ou qu'il y a un ouvrant et un fermant, c'est bon
 		if((bCrochetFermant && bCrochetOuvrant) || (!bCrochetOuvrant && !bCrochetFermant))
 		{
@@ -117,6 +117,11 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		}
 	}
 
+	// S'il y a un crochet fermant mais pas de crochet ouvrant, syntaxe invalide
+	if (!bCrochetFermant && bCrochetOuvrant)
+	{
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Ereur syntaxique : un crochet fermant semble manquer.");
+	}
 
 	// Si les crochets sont ouvert mais jamais fermés, syntaxe invalide
 	if (bCrochetOuvrant && !bCrochetFermant && !bSucces)
@@ -161,8 +166,6 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 
 		pcTmp = strchr(pcLines, '=');
 
-		//cout << pcLines << endl;
-
 		//pcBalise = chaine avant le = sans les espaces au debut et a la fin
 		strcpy_s(pcBalise, 64, pcLines);
 		pcBalise[strchr(pcBalise, '=') - pcBalise] = '\0';
@@ -186,6 +189,7 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 
 				fichier.getline(pcLines, 1024);
 			}
+
 			// On retire le dernier \n
 			pcValeur[strlen(pcValeur) - 1] = '\0';
 		}
@@ -193,6 +197,8 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 		{
 			//strncpy_s(pcValeur, pcTmp, strlen(pcTmp));
 		}
+
+		toLowerString(pcValeur);
 
 		TABtab.TABajouterAuto(pcBalise, pcValeur);
 	}

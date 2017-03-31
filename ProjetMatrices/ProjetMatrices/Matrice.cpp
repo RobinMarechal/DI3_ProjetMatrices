@@ -656,6 +656,9 @@ et que les types correspondants sont incorrects (resp. Entier, Entier, Chaine)
 template<class T>
 void CMatrice<T>::MATverifierContenuTableau(CTableauAssociatif TABtab)
 {
+	if (TABtab.TABgetIndiceCle("TypeMatrice") == -1)
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'TypeMatrice' non renseigné.");
+
 	if (TABtab.TABgetIndiceCle("NBLignes") == -1)
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'NBLignes' non renseigné.");
 
@@ -1141,7 +1144,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 			{
 				// Si on trouve '\n' ici alors qu'on a pas passé la dernière colonnes
 				if ((*pcStrMatrice == '\n' || *pcStrMatrice == '\0') && uiBoucleC > 0)
-					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Au moins une ligne contient moins de valeurs que prevu.");
+					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Au moins une ligne enuient moins de valeurs que prevu.");
 				pcStrMatrice++;
 			}
 
@@ -1185,7 +1188,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 			{
 				if (*pcStrMatrice != ' ' && *pcStrMatrice != '\t')
 				{
-					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Une ligne de la matrice contient plus de valeurs que le nombre de colonnes specifie.");
+					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Une ligne de la matrice tient plus de valeurs que le nombre de colonnes specifie.");
 				}
 
 				pcStrMatrice++;
