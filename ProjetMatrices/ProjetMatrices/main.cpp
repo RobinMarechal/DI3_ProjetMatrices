@@ -35,11 +35,29 @@ int main(unsigned int argc, char * argv[])
 
 		unsigned int uiBoucle;
 
-		for (uiBoucle = 1; uiBoucle < argc; uiBoucle++)
+		try
 		{
-			CTableauAssociatif TABtab = CParseur::PARparserFichier(argv[uiBoucle]);
-			pcMATmatrices[uiBoucle - 1] = CMatrice<double>();
-			pcMATmatrices[uiBoucle - 1] = CMatrice<double>::MATgenerer(TABtab);
+
+			for (uiBoucle = 1; uiBoucle < argc; uiBoucle++)
+			{
+				CTableauAssociatif TABtab = CParseur::PARparserFichier(argv[uiBoucle]);
+
+				// On vérifie que la matrice est bien de type 'double'.
+				if (strcmp(TABtab.TABgetValeurChaine("TypeMatrice"), "double") != 0 || strlen(TABtab.TABgetValeurChaine("TypeMatrice")) != strlen("double"))
+				{
+					char pcMsg[256];
+					sprintf(pcMsg, "La valeur de TypeMatrice n'est pas 'double' dans le fichier %s.", argv[uiBoucle]);
+
+					throw Cexception(EXC_ERREUR_LEXICALE, pcMsg);
+				}
+
+				pcMATmatrices[uiBoucle - 1] = CMatrice<double>::MATgenerer(TABtab);
+			}
+		} catch(Cexception EXCe)
+		{
+			cout << EXCe.EXCgetMessage() << endl;
+
+			exit(-1);
 		}
 
 		cout << "Matrices construites : " << endl;

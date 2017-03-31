@@ -777,11 +777,11 @@ void CMatrice<T>::MATverifierContenuTableau(CTableauAssociatif TABtab)
 	if (TABtab.TABgetIndiceCle("Matrice") == -1)
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'Matrice' non renseigné.");
 
-	if (TABtab.TABgetValeurType("NBLignes") != TAB_TYPE_ENTIER)
-		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier.");
+	if (TABtab.TABgetValeurType("NBLignes") != TAB_TYPE_ENTIER  || TABtab.TABgetValeurEntier("NBLignes") < 1)
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier positif.");
 
-	if (TABtab.TABgetValeurType("NBColonnes") != TAB_TYPE_ENTIER)
-		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier.");
+	if (TABtab.TABgetValeurType("NBColonnes") != TAB_TYPE_ENTIER || TABtab.TABgetValeurEntier("NBColonnes") < 1)
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier positif.");
 
 	if (TABtab.TABgetValeurType("Matrice") != TAB_TYPE_CHAINE)
 		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'Matrice' doit etre une chaine de caractère ou une liste ('[....]')");
@@ -1297,6 +1297,11 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 			if (pcCoefficient[strlen(pcCoefficient) - 1] == '.')
 			{
 				pcCoefficient[strlen(pcCoefficient) - 1] = '\0';
+			}
+
+			if (getType(pcCoefficient) != TAB_TYPE_REEL && getType(pcCoefficient) != TAB_TYPE_ENTIER)
+			{
+				throw Cexception(EXC_ERREUR_LEXICALE, "Les coefficients de la matrice ne sont pas des réels ou des entiers.");
 			}
 
 			dValeur = atof(pcCoefficient);

@@ -157,7 +157,8 @@ void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal)
 	vVal.pcChaine = pcVal;
 	TABajouter(pcCle, vVal, TAB_TYPE_CHAINE);
 }
-
+#include <iostream>
+using namespace std;
 void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 {
 	// Format : XX
@@ -165,7 +166,17 @@ void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 	if (iType == TAB_TYPE_ENTIER)
 	{
 		// On parse la chaine en int
-		int iVal = atoi(pcVal);
+		char * pcBuffer = nullptr;
+
+		int iVal = strtod(pcVal, &pcBuffer);
+
+		if (strlen(pcBuffer) > 0)
+		{
+			char pcMsg[256];
+			sprintf(pcMsg, "La valeur de %s doit être un entier positif.", pcCle);
+
+			throw Cexception(EXC_ERREUR_LEXICALE, pcMsg);
+		}
 		// on l'ajoute au tableau
 		TABajouterEntier(pcCle, iVal);
 	}
