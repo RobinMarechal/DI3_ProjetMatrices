@@ -94,14 +94,14 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		// Si la syntaxe n'est pas [BALISE]=[VALEUR], syntaxe invalide
 		if (!bBalise || !bEgal || !bValeur)
 		{
-			strcpy_s(strchr(pcMsg, '\0'), strlen("."), ".");
+			strcpy_s(strchr(pcMsg, '\0'), strlen(".") + 1, ".");
 			throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 		}
 
 		// S'il y a un crochet fermant mais pas de crochet ouvrant, syntaxe invalide
 		if (bCrochetFermant && !bCrochetOuvrant)
 		{
-			strcpy_s(strchr(pcMsg, '\0'), strlen("."), ".");
+			strcpy_s(strchr(pcMsg, '\0'), strlen(".") + 1, ".");
 			throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 		}
 		
@@ -124,11 +124,11 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		char pcMsg[1024] = { 0 };
 		iLigne++;
 
-		strcpy_s(pcMsg, strlen("Erreur syntaxique a la ligne "), "Erreur syntaxique a la ligne ");
+		strcpy_s(pcMsg, strlen("Erreur syntaxique a la ligne ") + 1, "Erreur syntaxique a la ligne ");
 		sprintf_s(strchr(pcMsg, '\0'), 3, "%d", iLigne);
-		strcpy_s(strchr(pcMsg, '\0'), strlen(" du fichier "), " du fichier ");
-		strcpy_s(strchr(pcMsg, '\0'), strlen(pcFichier), pcFichier);
-		strcpy_s(strchr(pcMsg, '\0'), strlen(" : '[' trouve mais aucun ']' trouve plus loin."), " : '[' trouve mais aucun ']' trouve plus loin.");
+		strcpy_s(strchr(pcMsg, '\0'), strlen(" du fichier ") + 1, " du fichier ");
+		strcpy_s(strchr(pcMsg, '\0'), strlen(pcFichier) + 1, pcFichier);
+		strcpy_s(strchr(pcMsg, '\0'), 1 + strlen(" : '[' trouve mais aucun ']' trouve plus loin."), " : '[' trouve mais aucun ']' trouve plus loin.");
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 	}
 }
@@ -161,6 +161,8 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 
 		pcTmp = strchr(pcLines, '=');
 
+		//cout << pcLines << endl;
+
 		//pcBalise = chaine avant le = sans les espaces au debut et a la fin
 		strcpy_s(pcBalise, 64, pcLines);
 		pcBalise[strchr(pcBalise, '=') - pcBalise] = '\0';
@@ -186,7 +188,6 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 			}
 			// On retire le dernier \n
 			pcValeur[strlen(pcValeur) - 1] = '\0';
-			strcat_s(pcValeur, 2 + strlen(pcValeur), "]");
 		}
 		else
 		{
