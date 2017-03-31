@@ -13,6 +13,15 @@
 #define TAB_TYPE_CHAINE 3
 
 
+/********************************************************
+Initialisation de l'objet
+*********************************************************
+Entrée : rien
+Nécessite : rien
+Sortie : rien
+Entraîne : Définition de la valeur des attributs :
+les pointeurs à NULL et le nombre d'élément à 0
+*********************************************************/
 void CTableauAssociatif::TABinit() 
 {
 	ppcTABcles = NULL;
@@ -21,6 +30,16 @@ void CTableauAssociatif::TABinit()
 	uiTABnbElements = 0;
 }
 
+
+
+/********************************************************
+Pré-destruction de l'objet
+*********************************************************
+Entrée : rien
+Nécessite : rien
+Sortie : rien
+Entraîne : Libération de la mémoire allouée pour les attributs
+*********************************************************/
 void CTableauAssociatif::TABdetruire() 
 {
 	unsigned int uiBoucle;
@@ -37,11 +56,31 @@ void CTableauAssociatif::TABdetruire()
 	free(puiTypes);
 }
 
+
+/********************************************************
+Constructeur par défaut
+*********************************************************
+Entrée : rien
+Nécessite : rien
+Sortie : rien
+Entraîne : Création de l'objet
+*********************************************************/
 CTableauAssociatif::CTableauAssociatif() 
 {
 	TABinit();
 }
 
+
+/********************************************************
+Constructeur de recopie
+*********************************************************
+Entrée : l'instance de CTableauAssociatif à recopier
+Nécessite : rien
+Sortie : rien
+Entraîne : Création de l'objet en recopiant TABobjet.
+=> La recopie des tableau se fait en recopiant les valeurs,
+et non l'adresse des pointeurs
+*********************************************************/
 CTableauAssociatif::CTableauAssociatif(CTableauAssociatif & TABobjet) 
 {
 	unsigned int uiBoucle;
@@ -59,11 +98,31 @@ CTableauAssociatif::CTableauAssociatif(CTableauAssociatif & TABobjet)
 	}
 }
 
+
+/********************************************************
+Destructeur
+*********************************************************
+Entrée : rien
+Nécessite : rien
+Sortie : rien
+Entraîne : La destruction de l'objet et la libération
+de la mémoire allouée pour les attributs
+*********************************************************/
 CTableauAssociatif::~CTableauAssociatif() 
 {
 	TABdetruire();
 }
 
+
+/********************************************************
+Opérateur =
+*********************************************************
+Entrée : l'instance de CTableauAssociatif à affecter à l'objet
+Nécessite : rien
+Sortie : rien
+Entraîne : La recopie des tableau en recopier les valeurs,
+et non l'adresse des pointeurs
+*********************************************************/
 CTableauAssociatif & CTableauAssociatif::operator=(CTableauAssociatif & TABobjet) 
 {
 	unsigned int uiBoucle;
@@ -77,13 +136,19 @@ CTableauAssociatif & CTableauAssociatif::operator=(CTableauAssociatif & TABobjet
 	return *this;
 }
 
-// precond : pcCle est bien dans le tableau
-Valeur & CTableauAssociatif::operator[](char * pcCle) 
-{
-	unsigned int uiPos = TABgetIndiceCle(pcCle);
-	return pvTABvaleurs[uiPos];
-}
 
+
+/********************************************************
+Ajout d'un union au tableau associatif
+*********************************************************
+Entrée : la clé,
+Entrée : l'union contenant la valeur,
+Entrée : Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
+Nécessite : rien
+Sortie : rien
+Entraîne : La réallocations des trois tableaux et l'insertion
+des éléments dans les tableaux respectifs.
+*********************************************************/
 void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int uiType) 
 {
 	uiTABnbElements++;
@@ -93,7 +158,8 @@ void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int u
 
 	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
 	{
-		throw Cexception(EXC_ECHEC_ALLOCATION, "TABsupprimerElement() : Echec de reallocation");
+		std::cout << "TABajouter() : Une réallocation a échoué, le programme s'est arrêté." << std::endl;
+		exit(EXIT_FAILURE);
 	}
 
 
@@ -103,10 +169,23 @@ void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int u
 }
 
 
+/********************************************************
+Supprimer un élément du tableau
+*********************************************************
+Entrée : la clé à retirer du tableau
+Nécessite : L'objet possède la clé en attribut (Sinon la méthode ne fait rien)
+Sortie : rien
+Entraîne : Réduction de la mémoire allouée aux tableaux en attribut
+Et suppression de la clé pcCle et de l'élément dans les autres tableaux
+*********************************************************/
 void CTableauAssociatif::TABsupprimer(char * pcCle) 
 {
 	unsigned int uiBoucle;
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
+
+	// Si l'élément n'est pas dans le tableau, on ne fait rien
+	if (uiPos == -1)
+		return;
 
 	// On décale tout ce qui est à droite de uiPos d'une case vers la gauche
 	for (uiBoucle = uiPos; uiBoucle < uiTABnbElements - 1; uiBoucle++)
@@ -124,19 +203,47 @@ void CTableauAssociatif::TABsupprimer(char * pcCle)
 
 	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
 	{
-		throw Cexception(EXC_ECHEC_ALLOCATION, "TABsupprimerElement() : Echec de reallocation");
+		std::cout << "TABsupprimer() : Une réallocation a échoué, le programme s'est arrêté." << std::endl;
+		exit(EXIT_FAILURE);
 	}
 
 }
 
-// precond : pcCle est bien dans le tableau
+
+/********************************************************
+Modifier un élément du tableaux
+*********************************************************
+Entrée : la clé de la valeur à modifier
+Entrée : un union Valeur contenant la valeur à modifier
+Entrée : Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
+Nécessite : L'objet possède la clé en attribut (Sinon la méthode ne fait rien)
+Sortie : rien
+Entraîne : modification d'une valeur de chaque tableau si pcCle est bien dans le tableau
+*********************************************************/
 void CTableauAssociatif::TABmodifier(char * pcCle, Valeur vValeur, unsigned int uiType) 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
+
+	// Si l'élément n'est pas dans le tableau, on ne fait rien
+	if (uiPos == -1)
+		return;
+
 	pvTABvaleurs[uiPos] = vValeur;
 	puiTypes[uiPos] = uiType;
 }
 
+
+
+/********************************************************
+Ajouter un élément de type Réel
+*********************************************************
+Entrée : la clé de la valeur à ajouter
+Entrée : la valeur de type Réel à ajouter
+Nécessite : rien
+Sortie : rien
+Entraîne : Réallocation des tableaux en attribut
+et ajout des éléments dans leur tableau respectif
+*********************************************************/
 void CTableauAssociatif::TABajouterEntier(char * pcCle, int iVal) 
 {
 	Valeur vVal;
@@ -144,6 +251,18 @@ void CTableauAssociatif::TABajouterEntier(char * pcCle, int iVal)
 	TABajouter(pcCle, vVal, TAB_TYPE_ENTIER);
 }
 
+
+
+/********************************************************
+Ajouter un élément de type Réel
+*********************************************************
+Entrée : la clé de la valeur à ajouter
+Entrée : la valeur de type Réel à ajouter
+Nécessite : rien
+Sortie : rien
+Entraîne : Réallocation des tableaux en attribut
+et ajout des éléments dans leur tableau respectif
+*********************************************************/
 void CTableauAssociatif::TABajouterReel(char * pcCle, double dVal) 
 {
 	Valeur vVal;
@@ -151,6 +270,18 @@ void CTableauAssociatif::TABajouterReel(char * pcCle, double dVal)
 	TABajouter(pcCle, vVal, TAB_TYPE_REEL);
 }
 
+
+
+/********************************************************
+Ajouter un élément de type Chaine
+*********************************************************
+Entrée : la clé de la valeur à ajouter
+Entrée : la valeur de type Chaine à ajouter
+Nécessite : rien
+Sortie : rien
+Entraîne : Réallocation des tableaux en attribut
+et ajout des éléments dans leur tableau respectif
+*********************************************************/
 void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal) 
 {
 	Valeur vVal;
@@ -159,6 +290,19 @@ void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal)
 }
 
 
+
+/********************************************************
+Ajouter un élément sans spécifier le type
+*********************************************************
+Entrée : la clé de la valeur à ajouter
+Entrée : la valeur à ajouter sous faire d'une chaine de caractère
+Nécessite : rien
+Sortie : rien
+Entraîne : Déduction du type potentiel de pcVal grâce à un automate,
+et l'ajoute au tableau avec le bon type
+Exemples : "1.12" => Reel, "5" => Entier, "a12" => Chaine
+Exemples : "7." => Entier, ".27" => Reel, "" => Chaine
+*********************************************************/
 void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 {
 	// Format : XX
@@ -166,17 +310,8 @@ void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 	if (iType == TAB_TYPE_ENTIER)
 	{
 		// On parse la chaine en int
-		char * pcBuffer = nullptr;
+		int iVal = atoi(pcVal);
 
-		int iVal = strtod(pcVal, &pcBuffer);
-
-		if (strlen(pcBuffer) > 0)
-		{
-			char pcMsg[256];
-			sprintf(pcMsg, "La valeur de %s doit être un entier positif.", pcCle);
-
-			throw Cexception(EXC_ERREUR_LEXICALE, pcMsg);
-		}
 		// on l'ajoute au tableau
 		TABajouterEntier(pcCle, iVal);
 	}
@@ -215,6 +350,16 @@ void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 	}
 }
 
+
+
+/********************************************************
+Lecture du nombre d'élements du tableau
+*********************************************************
+Entrée : rien
+Nécessite : rien
+Sortie : le nombre d'élements du tableau associatif
+Entraîne : rien
+*********************************************************/
 unsigned int CTableauAssociatif::TABgetNbElements() const 
 {
 	return uiTABnbElements;
@@ -222,6 +367,16 @@ unsigned int CTableauAssociatif::TABgetNbElements() const
 
 
 
+/********************************************************
+Lecture du nombre d'élements du tableau
+*********************************************************
+Entrée : rien
+Nécessite : rien
+Sortie : La position de la clé.
+>= 0 : La clé est dans le tableau,
+== -1 : La clé n'est pas dans le tableau.
+Entraîne : rien
+*********************************************************/
 int CTableauAssociatif::TABgetIndiceCle(char * pcCle) const 
 {
 	unsigned int uiBoucle;
@@ -239,53 +394,153 @@ int CTableauAssociatif::TABgetIndiceCle(char * pcCle) const
 	return -1;
 }
 
-// precond : 0 < uiPos < uiTABnbElements
+
+
+/********************************************************
+Lecture de la clé à une position
+*********************************************************
+Entrée : la position dans le tableau
+Nécessite : 0 <= uiPos < Nombre d'éléments
+Sortie : un pointeur sur la clé
+Entraîne : rien
+Attention ! Une modification de la chaine retournée par la
+méthode entrainerait la modification de l'élement dans
+le tableaux des clés, il ne s'agit pas d'une copie.
+*********************************************************/
 char * CTableauAssociatif::TABgetCle(unsigned int uiPos) const 
 {
 	return ppcTABcles[uiPos];
 }
 
-// precond : pcCle est bien dans le tableau
+
+
+/********************************************************
+Lecture de l'union Valeur associé à une clé
+*********************************************************
+Entrée : la clé
+Nécessite : pcCle est dans le tableau des clés
+Sortie : un union Valeur
+Entraîne : rien
+*********************************************************/
 Valeur CTableauAssociatif::TABgetValeur(char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 	return pvTABvaleurs[uiPos];
 }
 
-// precond : 0 < uiPos < uiTABnbElements
+
+
+/********************************************************
+Lecture de l'union Valeur à une position
+*********************************************************
+Entrée : la position
+Nécessite : 0 <= uiPos < Nombre d'éléments
+Sortie : un union Valeur
+Entraîne : rien
+*********************************************************/
 Valeur CTableauAssociatif::TABgetValeurPos(unsigned int uiPos)
 {
 	return pvTABvaleurs[uiPos];
 }
 
-// precond : 0 < uiPos < uiMATnbElements
+
+
+/********************************************************
+Lecture du type de la valeur à une position
+*********************************************************
+Entrée : la position
+Nécessite : 0 <= uiPos < Nombre d'éléments
+Sortie: Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
+Entraîne : rien
+*********************************************************/
 unsigned int CTableauAssociatif::TABgetValeurType(unsigned int uiPos)
 {
 	return puiTypes[uiPos];
 }
 
-// precond :pcCle est dans le tableau
+
+
+/********************************************************
+Lecture du type de la valeur associée à une clé
+*********************************************************
+Entrée : la clé
+Nécessite : pcCle est dans le tableau des clés
+Sortie : Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
+Entraîne : rien
+*********************************************************/
 unsigned int CTableauAssociatif::TABgetValeurType(char * pcCle)
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 	return TABgetValeurType(uiPos);
 }
 
-// precond :pcCle est dans le tableau
+
+
+/********************************************************
+Lecture de la valeur au type Entier
+*********************************************************
+Entrée : la clé
+Nécessite : pcCle est dans le tableau des clés
+Nécessite : La valeur a été stockée en tant qu'Entier
+Sortie : La valeur de type Entier de l'union Valeur associé à la clé.
+Entraîne : rien
+Attention ! Si la valeur n'a pas été stockée en tant qu'Entier,
+La valeur sera faussée.
+*********************************************************/
 int CTableauAssociatif::TABgetValeurEntier(char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
-	return pvTABvaleurs[uiPos].iEntier;
+
+	if (puiTypes[uiPos] == TAB_TYPE_REEL)
+	{
+		return (int) pvTABvaleurs[uiPos].dReel;
+	}
+	else
+	{
+		return pvTABvaleurs[uiPos].iEntier;
+	}
 }
 
-// precond :pcCle est dans le tableau
+
+
+/********************************************************
+Lecture de la valeur au type Reel
+*********************************************************
+Entrée : la clé
+Nécessite : pcCle est dans le tableau des clés
+Nécessite : La valeur a été stockée en tant qu'Reel
+Sortie : La valeur de type Reel de l'union Valeur associé à la clé.
+Entraîne : rien
+Attention ! Si la valeur a été stockée en tant que Chaine,
+la valeur sera faussée.
+*********************************************************/
 double CTableauAssociatif::TABgetValeurReel(char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
-	return pvTABvaleurs[uiPos].dReel;
+
+	if (puiTypes[uiPos] == TAB_TYPE_ENTIER)
+	{
+		return (double) pvTABvaleurs[uiPos].iEntier;
+	}
+	else
+	{
+		return pvTABvaleurs[uiPos].dReel;
+	}
 }
 
-// precond :pcCle est dans le tableau
+
+
+/********************************************************
+Lecture de la valeur au type Chaine
+*********************************************************
+Entrée : la clé
+Nécessite : pcCle est dans le tableau des clés
+Nécessite : La valeur a été stockée en tant qu'Entier
+Sortie : La valeur de type Entier de l'union Valeur associé à la clé.
+Entraîne : rien
+Attention ! Si la valeur n'a pas été stockée en tant qu'Entier,
+La valeur sera faussée.
+*********************************************************/
 char * CTableauAssociatif::TABgetValeurChaine(char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);

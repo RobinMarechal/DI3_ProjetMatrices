@@ -5,7 +5,6 @@
 #include <sstream>
 #include <stdlib.h>
 #include "Cexception.h"
-#include "Matrice.h"
 #include "TableauAssociatif.h"
 #include "helpers.h"
 #include "constantes.h"
@@ -14,6 +13,14 @@
 using namespace std;
 
 
+/*****************************************
+Analyseur syntaxique.
+******************************************
+Entrée : le chemin du fichier.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : soulève une Cexception en cas d'erreur de syntaxe dans le fichier
+******************************************/
 void CParseur::PARanalyseSyntaxique(char * pcFichier)
 {
 	bool bBalise = false,
@@ -139,6 +146,15 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 }
 
 
+
+/*****************************************
+Parse un fichier.
+******************************************
+Entrée : le chemin du fichier à parser.
+Nécessite : rien.
+Sortie : une instance de CTableauAssociatif contenant les données du fichier.
+Entraîne : soulève une Cexception en cas d'erreur de syntaxe dans le fichier
+******************************************/
 CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 {   
 	// INITIALISATIONS ////////////////////////////////////////////////////////

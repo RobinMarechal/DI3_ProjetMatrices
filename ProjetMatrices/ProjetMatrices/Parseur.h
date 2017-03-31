@@ -12,6 +12,11 @@
 #include "helpers.h"
 #include "constantes.h"
 
+
+/*************************************************
+Classe permettant de créer un CTableau associatif
+à partir d'un fichier texte contenant des données.
+***************************************************/
 class CParseur
 {
 public:
@@ -19,25 +24,22 @@ public:
 	/*****************************************
 	Parse un fichier.
 	******************************************
-	Entrée : le chemin du fichier (char *).
+	Entrée : le chemin du fichier à parser.
 	Nécessite : rien.
-	Sortie : une instance de CTableauAssociatif.
-	Entraîne : la récupération des informations contenues dans le fichier.
+	Sortie : une instance de CTableauAssociatif contenant les données du fichier.
+	Entraîne : soulève une Cexception en cas d'erreur de syntaxe dans le fichier
 	******************************************/
-
 	static CTableauAssociatif PARparserFichier(char * pcFichier);
 
 
 	/*****************************************
 	Analyseur syntaxique.
 	******************************************
-	Entrée : le chemin du fichier (char *).
+	Entrée : le chemin du fichier.
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : l'analyse des informations contenues dans le fichier,
-			   soulève des exceptions si le format est incorrect.
+	Entraîne : soulève une Cexception en cas d'erreur de syntaxe dans le fichier
 	******************************************/
-
 	static void PARanalyseSyntaxique(char * pcFichier);
 
 private:
@@ -50,7 +52,6 @@ private:
 	Sortie : rien.
 	Entraîne : initialisation de l'objet.
 	******************************************/
-
 	CParseur() {};
 
 
@@ -62,7 +63,6 @@ private:
 	Sortie : rien.
 	Entraîne : rien.
 	******************************************/
-
 	~CParseur() {};
 };
 #endif

@@ -27,6 +27,7 @@ int getType(char * pcVal)
 			if (cChar == '0') iEtat = 1;
 			else if (cChar == '-') iEtat = 2;
 			else if (cChar >= '1' && cChar <= '9') iEtat = 3;
+			else if (cChar == '.') iEtat = 4; // car ".7" ==> 7 avec atof()
 			else iEtat = -1;
 			break;
 
@@ -51,6 +52,7 @@ int getType(char * pcVal)
 
 		case 4:
 			if (cChar >= '0' && cChar <= '9') iEtat = 5;
+			else if (cChar == '\0') iType = TAB_TYPE_ENTIER; // Car "7." => 7 avec atof()
 			else iEtat = -1;
 			break;
 
