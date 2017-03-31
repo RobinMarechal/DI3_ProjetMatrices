@@ -18,94 +18,14 @@ using namespace std;
 
 #endif
 
-void robin()
+
+int main(unsigned int argc, char * argv[])
 {
-	char * s2 = "..\\JePasse\\fichier01.txt";
-	char * s3 = "..\\JePasse\\fichier02.txt";
-	char * s4 = "..\\JePasse\\fichier03.txt";
-	char * s5 = "..\\JePasse\\fichier04.txt";
-	char * s6 = "..\\JePasse\\fichier05.txt";
-	char * s7 = "..\\JePasse\\fichier06.txt";
-	char * s8 = "..\\JePasse\\fichier07.txt";
+	#ifndef NDEBUG
+		// Lancement des tests unitaires
+		CTestCMatrice::TMAstart();
+	#endif
 
-	char * f1 = "..\\TestsSyntaxe\\s1.txt";
-	char * f2 = "..\\TestsSyntaxe\\f2.txt";
-/*
-	try {
-		CParseur::PARanalyseSyntaxique(f2);
-		cout << "Succes" << endl;
-	}
-	catch (Cexception e)
-	{
-		cout << e.EXCgetMessage() << endl;
-	}
-
-	cout << "fin" << endl;
-	*/
-
-	/*CMatrice<double> m;
-	try {
-		m = CParseur::PARparserFichier(f1);
-	}
-	catch (Cexception e)
-	{
-		cout << e.EXCgetMessage() << endl;
-	}
-
-	cout << m << endl;*/
-	try {
-		CTableauAssociatif TABtab = CParseur::PARparserFichier(f1);
-		cout << TABtab.TABgetValeurChaine("Matrice") << endl;
-		if (strcmp(TABtab.TABgetValeurChaine("TypeMatrice"), "double") != 0)
-		{
-			throw Cexception(0, "TypeMatrice != 'double'.");
-		}
-
-		CMatrice<double> m = CMatrice<double>::MATgenerer(TABtab);
-
-		cout << m << endl;
-	}
-	catch (Cexception e)
-	{
-		cout << e.EXCgetMessage() << endl;
-	}
-
-
-#ifndef NDEBUG
-
-	// Permet d'éviter les messages de crash en cas d'appel a la fonction abort() par assert.h
-	_set_abort_behavior(0, _WRITE_ABORT_MSG);
-	// Récupère le signal SIGABRT envoyé par la fonction abort() et fait quelque chose... (un cout en l'occurrence)
-	signal(SIGABRT, &handleSIGABRT);
-
-	// Lancement des tests unitaires
-	CTestCMatrice::TMAstart();
-
-#endif
-}
-
-
-int main(unsigned int argc, char * argv2[])
-{
-	robin();
-	//gregoire();
-
-	/*
-		TODO :
-		- automate pour les nombres dans CTableauAssociatif::TABestNumerique()
-		- Vérifier les nombres négatifs
-	*/
-	/*
-	argc = 4;
-	char * argv[4] = { "", "..\\01.txt", "..\\02.txt", "..\\03.txt" };
-	
-	cout << argc << endl;
-	for (unsigned int i = 1; i < argc; i++)
-	{
-		cout << argv[i] << endl;
-	}
-	
-	
 	if (argc > 1)
 	{
 		double iValeur;
@@ -118,7 +38,7 @@ int main(unsigned int argc, char * argv2[])
 		{
 			CTableauAssociatif TABtab = CParseur::PARparserFichier(argv[uiBoucle]);
 			pcMATmatrices[uiBoucle - 1] = CMatrice<double>();
-			pcMATmatrices[uiBoucle - 1] = CMatrice<double>::MATparser(TABtab);
+			pcMATmatrices[uiBoucle - 1] = CMatrice<double>::MATgenerer(TABtab);
 		}
 
 		cout << "Matrices construites : " << endl;
@@ -188,6 +108,6 @@ int main(unsigned int argc, char * argv2[])
 
 		cout << MATproduit << endl;
 	}
-	*/
+	
 	return 0;
 }

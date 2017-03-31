@@ -1,28 +1,44 @@
 #include "Matrice.h"
+
+#include <iostream>
+
 #include "Cexception.h"
 #include "TableauAssociatif.h"
 #include "helpers.h"
 #include "constantes.h"
 
-#define TAB_TYPE_NON_DEFINI 0
-#define TAB_TYPE_ENTIER 1
-#define TAB_TYPE_REEL 2
-#define TAB_TYPE_CHAINE 3
-
-#include <iostream>
-
 using namespace std;
 
 // ----- Constructeurs et destructeurs----------------------------------------
 
+
+/*****************************************
+Constructeur par défaut.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : initialisation d'un objet CMatrice de dimensions 0 * 0
+*****************************************/
 template <class T>
 CMatrice<T>::CMatrice()
 {
 	uiMATnbLignes = 0;
 	uiMATnbColonnes = 0;
-	ppMATmatrice = nullptr;
+	pptMATmatrice = nullptr;
 }
 
+
+
+/*****************************************
+Constructeur à deux arguments.
+******************************************
+Entrée : le nombre de lignes
+Entrée : le nombre de colonnes
+Nécessite : rien.
+Sortie : rien.
+Entraîne : initialisation d'un objet CMatrice de dimensions uiNbLignes * uiNbColonnes
+******************************************/
 template <class T>
 CMatrice<T>::CMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes)
 {
@@ -31,6 +47,16 @@ CMatrice<T>::CMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes)
 	MATinitMatrice();
 }
 
+
+
+/****************************************
+Constructeur de recopie.
+*****************************************
+Entrée : instance de la classe CMatrice.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'initialisation de l'objet par copie de MATmatrice
+*****************************************/
 template <class T>
 CMatrice<T>::CMatrice(CMatrice<T> & MATmatrice)
 {
@@ -51,6 +77,15 @@ CMatrice<T>::CMatrice(CMatrice<T> & MATmatrice)
 	}
 }
 
+
+/****************************************
+Destructeur.
+*****************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : Libération de la mémoire allouée pour pptMATmatrice
+****************************************/
 template <class T>
 CMatrice<T>::~CMatrice()
 {
@@ -60,16 +95,35 @@ CMatrice<T>::~CMatrice()
 
 // ----- Operateurs ----------------------------------------
 
+
+/*****************************************
+Opérateur ().
+******************************************
+Entrée : indice de la ligne,
+Entrée : indice de la colonne.
+Nécessite : rien.
+Sortie : valeur de la position (i, j) dans la matrice.
+Entraîne : rien.
+*****************************************/
 template <class T>
 inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne)
 {
 	if (uiLigne >= uiMATnbLignes || uiColonne >= uiMATnbColonnes)
 		throw Cexception(0, "Operator () : Indice invalide");
 
-	return ppMATmatrice[uiColonne][uiLigne];
+	return pptMATmatrice[uiColonne][uiLigne];
 }
 
 
+
+/*****************************************
+Operateur =.
+******************************************
+Entrée : instance de la classe CMatrice.
+Nécessite : rien.
+Sortie : instance de la classe CMatrice
+Entraîne : Copie des valeurs des attributs de l'objet en paramètre
+******************************************/
 template <class T>
 CMatrice<T> & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
 {
@@ -97,6 +151,16 @@ CMatrice<T> & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
 }
 
 
+
+/*****************************************
+Operateur ==.
+******************************************
+Entrée : instance de la classe CMatrice.
+Nécessite : rien.
+Sortie : booléen.
+Entraîne : (true : les matrices sont identiques)
+OU (false : les matrices sont différentes).
+******************************************/
 template <class T>
 bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
 {
@@ -111,7 +175,7 @@ bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
 		for (uiLigne = 0; uiLigne < uiMATnbLignes; uiLigne++)
 		{
 			// Les coefficients sont diff�rents : les matrices sont diff�rentes.
-			if (MATmatrice.ppMATmatrice[uiColonne][uiLigne] != ppMATmatrice[uiColonne][uiLigne])
+			if (MATmatrice.pptMATmatrice[uiColonne][uiLigne] != pptMATmatrice[uiColonne][uiLigne])
 				return false;
 		}
 	}		
@@ -120,6 +184,16 @@ bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
 }
 
 
+
+/*****************************************
+Operateur !=.
+******************************************
+Entrée : instance de la classe CMatrice.
+Necessite : rien.
+Sortie : booléen.
+Entraîne : (true : les matrices sont différentes)
+OU (false : les matrices sont identiques).
+******************************************/
 template <class T>
 bool CMatrice<T>::operator!=( CMatrice<T> & MATmatrice)
 {
@@ -127,7 +201,14 @@ bool CMatrice<T>::operator!=( CMatrice<T> & MATmatrice)
 }
 
 
-
+/*****************************************
+Opérateur + à paramètre de type T.
+******************************************
+Entrée : la valeur à ajouter.
+Nécessite : rien.
+Sortie : objet CMatrice<T>.
+Entraîne : création d'un nouvel objet CMatrice<T> résultant de la somme
+******************************************/
 template <class T>
 CMatrice<T> CMatrice<T>::operator+(const T & tValeur)
 {
@@ -156,7 +237,7 @@ CMatrice<T> CMatrice<T>::operator+( CMatrice<T> & MATmatrice)
 
 	if (MATmatrice.uiMATnbColonnes != uiMATnbColonnes || MATmatrice.uiMATnbLignes != uiMATnbLignes)
 	{
-		throw Cexception(0, "operator+ : Dimensions invalides");
+		throw Cexception(EXC_DIMENSIONS_INVALIDES, "operator+ : Dimensions invalides");
 	}
 
 	CMatrice<T> MATresultat(uiMATnbLignes, uiMATnbColonnes);
@@ -200,7 +281,7 @@ CMatrice<T> CMatrice<T>::operator*( CMatrice<T> & MATmatrice)
 {
 	if(uiMATnbColonnes != MATmatrice.uiMATnbLignes)
 	{
-		throw Cexception(0, "Operator * : Dimensions invalides");
+		throw Cexception(EXC_DIMENSIONS_INVALIDES, "Operator * : Dimensions invalides");
 	}
 
 	unsigned int uiBoucleL, uiBoucleC, uiBouclePdt;
@@ -257,29 +338,6 @@ CMatrice<T> CMatrice<T>::operator-(const T & tValeur)
 template <class T>
 CMatrice<T> CMatrice<T>::operator-(CMatrice<T> & MATmatrice)
 {
-	/*
-	unsigned int uiBoucleL, uiBoucleC;
-
-	if (MATmatrice.uiMATnbColonnes != uiMATnbColonnes || MATmatrice.uiMATnbLignes != uiMATnbLignes)
-	{
-		throw Cexception(0, "operator- : Dimensions invalides");
-	}
-
-	CMatrice<T> MATresultat(*this);
-
-	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
-	{
-		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
-		{
-			MATresultat(uiBoucleL, uiBoucleC) = MATgetValeur(uiBoucleL, uiBoucleC) - MATmatrice(uiBoucleL, uiBoucleC);
-		}
-	}
-
-	return MATresultat;
-	*/
-
-	// Plus maintenable
-
 	return operator+(MATmatrice * -1);
 }
 
@@ -292,7 +350,7 @@ CMatrice<T> CMatrice<T>::operator/(const T & tValeur)
 	// Ex : M / 4 = M * 1/4, mais 1/4 = 0 en cas de type entier
 	if (tValeur == 0)
 	{
-		throw Cexception(0, "operator / : Division par 0");
+		throw Cexception(EXC_DIVISION_PAR_ZERO, "operator / : Division par 0");
 	}
 
 	unsigned int uiLigne;
@@ -318,7 +376,7 @@ CMatrice<T> CMatrice<T>::operator^(int iPuissance)
 	if (iPuissance == 0)
 	{
 		// Impossible dans certains cas...
-		throw Cexception(0, "Cette librairie ne permet pas d'élever une matrice à la puissance 0.");
+		throw Cexception(EXC_PUISSANCE_ZERO, "Cette librairie ne permet pas d'élever une matrice à la puissance 0.");
 	}
 
 	unsigned int uiBoucle;
@@ -584,55 +642,87 @@ bool CMatrice<T>::MATestNulle()
 	return true;
 }
 
+
+/*****************************************
+Vérifie le contenu d'une instance de CTableauAssociatif
+pour créer un objet CMatrice
+******************************************
+Entrée : Une instance de CTableauAssociatif.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : une exception si le tableau de contient pas "NBColonnes", "NBLignes" et "Matrice",
+et que les types correspondants sont incorrects (resp. Entier, Entier, Chaine)
+******************************************/
 template<class T>
 void CMatrice<T>::MATverifierContenuTableau(CTableauAssociatif TABtab)
 {
 	if (TABtab.TABgetIndiceCle("NBLignes") == -1)
-		throw Cexception(0, "Erreur : champs 'NBLignes' non renseigné.");
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'NBLignes' non renseigné.");
 
 	if (TABtab.TABgetIndiceCle("NBColonnes") == -1)
-		throw Cexception(0, "Erreur : champs 'NBColonnes' non renseigné.");
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'NBColonnes' non renseigné.");
 
 	if (TABtab.TABgetIndiceCle("Matrice") == -1)
-		throw Cexception(0, "Erreur : champs 'Matrice' non renseigné.");
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'Matrice' non renseigné.");
 
 	if (TABtab.TABgetValeurType("NBLignes") != TAB_TYPE_ENTIER)
-		throw Cexception(0, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier.");
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier.");
 
 	if (TABtab.TABgetValeurType("NBColonnes") != TAB_TYPE_ENTIER)
-		throw Cexception(0, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier.");
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier.");
 
 	if (TABtab.TABgetValeurType("Matrice") != TAB_TYPE_CHAINE)
-		throw Cexception(0, "Erreur de creation de la matrice : La valeur de 'Matrice' doit etre une chaine de caractère ou une liste ('[....]')");
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'Matrice' doit etre une chaine de caractère ou une liste ('[....]')");
 }
 
+
+
+/*****************************************
+Initialisation de la matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : (Allocation de l'espace nécessaire en mémoire) 
+		ET (remplissage de la matrice nulle)
+******************************************/
 template <class T>
 void CMatrice<T>::MATinitMatrice()
 {
 	unsigned int uiBoucle;
 	// On alloue uiMATnbColonnes colonnes
-	ppMATmatrice = (T **) malloc(sizeof(T *) * uiMATnbColonnes);
+	pptMATmatrice = (T **) malloc(sizeof(T *) * uiMATnbColonnes);
 
-	if (ppMATmatrice == nullptr)
+	if (pptMATmatrice == nullptr)
 	{
-		throw Cexception(0, "MATinitMatrice() : Mallocation failed");
+		throw Cexception(EXC_ECHEC_ALLOCATION, "MATinitMatrice() : Mallocation failed");
 	}
 
 	// Dans chaque colonne, on alloue uiMATnbLignes 'cases'
 	for (uiBoucle = 0; uiBoucle < uiMATnbColonnes; uiBoucle++)
 	{
 		// permet d'obtenir la matrice null directement
-		ppMATmatrice[uiBoucle] = (T *) calloc(uiMATnbLignes, sizeof(T));
+		pptMATmatrice[uiBoucle] = (T *) calloc(uiMATnbLignes, sizeof(T));
 
-		if (ppMATmatrice[uiBoucle] == nullptr)
+		if (pptMATmatrice[uiBoucle] == nullptr)
 		{
-			throw Cexception(0, "MATinitMatrice() : Callocation failed");
+			throw Cexception(EXC_ECHEC_ALLOCATION, "MATinitMatrice() : Callocation failed");
 		}
 	}
 }
 
 
 
+
+/*****************************************
+Test d'une ligne nulle
+******************************************
+Entrée : l'indice de la ligne
+Nécessite : rien
+Sortie : un booléen
+Entraîne : (true : la ligne est nulle)
+OU (false : la ligne n'est pas nulle)
+******************************************/
 template<class T>
 bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
 {
@@ -652,6 +742,14 @@ bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
 
 
 
+/*****************************************
+Désalloue une matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : désalloue l'objet.
+******************************************/
 template <class T>
 void CMatrice<T>::MATdesallouerMatrice()
 {
@@ -660,48 +758,27 @@ void CMatrice<T>::MATdesallouerMatrice()
 	// On desalloue toutes les colonnes
 	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
 	{
-		free(ppMATmatrice[uiBoucleC]);
+		free(pptMATmatrice[uiBoucleC]);
 	}
 
 	// Puis on desalloue le pointeur
-	free(ppMATmatrice);
-	ppMATmatrice = nullptr;
+	free(pptMATmatrice);
+	pptMATmatrice = nullptr;
 }
 
 
 
+/*****************************************
+Ajoute ou retire des colonnes
+******************************************
+Entrée : le nombre de colonnes à ajouter (par défaut = 1).
+Nécessite : rien
+Sortie : rien
+Entraîne : une réallocation du tableau 2D
+******************************************/
 template<class T>
 void CMatrice<T>::MATajouterColonnes(int iNb)
 {
-	/*
-	if (iNb < 0 && (unsigned int) (-iNb) >= uiMATnbColonnes)
-	{
-		throw Cexception(0, "MATajouterColonnes() : Argument invalide");
-	}
-
-	ppMATmatrice = (T **)realloc(ppMATmatrice, (uiMATnbColonnes + iNb) * sizeof(T *));
-
-	if (ppMATmatrice == nullptr)
-	{
-		throw Cexception(0, "MATajouterColonnes() : Echec de reallocation");
-	}
-
-	if (iNb > 0)
-	{
-		unsigned int uiBoucleC;
-
-		for (uiBoucleC = uiMATnbColonnes; uiBoucleC < uiMATnbColonnes + iNb; uiBoucleC++)
-		{
-			ppMATmatrice[uiBoucleC] = (T *)calloc(uiMATnbLignes, sizeof(T));
-
-			if (ppMATmatrice[uiBoucleC] == nullptr)
-			{
-				throw Cexception(0, "MATajouterColonnes() : Callocation failed");
-			}
-		}
-	}
-	*/
-
 	// Ajouter une colonne revient a ajouter une ligne à la transposee
 	CMatrice<T> MATtmp = MATtransposee();
 	MATtmp.MATsetNbLignes(iNb + MATtmp.uiMATnbLignes);
@@ -711,28 +788,36 @@ void CMatrice<T>::MATajouterColonnes(int iNb)
 
 
 
+/*****************************************
+Ajoute ou retire des lignes
+******************************************
+Entrée : le nombre de lignes à ajouter (par défaut = 1).
+Nécessite : rien.
+Sortie : rien.
+Entraîne : une réallocation du tableau 2D.
+******************************************/
 template<class T>
 void CMatrice<T>::MATajouterLignes(int iNb)
 {
 	if (iNb < 0 && (unsigned int)(-iNb) >= uiMATnbLignes)
 	{
-		throw Cexception(0, "MATajouterLignes() : Argument invalide");
+		throw Cexception(EXC_ACCES_MEMOIRE, "MATajouterLignes() : Argument invalide");
 	}
 
 	unsigned int uiBoucleC, uiBoucleL;
 
 	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
 	{
-		ppMATmatrice[uiBoucleC] = (T *) realloc(ppMATmatrice[uiBoucleC], (uiMATnbLignes + iNb) * sizeof(T));
+		pptMATmatrice[uiBoucleC] = (T *) realloc(pptMATmatrice[uiBoucleC], (uiMATnbLignes + iNb) * sizeof(T));
 
-		if (ppMATmatrice[uiBoucleC] == nullptr)
+		if (pptMATmatrice[uiBoucleC] == nullptr)
 		{
-			throw Cexception(0, "MATajouterColonnes() : Reallocation failed");
+			throw Cexception(EXC_ECHEC_ALLOCATION, "MATajouterColonnes() : Reallocation failed");
 		}
 
 		for (uiBoucleL = uiMATnbLignes; uiBoucleL < uiMATnbLignes + iNb; uiBoucleL++)
 		{
-			ppMATmatrice[uiBoucleC][uiBoucleL] = 0;
+			pptMATmatrice[uiBoucleC][uiBoucleL] = 0;
 		}
 	}
 }
@@ -744,7 +829,7 @@ T CMatrice<T>::MATdet()
 {
 	if (uiMATnbLignes == 1)
 	{
-		return ppMATmatrice[0][0];
+		return pptMATmatrice[0][0];
 	}
 	else
 	{
@@ -792,7 +877,7 @@ T CMatrice<T>::MATtr()
 
 	for (uiBoucle = 0; uiBoucle < MATgetNbLignes(); uiBoucle++)
 	{
-		trace += ppMATmatrice[uiBoucle][uiBoucle];
+		trace += pptMATmatrice[uiBoucle][uiBoucle];
 	}
 
 	return trace;
@@ -837,7 +922,7 @@ CMatrice<T> CMatrice<T>::MATinverse()
 
 	if (det == 0)
 	{
-		throw Cexception(0, "Calcul de l'inverse impossible : Déterminant nul.");
+		throw Cexception(EXC_DIVISION_PAR_ZERO, "Calcul de l'inverse impossible : Déterminant nul.");
 	}
 
 	CMatrice<T> MATinv(uiDim, uiDim);
@@ -1056,7 +1141,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 			{
 				// Si on trouve '\n' ici alors qu'on a pas passé la dernière colonnes
 				if ((*pcStrMatrice == '\n' || *pcStrMatrice == '\0') && uiBoucleC > 0)
-					throw Cexception(0, "Format invalide : Au moins une ligne contient moins de valeurs que prevu.");
+					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Au moins une ligne contient moins de valeurs que prevu.");
 				pcStrMatrice++;
 			}
 
@@ -1095,7 +1180,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 			{
 				if (*pcStrMatrice != ' ' && *pcStrMatrice != '\t')
 				{
-					throw Cexception(0, "Format invalide : Une ligne de la matrice contient plus de valeurs que le nombre de colonnes specifie.");
+					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Une ligne de la matrice contient plus de valeurs que le nombre de colonnes specifie.");
 				}
 
 				pcStrMatrice++;

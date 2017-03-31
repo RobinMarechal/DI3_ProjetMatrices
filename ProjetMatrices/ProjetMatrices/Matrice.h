@@ -1,11 +1,6 @@
 ﻿#ifndef CMATRICE_H
 #define CMATRICE_H
 
-#define TAB_TYPE_NON_DEFINI 0
-#define TAB_TYPE_ENTIER 1
-#define TAB_TYPE_REEL 2
-#define TAB_TYPE_CHAINE 3
-
 #include <iostream>
 #include "TableauAssociatif.h"
 #include "Cexception.h"
@@ -13,7 +8,7 @@
 #include "constantes.h"
 
 /*************************************
-Classe pour gérer des matrices
+Classe permettant de gérer des matrices
 **************************************
 Permet la créations de matrices
 et fournis un ensemble d'opérations
@@ -36,7 +31,7 @@ private:
 	/*****************************
 	le tableau 2D représentant la matrice
 	******************************/
-	T ** ppMATmatrice;
+	T ** pptMATmatrice;
 
 
 	/*****************************************
@@ -63,53 +58,47 @@ private:
 
 
 	/*****************************************
-	Test d'une ligne nulle.
+	Test d'une ligne nulle
 	******************************************
-	Entrée : l'indice de la ligne (unsigned int).
-	Nécessite : rien.
-	Sortie : un booléen.
+	Entrée : l'indice de la ligne
+	Nécessite : rien
+	Sortie : un booléen
 	Entraîne : (true : la ligne est nulle)
-			   OU (false : la ligne n'est pas nulle).
+			   OU (false : la ligne n'est pas nulle)
 	******************************************/
-
 	bool MATligneEstNulle(unsigned int uiLigne);
 
 
 	/*****************************************
-	Désalloue une matrice.
+	Libère la mémoire rerservée par l'instance de CMatrice<T>
 	******************************************
-	Entrée : rien.
-	Nécessite : rien.
-	Sortie : rien.
+	Entrée : rien
+	Nécessite : Nombres de 'colonnes' de pptMatrice = uiMATnbColonnes 
+	Sortie : rien
 	Entraîne : désalloue l'objet.
 	******************************************/
-
 	void MATdesallouerMatrice();
-
-	//void MATactualiserMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes);
 
 
 	/*****************************************
-	Ajoute une ou des colonnes.
+	Ajoute ou retire des colonnes
 	******************************************
-	Entrée : le nombre de colonnes (int).
-	Nécessite : rien.
-	Sortie : rien.
-	Entraîne : une réallocation du tableau 2D.
+	Entrée : le nombre de colonnes à ajouter (par défaut = 1).
+	Nécessite : rien
+	Sortie : rien
+	Entraîne : une réallocation du tableau 2D
 	******************************************/
-
 	void MATajouterColonnes(int iNb = 1);
 
 
 	/*****************************************
-	Ajoute une ou plusieurs lignes.
+	Ajoute ou retire des lignes
 	******************************************
-	Entrée : le nombre de lignes (int).
+	Entrée : le nombre de lignes à ajouter (par défaut = 1).
 	Nécessite : rien.
 	Sortie : rien.
 	Entraîne : une réallocation du tableau 2D.
 	******************************************/
-
 	void MATajouterLignes(int iNb = 1);
 
 public:
@@ -122,22 +111,20 @@ public:
 	Entrée : rien.
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : initialisation de l'objet.
+	Entraîne : initialisation d'un objet CMatrice de dimensions 0 * 0
 	*****************************************/
-
 	CMatrice();
 	
 
 	/*****************************************
 	Constructeur à deux arguments.
 	******************************************
-	Entrée : le nombre de lignes (unsigned int),
-			 le nombre de colonnes (unsigned int).
+	Entrée : le nombre de lignes
+	Entrée : le nombre de colonnes
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : Initialisation de l'objet.
+	Entraîne : initialisation d'un objet CMatrice de dimensions uiNbLignes * uiNbColonnes
 	******************************************/
-
 	CMatrice(unsigned int uiNbLignes, unsigned int uiNbColonnes);
 
 
@@ -147,9 +134,8 @@ public:
 	Entrée : instance de la classe CMatrice.
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : l'initialisation de l'objet.
+	Entraîne : l'initialisation de l'objet par copie de MATmatrice
 	*****************************************/
-
 	CMatrice(CMatrice<T> & MATmatrice);
 
 
@@ -159,10 +145,8 @@ public:
 	Entrée : rien.
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : destruction de l'objet,
-			   désallocation du tableau 2D.
+	Entraîne : Libération de la mémoire allouée pour pptMATmatrice
 	****************************************/
-
 	~CMatrice();
 
 
@@ -171,13 +155,12 @@ public:
 	/*****************************************
 	Opérateur ().
 	******************************************
-	Entrée : indice de la ligne (unsigned int),
-			 indice de la colonne (unsigned int).
+	Entrée : indice de la ligne,
+	Entrée : indice de la colonne.
 	Nécessite : rien.
 	Sortie : valeur de la position (i, j) dans la matrice.
 	Entraîne : rien.
 	*****************************************/
-
 	T & operator()(unsigned int uiLigne, unsigned int uiColonne);
 
 
@@ -186,11 +169,9 @@ public:
 	******************************************
 	Entrée : instance de la classe CMatrice.
 	Nécessite : rien.
-	Sortie : instance de la classe CMatrice par référence,
-			 copie de celle en paramètre
-	Entraîne : la recopie de l'objet en paramètre
+	Sortie : instance de la classe CMatrice
+	Entraîne : Copie des valeurs des attributs de l'objet en paramètre
 	******************************************/
-
 	CMatrice<T> & operator=(CMatrice<T> & MATmatrice);
 
 
@@ -203,7 +184,6 @@ public:
 	Entraîne : (true : les matrices sont identiques)
 			   OU (false : les matrices sont différentes).
 	******************************************/
-
 	bool operator==(CMatrice<T> & MATmatrice);
 
 
@@ -216,20 +196,17 @@ public:
 	Entraîne : (true : les matrices sont différentes)
 			   OU (false : les matrices sont identiques).
 	******************************************/
-
 	bool operator!=(CMatrice<T> & MATmatrice);
 
 
 	/*****************************************
 	Opérateur + à paramètre de type T. 
 	******************************************
-	Entrée : la valeur à ajouter (de type T).
+	Entrée : la valeur à ajouter.
 	Nécessite : rien.
-	Sortie : instance de la classe CMatrice contenant le résultat de la somme.
-	Entraîne : Allocation d'un nouvel objet CMatrice,
-			   ajout de la valeur passée en paramètre à toutes les cases de la matrice.
+	Sortie : objet CMatrice<T>.
+	Entraîne : création d'un nouvel objet CMatrice<T> résultant de la somme
 	******************************************/
-
 	CMatrice<T> operator+(const T & tValeur);
 
 

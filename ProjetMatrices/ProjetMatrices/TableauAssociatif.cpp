@@ -12,21 +12,6 @@
 #define TAB_TYPE_REEL 2
 #define TAB_TYPE_CHAINE 3
 
-/*
-
-Valeur : {
-	double dReel;
-	int iEntier;
-	char * pcChaine;
-} Valeur;
-
-Attributs :
-	char ** ppcTABcles;
-	Valeur * pvTABvaleurs;
-	unsigned int uiTABnbElements;
-	unsigned int * puiTypes;
-*/
-
 
 void CTableauAssociatif::TABinit() 
 {
@@ -108,7 +93,7 @@ void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int u
 
 	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
 	{
-		throw Cexception(0, "TABsupprimerElement() : Echec de reallocation");
+		throw Cexception(EXC_ECHEC_ALLOCATION, "TABsupprimerElement() : Echec de reallocation");
 	}
 
 
@@ -116,6 +101,7 @@ void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int u
 	pvTABvaleurs[uiTABnbElements - 1] = vValeur;
 	puiTypes[uiTABnbElements - 1] = uiType;
 }
+
 
 void CTableauAssociatif::TABsupprimer(char * pcCle) 
 {
@@ -138,7 +124,7 @@ void CTableauAssociatif::TABsupprimer(char * pcCle)
 
 	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
 	{
-		throw Cexception(0, "TABsupprimerElement() : Echec de reallocation");
+		throw Cexception(EXC_ECHEC_ALLOCATION, "TABsupprimerElement() : Echec de reallocation");
 	}
 
 }
