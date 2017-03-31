@@ -74,7 +74,7 @@ private:
 	Entrée : rien
 	Nécessite : rien
 	Sortie : rien
-	Entraîne :libère la mémoire allouée au tableau 2D.
+	Entraîne : libère la mémoire allouée au tableau 2D.
 	******************************************/
 	void MATdesallouerMatrice();
 
@@ -459,10 +459,9 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : la valeur de la trace (de type T).
+	Sortie : la valeur de la trace.
 	Entraîne : rien.
 	******************************************/
-
 	T MATtr();
 
 
@@ -471,10 +470,9 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : une instance de CMatrice.
-	Entraîne : la création d'une matrice.
+	Sortie : une instance de CMatrice égale a la commatrice de l'objet.
+	Entraîne : rien.
 	******************************************/
-
 	CMatrice<T> MATcommatrice();
 
 
@@ -483,10 +481,9 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : une instance de CMatrice.
-	Entraîne : la création de la matrice inverse.
+	Sortie : une instance de CMatrice égale à l'inverse de l'objet.
+	Entraîne : rien.
 	******************************************/
-
 	CMatrice<T> MATinverse();
 
 
@@ -495,37 +492,31 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : un booléen.
-	Entraîne : (true : la matrice est triangulaire)
-			   OU (false : la matrice n'est pas triangulaire).
+	Sortie : un booléen : True = la matrice est triangulaire, False = la matrice n'est pas triangulaire.
+	Entraîne : rien.
 	******************************************/
-
 	bool MATestTriangulaire();
 
 
 	/*****************************************
-	Teste si la matrice est triangulaire supérieur.
+	Teste si la matrice est triangulaire supérieure.
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : un booléen.
-	Entraîne : (true : la matrice est triangulaire supérieur)
-			   OU (false : la matrice n'est pas triangulaire supérieur).
+	Sortie : un booléen : True = la matrice est triangulaire supérieure, False = la matrice n'est pas triangulaire supérieure.
+	Entraîne : rien
 	******************************************/
-
 	bool MATestTriangulaireSuperieure();
 
 
 	/*****************************************
-	Teste si la matrice est triangulaire inférieur.
+	Teste si la matrice est triangulaire inférieure.
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : un booléen.
-	Entraîne : (true : la matrice est triangulaire inférieur)
-			   OU (false : la matrice n'est pas triangulaire inférieur).
+	Sortie : un booléen : True = la matrice est triangulaire inférieur, False = la matrice n'est pas triangulaire inférieure.
+	Entraîne : rien
 	******************************************/
-
 	bool MATestTriangulaireInferieure();
 
 
@@ -534,11 +525,9 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : un booléen.
-	Entraîne : (true : la matrice est diagonale)
-			   OU (false : la matrice n'est pas diagonale).
+	Sortie : un booléen : True = la matrice est diagonale, False = la matrice n'est pas diagonale.
+	Entraîne : rien.
 	******************************************/
-
 	bool MATestDiagonale();
 
 
@@ -547,11 +536,9 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : un booléen.
-	Entraîne : (true : la matrice est inversible)
-			   OU (false : la matrice n'est pas inversible).
+	Sortie : un booléen : True = la matrice est inversible, False = la matrice n'est pas inversible.
+	Entraîne : rien
 	******************************************/
-
 	bool MATestInversible();
 
 
@@ -560,11 +547,9 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : un booléen.
-	Entraîne : (true : la matrice est symétrique)
-			   OU (false : la matrice n'est pas symétrique).
+	Sortie : un booléen : True = la matrice est symétrique, False = la matrice n'est pas symétrique.
+	Entraîne : rien.
 	******************************************/
-
 	bool MATestSymetrique();
 
 
@@ -573,25 +558,24 @@ public:
 	******************************************
 	Entrée : rien.
 	Nécessite : rien.
-	Sortie : un booléen.
-	Entraîne : (true : la matrice est antisymétrique)
-			   OU (false : la matrice n'est pas antisymétrique).
+	Sortie : un booléen : True = la matrice est antisymétrique, False = la matrice n'est pas antisymétrique.
+	Entraîne : rien.
 	******************************************/
-
 	bool MATestAntiSymetrique();
 
-	// Factory
+
 
 	/*****************************************
 	Création d'une matrice diagonale.
 	******************************************
-	Entrée : la dimension (unsigned int),
-			 un tableau de valeurs (de type T).
-	Nécessite : la dimension du tableau est >= à la dimension souhaitée.
-	Sortie : une instance de CMatrice.
-	Entraîne : la création d'une matrice diagonale.
+	Entrée : la dimension,
+	Entrée : un tableau de valeurs.
+	Nécessite : la dimension du tableau est >= uiDim 
+	(si elle est supérieure, seules les uiDim premières 
+	valeurs seront prisent en compte).
+	Sortie : un matrice diagonale contenant les valeurs de ptDiag sur la diagonale.
+	Entraîne : rien
 	******************************************/
-
 	static CMatrice<T> MATdiag(unsigned int uiDim, const T ptDiag[]);
 
 
@@ -601,9 +585,8 @@ public:
 	Entrée : une instance de CTableauAssociatif.
 	Nécessite : rien.
 	Sortie : une instance de CMatrice.
-	Entraîne : la création d'une matrice.
+	Entraîne : la création d'une matrice à partir des valeurs du tableau.
 	******************************************/
-
 	static CMatrice<T> MATgenerer(CTableauAssociatif TABtab);
 
 
@@ -622,46 +605,42 @@ public:
 // Opérateurs complémentaires
 
 /*****************************************
-Opérateur +.
+Opérateur + à paramètre de type CMatrice<T> et T.
 ******************************************
 Entrée : la valeur à ajouter (de type T),
-		 une instance de CMatrice.
+Entrée : une instance de CMatrice.
 Nécessite : rien.
-Sortie : instance de la classe CMatrice contenant le résultat de la somme.
-Entraîne : Allocation d'un nouvel objet CMatrice,
-		   ajout de la valeur passée en paramètre à toutes les cases de la matrice.
+Sortie : objet CMatrice<T> résultant de la somme.
+Entraîne : rien
 ******************************************/
-
 template <class T>
 CMatrice<T> operator+(const T & tValeur, const CMatrice<T> & MATmatrice);
 
 
-/*****************************************
-Opérateur -.
-******************************************
-Entrée : la valeur à soustraire (de type T),
-		 une instance de CMatrice.
-Nécessite : rien.
-Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
-Entraîne : Allocation d'un nouvel objet CMatrice,
-		   soustraction de la valeur passée en paramètre avec toutes les cases de la matrice.
-******************************************/
 
+/*****************************************
+Opérateur - à paramètre de type CMatrice<T> et T.
+******************************************
+Entrée : la valeur à retirer (de type T),
+Entrée : une instance de CMatrice.
+Nécessite : rien.
+Sortie : objet CMatrice<T> résultant de la différence.
+Entraîne : rien
+******************************************/
 template <class T>
 CMatrice<T> operator-(const T & tValeur, const CMatrice<T> & MATmatrice);
 
 
-/*****************************************
-Opérateur *.
-******************************************
-Entrée : la valeur à multiplier (de type T),
-		 une instance de CMatrice.
-Nécessite : rien.
-Sortie : instance de la classe CMatrice contenant le résultat du produit.
-Entraîne : Allocation d'un nouvel objet CMatrice,
-		   multiplication de la valeur passée en paramètre avec toutes les cases de la matrice.
-******************************************/
 
+/*****************************************
+Opérateur * à paramètre de type CMatrice<T> et T.
+******************************************
+Entrée : le coefficient de multiplication (de type T),
+Entrée : une instance de CMatrice.
+Nécessite : rien.
+Sortie : objet CMatrice<T> résultant du produit.
+Entraîne : rien
+******************************************/
 template <class T>
 CMatrice<T> operator*(const T & tValeur, const CMatrice<T> & MATmatrice);
 
@@ -669,13 +648,12 @@ CMatrice<T> operator*(const T & tValeur, const CMatrice<T> & MATmatrice);
 /*****************************************
 Opérateur <<.
 ******************************************
-Entrée : un flux,
-		 une instance de CMatrice.
+Entrée : un flux (std::cout),
+Entrée : une instance de CMatrice.
 Nécessite : rien.
 Sortie : un flux.
 Entraîne : l'affichage de la matrice.
 ******************************************/
-
 template <class T>
 std::ostream & operator<<(std::ostream & OSTflux, const CMatrice<T> & MATmatrice);
 
