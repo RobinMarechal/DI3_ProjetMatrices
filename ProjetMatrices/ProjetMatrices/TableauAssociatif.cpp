@@ -7,11 +7,6 @@
 #include "Cexception.h"
 #include "constantes.h"
 
-#define TAB_TYPE_NON_DEFINI 0
-#define TAB_TYPE_ENTIER 1
-#define TAB_TYPE_REEL 2
-#define TAB_TYPE_CHAINE 3
-
 
 /********************************************************
 Initialisation de l'objet

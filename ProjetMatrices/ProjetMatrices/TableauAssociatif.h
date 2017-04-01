@@ -9,6 +9,10 @@
 #include "helpers.h"
 #include "constantes.h"
 
+/**************************************************
+Union permettant de stocker une valeur dans le 
+tableau associatif en tant que reel, entier ou chaine.
+***************************************************/
 typedef union {
 	double dReel;
 	int iEntier;

@@ -101,16 +101,14 @@ Opérateur ().
 ******************************************
 Entrée : indice de la ligne,
 Entrée : indice de la colonne.
-Nécessite : rien.
+Nécessite : 0 <= uiLigne < nombre de lignes;
+Nécessite : 0 <= uiColonnes < nombre de colonnes;
 Sortie : Référence de la valeur à la position (i, j) dans la matrice.
 Entraîne : rien.
 *****************************************/
 template <class T>
 inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne)
 {
-	if (uiLigne >= uiMATnbLignes || uiColonne >= uiMATnbColonnes)
-		throw Cexception(0, "Operator () : Indice invalide");
-
 	return pptMATmatrice[uiColonne][uiLigne];
 }
 
@@ -238,11 +236,6 @@ CMatrice<T> CMatrice<T>::operator+( CMatrice<T> & MATmatrice)
 {
 	unsigned int uiBoucleL, uiBoucleC;
 
-	if (MATmatrice.uiMATnbColonnes != uiMATnbColonnes || MATmatrice.uiMATnbLignes != uiMATnbLignes)
-	{
-		throw Cexception(EXC_DIMENSIONS_INVALIDES, "operator+ : Dimensions invalides");
-	}
-
 	CMatrice<T> MATresultat(uiMATnbLignes, uiMATnbColonnes);
 
 	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
@@ -297,11 +290,6 @@ Entraîne : rien
 template <class T>
 CMatrice<T> CMatrice<T>::operator*( CMatrice<T> & MATmatrice)
 {
-	if(uiMATnbColonnes != MATmatrice.uiMATnbLignes)
-	{
-		throw Cexception(EXC_DIMENSIONS_INVALIDES, "Operator * : Dimensions invalides");
-	}
-
 	unsigned int uiBoucleL, uiBoucleC, uiBouclePdt;
 	CMatrice<T> MATresultat(uiMATnbLignes, MATmatrice.uiMATnbColonnes);
 
@@ -362,7 +350,7 @@ Opérateur / à paramètre de type T.
 Entree : la valeur à diviser (de type T).
 Necessite : tValeur doit être différente de 0.
 Sortie : instance de la classe CMatrice contenant le résultat de la division.
-Entraîne : rien
+Entraîne : Une Cexception est levée si tValeur = 0
 ******************************************/
 template <class T>
 CMatrice<T> CMatrice<T>::operator/(const T & tValeur)
@@ -397,7 +385,7 @@ Opérateur ^
 Entree : la puissance
 Necessite : iPuissance != 0
 Sortie : instance de la classe CMatrice contenant le résultat de M^(iPuissance).
-Entraîne : rien
+Entraîne : Une Cexception est levée si iPuissance = 0
 ******************************************/
 template<class T>
 CMatrice<T> CMatrice<T>::operator^(int iPuissance)
@@ -488,8 +476,8 @@ Lecture de la valeur d'un coefficient.
 ******************************************
 Entéee : l'indice de la ligne,
 Entrée : l'indice de la colonne.
-Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes.
-Nécessite : uiColonne >= 0 et est inferieur au nombre de de colonnes.
+Nécessite : 0 <= uiLigne < nombre de lignes;
+Nécessite : 0 <= uiColonnes < nombre de colonnes;
 Sortie : le coefficient à la position (uiLigne, uiColonne) par référence.
 Entraîne : rien.
 ******************************************/
@@ -504,7 +492,7 @@ inline T & CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonn
 Lecture d'une ligne.
 ******************************************
 Entrée : l'indice de la ligne (unsigned int).
-Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
+Nécessite : 0 <= uiLigne < nombre de lignes;
 Sortie : T * : un tableau contant la ligne uiLigne.
 Entraîne : allocation (via l'operateur new) d'un tableau.
 ******************************************/
@@ -527,7 +515,7 @@ T * CMatrice<T>::MATgetLigne(unsigned int uiLigne)
 Lecture d'une colonne.
 ******************************************
 Entrée : l'indice de la colonne.
-Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
+Nécessite : 0 <= uiColonnes < nombre de colonnes;
 Sortie : un tableau contant la colonnes uiColonne.
 Entraîne : allocation (via l'operateur new) d'un tableau.
 ******************************************/
@@ -548,8 +536,8 @@ Mutateur pour la valeur.
 Entrée : l'indice de la ligne.
 Entrée : l'indice de la colonne.
 Entrée : la valeur définir.
-Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
-Nécessite : uiColonne >= 0 et est inferieur au nombre de de colonnes de la matrice.
+Nécessite : 0 <= uiLigne < nombre de lignes;
+Nécessite : 0 <= uiColonnes < nombre de colonnes;
 Sortie : rien.
 Entraîne : un changement de valeur du coefficient à la position (uiLigne, uiColonne).
 ******************************************/
@@ -762,7 +750,7 @@ pour créer un objet CMatrice
 Entrée : Une instance de CTableauAssociatif.
 Nécessite : rien.
 Sortie : rien.
-Entraîne : une exception si le tableau de contient pas "NBColonnes", "NBLignes" et "Matrice",
+Entraîne : une Cexception  est levée si le tableau de contient pas "NBColonnes", "NBLignes" et "Matrice",
 		ou que les types correspondants sont incorrects (resp. Entier, Entier, Chaine)
 ******************************************/
 template<class T>
@@ -809,7 +797,8 @@ void CMatrice<T>::MATinitMatrice()
 
 	if (pptMATmatrice == nullptr)
 	{
-		throw Cexception(EXC_ECHEC_ALLOCATION, "MATinitMatrice() : Mallocation failed");
+		cout << "Erreur d'allocation dans MATinitMatrice(). Le programme s'est arrêté." << endl;
+		exit(EXIT_FAILURE);
 	}
 
 	// Dans chaque colonne, on alloue uiMATnbLignes 'cases'
@@ -820,7 +809,8 @@ void CMatrice<T>::MATinitMatrice()
 
 		if (pptMATmatrice[uiBoucle] == nullptr)
 		{
-			throw Cexception(EXC_ECHEC_ALLOCATION, "MATinitMatrice() : Callocation failed");
+			cout << "Erreur d'allocation dans MATinitMatrice(). Le programme s'est arrêté." << endl;
+			exit(EXIT_FAILURE);
 		}
 	}
 }
@@ -901,18 +891,13 @@ void CMatrice<T>::MATajouterColonnes(int iNb)
 Ajoute ou retire des lignes
 ******************************************
 Entrée : le nombre de lignes à ajouter (par défaut = 1).
-Nécessite : rien.
+Nécessite : iNb > (-1) * le nombre de lignes.
 Sortie : rien.
 Entraîne : Réallocation du tableau 2D.
 ******************************************/
 template<class T>
 void CMatrice<T>::MATajouterLignes(int iNb)
 {
-	if (iNb < 0 && (unsigned int)(-iNb) >= uiMATnbLignes)
-	{
-		throw Cexception(EXC_ACCES_MEMOIRE, "MATajouterLignes() : Argument invalide");
-	}
-
 	unsigned int uiBoucleC, uiBoucleL;
 
 	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
@@ -921,7 +906,8 @@ void CMatrice<T>::MATajouterLignes(int iNb)
 
 		if (pptMATmatrice[uiBoucleC] == nullptr)
 		{
-			throw Cexception(EXC_ECHEC_ALLOCATION, "MATajouterColonnes() : Reallocation failed");
+			cout << "Erreur d'allocation dans MATajouterLignes(). Le programme s'est arrêté." << endl;
+			exit(EXIT_FAILURE);
 		}
 
 		for (uiBoucleL = uiMATnbLignes; uiBoucleL < uiMATnbLignes + iNb; uiBoucleL++)
@@ -936,7 +922,7 @@ void CMatrice<T>::MATajouterLignes(int iNb)
 Calcul du déterminant.
 ******************************************
 Entrée : rien.
-Nécessite : rien.
+Nécessite : La matrice est carrée.
 Sortie : la valeur du déterminant.
 Entraîne : rien.
 ******************************************/
@@ -988,7 +974,7 @@ T CMatrice<T>::MATdet()
 Calcul de la trace d'une matrice.
 ******************************************
 Entrée : rien.
-Nécessite : rien.
+Nécessite : La matrice est carrée.
 Sortie : la valeur de la trace.
 Entraîne : rien.
 ******************************************/
@@ -1011,7 +997,7 @@ T CMatrice<T>::MATtr()
 Calcul de la commatrice.
 ******************************************
 Entrée : rien.
-Nécessite : rien.
+Nécessite : La matrice est carrée.
 Sortie : une instance de CMatrice égale a la commatrice de l'objet.
 Entraîne : rien.
 ******************************************/
@@ -1044,9 +1030,9 @@ CMatrice<T> CMatrice<T>::MATcommatrice()
 Calcul de l'inverse d'une matrice.
 ******************************************
 Entrée : rien.
-Nécessite : rien.
+Nécessite : La matrice est carrée.
 Sortie : une instance de CMatrice égale à l'inverse de l'objet.
-Entraîne : rien.
+Entraîne : Une Cexception est levée si le determinant est nul.
 ******************************************/
 template <class T>
 CMatrice<T> CMatrice<T>::MATinverse()
@@ -1083,7 +1069,7 @@ CMatrice<T> CMatrice<T>::MATinverse()
 Teste si la matrice est triangulaire.
 ******************************************
 Entrée : rien.
-Nécessite : rien.
+Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est triangulaire, False = la matrice n'est pas triangulaire.
 Entraîne : rien.
 ******************************************/
@@ -1098,7 +1084,7 @@ bool CMatrice<T>::MATestTriangulaire()
 Teste si la matrice est triangulaire inférieure.
 ******************************************
 Entrée : rien.
-Nécessite : rien.
+Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est triangulaire inférieur, False = la matrice n'est pas triangulaire inférieure.
 Entraîne : rien
 ******************************************/
@@ -1127,7 +1113,7 @@ bool CMatrice<T>::MATestTriangulaireInferieure()
 Teste si la matrice est triangulaire supérieure.
 ******************************************
 Entrée : rien.
-Nécessite : rien.
+Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est triangulaire supérieure, False = la matrice n'est pas triangulaire supérieure.
 Entraîne : rien
 ******************************************/
@@ -1144,7 +1130,7 @@ bool CMatrice<T>::MATestTriangulaireSuperieure()
 Teste si la matrice est diagonale.
 ******************************************
 Entrée : rien.
-Nécessite : rien.
+Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est diagonale, False = la matrice n'est pas diagonale.
 Entraîne : rien.
 ******************************************/
@@ -1167,7 +1153,7 @@ Entraîne : rien
 template <class T>
 bool CMatrice<T>::MATestInversible()
 {
-	return (MATdet() != 0);
+	return (uiMATnbColonnes == uiMATnbLignes && MATdet() != 0);
 }
 
 
@@ -1175,7 +1161,7 @@ bool CMatrice<T>::MATestInversible()
 Teste si la matrice est symétrique.
 ******************************************
 Entrée : rien.
-Nécessite : rien.
+Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est symétrique, False = la matrice n'est pas symétrique.
 Entraîne : rien.
 ******************************************/
@@ -1190,7 +1176,7 @@ bool CMatrice<T>::MATestSymetrique()
 Teste si la matrice est antisymétrique.
 ******************************************
 Entrée : rien.
-Nécessite : rien.
+Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est antisymétrique, False = la matrice n'est pas antisymétrique.
 Entraîne : rien.
 ******************************************/

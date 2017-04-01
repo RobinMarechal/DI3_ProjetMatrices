@@ -41,7 +41,7 @@ private:
 	Entrée : Une instance de CTableauAssociatif.
 	Nécessite : rien.
 	Sortie : rien.
-	Entraîne : une exception si le tableau de contient pas "NBColonnes", "NBLignes" et "Matrice", 
+	Entraîne : une Cexception  est levée si le tableau de contient pas "NBColonnes", "NBLignes" et "Matrice",
 			ou que les types correspondants sont incorrects (resp. Entier, Entier, Chaine)
 	******************************************/
 	static void MATverifierContenuTableau(CTableauAssociatif TABtab);
@@ -94,7 +94,7 @@ private:
 	Ajoute ou retire des lignes
 	******************************************
 	Entrée : le nombre de lignes à ajouter (par défaut = 1).
-	Nécessite : rien.
+	Nécessite : iNb > (-1) * le nombre de lignes.
 	Sortie : rien.
 	Entraîne : Réallocation du tableau 2D.
 	******************************************/
@@ -156,7 +156,8 @@ public:
 	******************************************
 	Entrée : indice de la ligne,
 	Entrée : indice de la colonne.
-	Nécessite : rien.
+	Nécessite : 0 <= uiLigne < nombre de lignes;
+	Nécessite : 0 <= uiColonnes < nombre de colonnes;
 	Sortie : Référence de la valeur à la position (i, j) dans la matrice.
 	Entraîne : rien.
 	*****************************************/
@@ -200,7 +201,7 @@ public:
 	Opérateur + à paramètre de type T. 
 	******************************************
 	Entrée : la valeur à ajouter.
-	Nécessite : rien.
+	Nécessite : les matrices sont de même dimension.
 	Sortie : objet CMatrice<T> résultant de la somme.
 	Entraîne : rien
 	******************************************/
@@ -269,7 +270,7 @@ public:
 	Entree : la valeur à diviser (de type T).
 	Necessite : tValeur doit être différente de 0.
 	Sortie : instance de la classe CMatrice contenant le résultat de la division.
-	Entraîne : rien
+	Entraîne : Une Cexception est levée si tValeur = 0
 	******************************************/
 	CMatrice<T> operator/(const T & tValeur);
 
@@ -280,7 +281,7 @@ public:
 	Entree : la puissance
 	Necessite : iPuissance != 0
 	Sortie : instance de la classe CMatrice contenant le résultat de M^(iPuissance).
-	Entraîne : rien
+	Entraîne : Une Cexception est levée si iPuissance = 0
 	******************************************/
 	CMatrice<T> operator^(int iPuissance);
 
@@ -325,8 +326,8 @@ public:
 	******************************************
 	Entéee : l'indice de la ligne,
 	Entrée : l'indice de la colonne.
-	Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
-	Nécessite : uiColonne >= 0 et est inferieur au nombre de de colonnes de la matrice.
+	Nécessite : 0 <= uiLigne < nombre de lignes;
+	Nécessite : 0 <= uiColonnes < nombre de colonnes;
 	Sortie : le coefficient à la position (uiLigne, uiColonne) par référence.
 	Entraîne : rien.
 	******************************************/
@@ -337,7 +338,7 @@ public:
 	Lecture d'une ligne.
 	******************************************
 	Entrée : l'indice de la ligne.
-	Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
+	Nécessite : 0 <= uiLigne < nombre de lignes;
 	Sortie : un tableau contant la ligne uiLigne.
 	Entraîne : allocation (via l'operateur new) d'un tableau.
 	******************************************/
@@ -348,7 +349,7 @@ public:
 	Lecture d'une colonne.
 	******************************************
 	Entrée : l'indice de la colonne.
-	Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
+	Nécessite : 0 <= uiColonnes < nombre de colonnes;
 	Sortie : un tableau contant la colonnes uiColonne.
 	Entraîne : allocation (via l'operateur new) d'un tableau.
 	******************************************/
@@ -363,8 +364,8 @@ public:
 	Entrée : l'indice de la ligne.
 	Entrée : l'indice de la colonne.
 	Entrée : la valeur définir.
-	Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
-	Nécessite : uiColonne >= 0 et est inferieur au nombre de de colonnes de la matrice.
+	Nécessite : 0 <= uiLigne < nombre de lignes;
+	Nécessite : 0 <= uiColonnes < nombre de colonnes;
 	Sortie : rien.
 	Entraîne : un changement de valeur du coefficient à la position (uiLigne, uiColonne).
 	******************************************/
@@ -447,7 +448,7 @@ public:
 	Calcul du déterminant.
 	******************************************
 	Entrée : rien.
-	Nécessite : rien.
+	Nécessite : La matrice est carrée.
 	Sortie : la valeur du déterminant.
 	Entraîne : rien.
 	******************************************/
@@ -458,7 +459,7 @@ public:
 	Calcul de la trace d'une matrice.
 	******************************************
 	Entrée : rien.
-	Nécessite : rien.
+	Nécessite : La matrice est carrée.
 	Sortie : la valeur de la trace.
 	Entraîne : rien.
 	******************************************/
@@ -469,7 +470,7 @@ public:
 	Calcul de la commatrice.
 	******************************************
 	Entrée : rien.
-	Nécessite : rien.
+	Nécessite : La matrice est carrée.
 	Sortie : une instance de CMatrice égale a la commatrice de l'objet.
 	Entraîne : rien.
 	******************************************/
@@ -480,9 +481,9 @@ public:
 	Calcul de l'inverse d'une matrice.
 	******************************************
 	Entrée : rien.
-	Nécessite : rien.
+	Nécessite : La matrice est carrée.
 	Sortie : une instance de CMatrice égale à l'inverse de l'objet.
-	Entraîne : rien.
+	Entraîne : Une Cexception est levée si le determinant est nul.
 	******************************************/
 	CMatrice<T> MATinverse();
 
@@ -491,7 +492,7 @@ public:
 	Teste si la matrice est triangulaire.
 	******************************************
 	Entrée : rien.
-	Nécessite : rien.
+	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est triangulaire, False = la matrice n'est pas triangulaire.
 	Entraîne : rien.
 	******************************************/
@@ -502,7 +503,7 @@ public:
 	Teste si la matrice est triangulaire supérieure.
 	******************************************
 	Entrée : rien.
-	Nécessite : rien.
+	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est triangulaire supérieure, False = la matrice n'est pas triangulaire supérieure.
 	Entraîne : rien
 	******************************************/
@@ -513,7 +514,7 @@ public:
 	Teste si la matrice est triangulaire inférieure.
 	******************************************
 	Entrée : rien.
-	Nécessite : rien.
+	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est triangulaire inférieur, False = la matrice n'est pas triangulaire inférieure.
 	Entraîne : rien
 	******************************************/
@@ -524,7 +525,7 @@ public:
 	Teste si la matrice est diagonale.
 	******************************************
 	Entrée : rien.
-	Nécessite : rien.
+	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est diagonale, False = la matrice n'est pas diagonale.
 	Entraîne : rien.
 	******************************************/
@@ -546,7 +547,7 @@ public:
 	Teste si la matrice est symétrique.
 	******************************************
 	Entrée : rien.
-	Nécessite : rien.
+	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est symétrique, False = la matrice n'est pas symétrique.
 	Entraîne : rien.
 	******************************************/
@@ -557,7 +558,7 @@ public:
 	Teste si la matrice est antisymétrique.
 	******************************************
 	Entrée : rien.
-	Nécessite : rien.
+	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est antisymétrique, False = la matrice n'est pas antisymétrique.
 	Entraîne : rien.
 	******************************************/
