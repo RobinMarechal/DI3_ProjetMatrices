@@ -94,21 +94,21 @@ Extraction d'une sous chaine
 ******************************************
 Entrée : un pointeur sur le début de la sous-chaîne,
 Entrée : un pointeur sur la fin de la sous-chaîne.
-Nécessite : 'end' >= 'start'.
+Nécessite : pcStart >= pcEnd.
 Sortie : la sous-chaîne souhaitée (de type char *).
 Entraîne : Allocation dynamique d'un char * (malloc)
 ******************************************/
-char * subString(const char * start, const char * end) {
-	int i = 0;
-	char * str = (char *)malloc(sizeof(char) * (size_t)(end - start + 1));
-	while (start + i != end && start[i] != '\0')
+char * subString(const char * pcStart, const char * pcEnd) {
+	unsigned int uiBoucle = 0;
+	char * pcStr = (char *)malloc(sizeof(char) * (size_t)(pcEnd - pcStart + 1));
+	while (pcStart + uiBoucle != pcEnd && pcStart[uiBoucle] != '\0')
 	{
-		str[i] = start[i];
-		i++;
+		pcStr[uiBoucle] = pcStart[uiBoucle];
+		uiBoucle++;
 	}
-	str[i] = '\0';
+	pcStr[uiBoucle] = '\0';
 
-	return str;
+	return pcStr;
 }
 
 
@@ -118,7 +118,8 @@ transformation d'une chaine de caratères en minuscule.
 Entrée : une chaîne de caractères.
 Nécessite : rien.
 Sortie : rien.
-Entraîne : la chaine est en minuscule.
+Entraîne : Modification de la chaine pointée par pcStr
+=> tous les caractères sont en minuscule.
 ******************************************/
 void toLowerString(char * pcStr)
 {
@@ -135,22 +136,23 @@ Suppression des espaces en début et fin de chaine.
 ******************************************
 Entrée : une chaîne de caractères.
 Nécessite : rien.
-Sortie : une chaîne de caractères.
-Entraîne : la suppression des espaces au début et à la fin de la chaîne.
+Sortie : Une copie de la chaine de caractère sans les espaces de début et de fin.
+Entraîne : rien.
 ******************************************/
 char * trim(char pcStr[])
 {
+	char pcResultat[1024] = { 0 };
+	char * pcTmp = strchr(pcStr, '\0') - 1;
 	// On suprime les espaces avant le début du mot
 	while (isspace(*pcStr))
 		pcStr++;
 
-	char * pcTmp = strchr(pcStr, '\0') - 1;
 	// On supprime les espaces après la fin du mot
 	while (isspace(*pcTmp))
 		pcTmp--;
 
-	pcTmp[1] = '\0';
+	strncpy_s(pcResultat, 1024 , pcStr, pcTmp - pcStr + 1);
 
-	return pcStr;
+	return pcResultat;
 }
 

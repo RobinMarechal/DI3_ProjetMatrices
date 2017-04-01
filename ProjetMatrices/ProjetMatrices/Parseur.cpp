@@ -44,10 +44,7 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		IFSfichier.getline(pcLigne, 256);
 
 		// Préparation du message d'erreur au cas où
-		strcpy_s(pcMsg, "Erreur syntaxique a la ligne ");
-		sprintf_s(strchr(pcMsg, '\0'), 3 , "%d", iLigne);
-		strcpy_s(strchr(pcMsg, '\0'), strlen(" du fichier : ") + 1, " du fichier : ");
-		strcpy_s(strchr(pcMsg, '\0'), strlen(pcFichier) + 1, pcFichier);
+		sprintf(pcMsg, "Erreur syntaxique à la ligne %d du fichier : \n%s", iLigne, pcFichier);
 
 		// ...on analyse chaque caractere
 		while (pcLigne[uiBoucle] != '\n' && pcLigne[uiBoucle] != '\0')
@@ -71,8 +68,8 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 			{
 				if (bEgal)
 				{
-					// Il y a 2 '=' sur cette ligne.
-					strcpy_s(strchr(pcMsg, '\0'), strlen(", deux '=' sur la meme ligne."), ", deux '=' sur la meme ligne.");
+					// Il y a 2 '=' ou plus sur cette ligne.
+					strcat(pcMsg, "\n --> Deux '=' ou plus sur la même ligne.");
 					throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 				}
 				bEgal = true;
@@ -101,14 +98,14 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		// Si la syntaxe n'est pas [BALISE]=[VALEUR], syntaxe invalide
 		if (!bBalise || !bEgal || !bValeur)
 		{
-			strcpy_s(strchr(pcMsg, '\0'), strlen(".") + 1, ".");
+			strcat(pcMsg, ".");
 			throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 		}
 
 		// S'il y a un crochet fermant mais pas de crochet ouvrant, syntaxe invalide
 		if (bCrochetFermant && !bCrochetOuvrant)
 		{
-			strcpy_s(strchr(pcMsg, '\0'), strlen(".") + 1, ".");
+			strcat(pcMsg, ".");
 			throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 		}
 
@@ -127,7 +124,9 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 	// S'il y a un crochet fermant mais pas de crochet ouvrant, syntaxe invalide
 	if (!bCrochetFermant && bCrochetOuvrant)
 	{
-		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Ereur syntaxique : un crochet fermant semble manquer.");
+		char pcMsg[1024] = { 0 };
+		sprintf(pcMsg, "Ereur syntaxique dans le fichier :\n%s\n-->Un crochet fermant semble manquer.", pcFichier);
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 	}
 
 	// Si les crochets sont ouvert mais jamais fermés, syntaxe invalide
@@ -136,11 +135,7 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		char pcMsg[1024] = { 0 };
 		iLigne++;
 
-		strcpy_s(pcMsg, strlen("Erreur syntaxique a la ligne ") + 1, "Erreur syntaxique a la ligne ");
-		sprintf_s(strchr(pcMsg, '\0'), 3, "%d", iLigne);
-		strcpy_s(strchr(pcMsg, '\0'), strlen(" du fichier ") + 1, " du fichier ");
-		strcpy_s(strchr(pcMsg, '\0'), strlen(pcFichier) + 1, pcFichier);
-		strcpy_s(strchr(pcMsg, '\0'), 1 + strlen(" : '[' trouve mais aucun ']' trouve plus loin."), " : '[' trouve mais aucun ']' trouve plus loin.");
+		sprintf(pcMsg, "Erreur syntaxique à la ligne %d du fichier :\n%s\n-->'[' trouvé mais aucun ']' trouvé plus loin.", iLigne, pcFichier);
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 	}
 }
@@ -172,49 +167,45 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 	while(!fichier.eof())
 	{
 		char * pcTmp,
-			pcLines[1024] = { 0 };
+			pcLigne[1024] = { 0 };
 
 		char pcBalise[1024] = { 0 }, pcValeur[1024] = { 0 };
 
-		fichier.getline(pcLines, 1024);
+		fichier.getline(pcLigne, 1024);
 
-		// VERIFICATION DE pcLines
+		// VERIFICATION DE pcLigne
 
-		pcTmp = strchr(pcLines, '=');
+		pcTmp = strchr(pcLigne, '=');
 
 		//pcBalise = chaine avant le = sans les espaces au debut et a la fin
-		strcpy_s(pcBalise, 64, pcLines);
+		strcpy_s(pcBalise, 128, pcLigne);
 		pcBalise[strchr(pcBalise, '=') - pcBalise] = '\0';
-		strcpy_s(pcBalise, 64, trim(pcBalise));
+		strcpy_s(pcBalise, 128, trim(pcBalise));
 
 		// pcValeur = chaine après le = sans les espaces au debut et a la fin
-		strcpy_s(pcValeur, 64, trim(strchr(pcLines, '=') + 1));
+		strcpy_s(pcValeur, 128, trim(strchr(pcLigne, '=') + 1));
+
+		toLowerString(pcValeur);
 
 		//ppcValeursBalises[uiBoucle][0] = '\0';
 		if (*pcValeur == '[')
 		{
-			fichier.getline(pcLines, 1024);
+			fichier.getline(pcLigne, 1024);
 
 			// Tant qu'on n'est pas a la fin du fichier
-			while (strchr(pcLines, ']') == NULL)
+			while (strchr(pcLigne, ']') == NULL)
 			{
-				unsigned int uiNouvelleTaille = strlen(pcLines) + strlen(pcValeur) + 1;
+				unsigned int uiNouvelleTaille = strlen(pcLigne) + strlen(pcValeur) + 1;
 
-				strcat_s(pcValeur, uiNouvelleTaille, pcLines);
+				strcat_s(pcValeur, uiNouvelleTaille, pcLigne);
 				strcat_s(pcValeur, uiNouvelleTaille + 2, "\n");
 
-				fichier.getline(pcLines, 1024);
+				fichier.getline(pcLigne, 1024);
 			}
 
 			// On retire le dernier \n
 			pcValeur[strlen(pcValeur) - 1] = '\0';
 		}
-		else
-		{
-			//strncpy_s(pcValeur, pcTmp, strlen(pcTmp));
-		}
-
-		toLowerString(pcValeur);
 
 		TABtab.TABajouterAuto(pcBalise, pcValeur);
 	}

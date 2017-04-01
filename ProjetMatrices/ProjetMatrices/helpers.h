@@ -14,7 +14,8 @@ Retourne le type correspondant à la chaine en paramètre
 Entrée : la chaine à analyser
 Nécessite : rien
 Sortie : l'entier correspondant au type de la chaine
-Entraîne : (0 = entier) || (1 = réel) || (3 = chaine)
+=> (0 = entier) || (1 = réel) || (3 = chaine)
+Entraîne : rien
 ******************************************/
 int getType(char * pcCle);
 
@@ -24,11 +25,11 @@ Extraction d'une sous chaine
 ******************************************
 Entrée : un pointeur sur le début de la sous-chaîne,
 Entrée : un pointeur sur la fin de la sous-chaîne.
-Nécessite : 'end' >= 'start'.
+Nécessite : pcStart >= pcEnd.
 Sortie : la sous-chaîne souhaitée (de type char *).
 Entraîne : Allocation dynamique d'un char * (malloc)
 ******************************************/
-char * subString(const char * start, const char * end);
+char * subString(const char * pcStart, const char * pcEnd);
 
 
 /*****************************************
@@ -37,7 +38,8 @@ transformation d'une chaine de caratères en minuscule.
 Entrée : une chaîne de caractères.
 Nécessite : rien.
 Sortie : rien.
-Entraîne : la chaine est en minuscule.
+Entraîne : Modification de la chaine pointée par pcStr
+-> tous les caractères sont en minuscule.
 ******************************************/
 void toLowerString(char * pcStr);
 
@@ -47,8 +49,8 @@ Suppression des espaces en début et fin de chaine.
 ******************************************
 Entrée : une chaîne de caractères.
 Nécessite : rien.
-Sortie : une chaîne de caractères.
-Entraîne : la suppression des espaces au début et à la fin de la chaîne.
+Sortie : Une copie de la chaine de caractère sans les espaces de début et de fin.
+Entraîne : rien.
 ******************************************/
 char * trim(char pcStr[]);
 
