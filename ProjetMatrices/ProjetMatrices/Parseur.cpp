@@ -44,7 +44,7 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		IFSfichier.getline(pcLigne, 256);
 
 		// Préparation du message d'erreur au cas où
-		sprintf(pcMsg, "Erreur syntaxique à la ligne %d du fichier : \n%s", iLigne, pcFichier);
+		sprintf_s(pcMsg, 1024, "Erreur syntaxique à la ligne %d du fichier : \n%s", iLigne, pcFichier);
 
 		// ...on analyse chaque caractere
 		while (pcLigne[uiBoucle] != '\n' && pcLigne[uiBoucle] != '\0')
@@ -69,7 +69,7 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 				if (bEgal)
 				{
 					// Il y a 2 '=' ou plus sur cette ligne.
-					strcat(pcMsg, "\n --> Deux '=' ou plus sur la même ligne.");
+					strcat_s(pcMsg, 1024, "\n--> Deux '=' ou plus sur la même ligne.");
 					throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 				}
 				bEgal = true;
@@ -98,14 +98,14 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		// Si la syntaxe n'est pas [BALISE]=[VALEUR], syntaxe invalide
 		if (!bBalise || !bEgal || !bValeur)
 		{
-			strcat(pcMsg, ".");
+			strcat_s(pcMsg, 1024, ".");
 			throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 		}
 
 		// S'il y a un crochet fermant mais pas de crochet ouvrant, syntaxe invalide
 		if (bCrochetFermant && !bCrochetOuvrant)
 		{
-			strcat(pcMsg, ".");
+			strcat_s(pcMsg, 1024, "\n-->, '[' manquant.");
 			throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 		}
 
@@ -125,7 +125,7 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 	if (!bCrochetFermant && bCrochetOuvrant)
 	{
 		char pcMsg[1024] = { 0 };
-		sprintf(pcMsg, "Ereur syntaxique dans le fichier :\n%s\n-->Un crochet fermant semble manquer.", pcFichier);
+		sprintf_s(pcMsg, 1024, "Ereur syntaxique dans le fichier :\n%s\n-->Un crochet fermant semble manquer.", pcFichier);
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 	}
 
@@ -135,7 +135,7 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		char pcMsg[1024] = { 0 };
 		iLigne++;
 
-		sprintf(pcMsg, "Erreur syntaxique à la ligne %d du fichier :\n%s\n-->'[' trouvé mais aucun ']' trouvé plus loin.", iLigne, pcFichier);
+		sprintf_s(pcMsg, 1024, "Erreur syntaxique à la ligne %d du fichier :\n%s\n-->'[' trouvé mais aucun ']' trouvé plus loin.", iLigne, pcFichier);
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, pcMsg);
 	}
 }
@@ -190,6 +190,7 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 		//ppcValeursBalises[uiBoucle][0] = '\0';
 		if (*pcValeur == '[')
 		{
+			*pcValeur = '\0';
 			fichier.getline(pcLigne, 1024);
 
 			// Tant qu'on n'est pas a la fin du fichier
@@ -203,11 +204,18 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 				fichier.getline(pcLigne, 1024);
 			}
 
-			// On retire le dernier \n
-			pcValeur[strlen(pcValeur) - 1] = '\0';
+
+			// On retire le dernier \n (si la chaine n'est pas vide)
+			if(pcValeur[0] != 0)
+				pcValeur[strlen(pcValeur) - 1] = '\0';
+
+			TABtab.TABajouterChaine(pcBalise, trim(pcValeur));
+		}
+		else
+		{
+			TABtab.TABajouterAuto(pcBalise, pcValeur);
 		}
 
-		TABtab.TABajouterAuto(pcBalise, pcValeur);
 	}
 
 	return TABtab;

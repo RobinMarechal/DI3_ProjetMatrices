@@ -280,7 +280,8 @@ et ajout des éléments dans leur tableau respectif
 void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal) 
 {
 	Valeur vVal;
-	vVal.pcChaine = pcVal;
+	char * pcTmp = _strdup(pcVal);
+	vVal.pcChaine = pcTmp;
 	TABajouter(pcCle, vVal, TAB_TYPE_CHAINE);
 }
 
@@ -341,7 +342,7 @@ void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 	else
 	{
 		// on ajoute simplement la chaine
-		TABajouterChaine(pcCle, _strdup(pcVal));
+		TABajouterChaine(pcCle, pcVal);
 	}
 }
 

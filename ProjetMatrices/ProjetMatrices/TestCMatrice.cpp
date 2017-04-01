@@ -867,68 +867,6 @@ void CTestCMatrice::TMAtestExceptions()
 	CMatrice<int> MATm23(2, 3);
 	CMatrice<int> MATm33(3, 3);
 
-
-	// operator*
-
-	// Doit lever une exception
-	try	{
-		MATm33 * MATm23;
-		// le programme n'est pas censé atteindre cette ligne
-		assertExceptionHasBeenThrown();
-	}
-	catch (Cexception EXCe)	{
-		cout << ".";
-	}
-
-	// Ne doit pas lever d'exception
-	try {
-		MATm23 * MATm33;
-		cout << ".";
-	}
-	catch (Cexception EXCe) {
-		// Le programme n'est pas censé rentrer dans le catch
-		assertExceptionHasNotBeenThrown();
-	}
-
-	// operator+ //////////////////////////////////////////////
-	// Doit lever une exception (dimensions invalides)
-	try {
-		MATm23 + MATm33;
-		assertExceptionHasBeenThrown();
-	}
-	catch (Cexception EXCe) {
-		cout << ".";
-	}
-
-	// Ne doit pas lever d'exception
-	try {
-		MATm23 + MATm23;
-		cout << ".";
-	}
-	catch (Cexception EXCe) {
-		assertExceptionHasNotBeenThrown();
-	}
-
-	// operator-
-	// Doit lever une exception
-	try
-	{
-		MATm23 - MATm33;
-		assertExceptionHasBeenThrown();
-	}
-	catch (Cexception EXCe) {
-		cout << ".";
-	}
-
-	// Ne doit pas lever d'exception
-	try {
-		MATm23 - MATm23;
-		cout << ".";
-	}
-	catch (Cexception EXCe) {
-		assertExceptionHasNotBeenThrown();
-	}
-
 	// operator/
 
 	// Doit lever une exception
@@ -965,64 +903,6 @@ void CTestCMatrice::TMAtestExceptions()
 	// Ne doit pas lever d'exception 
 	try {
 		MATm33 ^ 2;
-		cout << ".";
-	}
-	catch (Cexception EXCe) {
-		assertExceptionHasNotBeenThrown();
-	}
-
-	// MATgetValeur()
-	// Doit lever une exception
-	try
-	{
-		MATm23.MATgetValeur(3, 3);
-		assertExceptionHasBeenThrown();
-	}
-	catch (Cexception EXCe) {
-		cout << ".";
-	}
-
-	// Ne doit pas lever d'exception
-	try {
-		MATm23.MATgetValeur(1, 2);
-		cout << ".";
-	}
-	catch (Cexception EXCe) {
-		assertExceptionHasNotBeenThrown();
-	} 
-
-	// MATsetValeur()
-	// Doit lever une exception
-	try {
-		MATm23.MATsetValeur(3, 3, 5);
-		assertExceptionHasBeenThrown();
-	}
-	catch (Cexception EXCe) {
-		cout << ".";
-	}
-
-	// Ne doit pas lever d'exception
-	try {
-		MATm23.MATsetValeur(1, 2, 5);
-		cout << ".";
-	}
-	catch (Cexception EXCe) {
-		assertExceptionHasNotBeenThrown();
-	}
-
-	// MATinverse()
-	// Doit lever une exception (Determinant nul)
-	try {
-		CMatrice<int>(3, 3).MATinverse();
-		assertExceptionHasBeenThrown();
-	}
-	catch (Cexception EXCe) {
-		cout << ".";
-	}
-	// Ne doit pas lever d'exception
-	try {
-		double pdTab[3] = { 1.5, 5.3, 3 };
-		CMatrice<double>::MATdiag(3, pdTab).MATinverse();
 		cout << ".";
 	}
 	catch (Cexception EXCe) {

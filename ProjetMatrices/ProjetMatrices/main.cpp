@@ -21,6 +21,10 @@ using namespace std;
 
 int main(unsigned int argc, char * argv[])
 {
+
+	argc = 2;
+	argv[1] = "C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\ProjetMatrices\\JePassePas\\fichier123.txt";
+
 	#ifndef NDEBUG
 		// Lancement des tests unitaires
 		CTestCMatrice::TMAstart();
@@ -42,11 +46,20 @@ int main(unsigned int argc, char * argv[])
 			{
 				CTableauAssociatif TABtab = CParseur::PARparserFichier(argv[uiBoucle]);
 
+				// On vérifie que 'TypeMatrice' est bien précisé dans le fichier
+				if (TABtab.TABgetIndiceCle("TypeMatrice") == -1)
+				{
+					char pcMsg[1024];
+					sprintf_s(pcMsg, 1024, "Le champs 'TypeMatrice' n'est pas spécifié dans le fichier %s.", argv[uiBoucle]);
+
+					throw Cexception(EXC_ERREUR_LEXICALE, pcMsg);
+				}
+
 				// On vérifie que la matrice est bien de type 'double'.
 				if (strcmp(TABtab.TABgetValeurChaine("TypeMatrice"), "double") != 0 || strlen(TABtab.TABgetValeurChaine("TypeMatrice")) != strlen("double"))
 				{
-					char pcMsg[256];
-					sprintf(pcMsg, "La valeur de TypeMatrice n'est pas 'double' dans le fichier %s.", argv[uiBoucle]);
+					char pcMsg[1024];
+					sprintf_s(pcMsg, 1024, "La valeur de TypeMatrice n'est pas 'double' dans le fichier %s.", argv[uiBoucle]);
 
 					throw Cexception(EXC_ERREUR_LEXICALE, pcMsg);
 				}
@@ -57,7 +70,7 @@ int main(unsigned int argc, char * argv[])
 		{
 			cout << EXCe.EXCgetMessage() << endl;
 
-			exit(-1);
+			exit(EXIT_FAILURE);
 		}
 
 		cout << "Matrices construites : " << endl;

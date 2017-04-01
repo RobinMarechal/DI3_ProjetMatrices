@@ -18,7 +18,8 @@ int getType(char * pcVal)
 {
 	int iEtat = 0;
 	int iType = TAB_TYPE_CHAINE;
-	while (iEtat != -1 && iType == TAB_TYPE_CHAINE)
+	bool bStop = false;
+	while (!bStop)
 	{
 		char cChar = *pcVal;
 		switch (iEtat)
@@ -27,14 +28,14 @@ int getType(char * pcVal)
 			if (cChar == '0') iEtat = 1;
 			else if (cChar == '-') iEtat = 2;
 			else if (cChar >= '1' && cChar <= '9') iEtat = 3;
-			else if (cChar == '.') iEtat = 4; // car ".7" ==> 7 avec atof()
+			else if (cChar == '.') iEtat = 4; // car ".7" ==> 0.7 avec atof()
 			else iEtat = -1;
 			break;
 
 		case 1:
 			if (cChar == '.') iEtat = 4;
 			else if (cChar == 'e' || cChar == 'E') iEtat = 6;
-			else iType = TAB_TYPE_ENTIER;
+			else { iType = TAB_TYPE_ENTIER; bStop = true; }
 			break;
 
 		case 2:
@@ -47,39 +48,41 @@ int getType(char * pcVal)
 			if (cChar == '.') iEtat = 4;
 			else if (cChar == 'e' || cChar == 'E') iEtat = 6;
 			else if (cChar >= '0' && cChar <= '9') iEtat = 3;
-			else iType = TAB_TYPE_ENTIER;
+			else if (cChar == '\0') { iType = TAB_TYPE_ENTIER; bStop = true; }
+			else { iType = TAB_TYPE_CHAINE; bStop = true; }
 			break;
 
 		case 4:
 			if (cChar >= '0' && cChar <= '9') iEtat = 5;
-			else if (cChar == '\0') iType = TAB_TYPE_ENTIER; // Car "7." => 7 avec atof()
+			else if (cChar == '\0') { iType = TAB_TYPE_ENTIER; bStop = true; } // Car "7." => 7 avec atof()
 			else iEtat = -1;
 			break;
 
 		case 5:
 			if (cChar == 'e' || cChar == 'E') iEtat = 6;
 			else if (cChar >= '0' && cChar <= '9') iEtat = 5;
-			else iType = TAB_TYPE_REEL;
+			else { iType = TAB_TYPE_REEL; bStop = true; }
 			break;
 
 		case 6:
 			if (cChar >= '0' && cChar <= '9') iEtat = 8;
 			else if (cChar == '+' || cChar == '-') iEtat = 7;
-			else iType = -1;
+			else iEtat = -1;
 			break;
 
 		case 7:
 			if (cChar >= '0' && cChar <= '9') iEtat = 8;
-			else iType = -1;
+			else iEtat = -1;
 			break;
 
 		case 8:
 			if (cChar >= '0' && cChar <= '9') iEtat = 8;
-			else iType = TAB_TYPE_REEL;
+			else { iType = TAB_TYPE_REEL; bStop = true; }
 			break;
 
-		default:
+		case -1:
 			iType = TAB_TYPE_CHAINE;
+			bStop = true;
 			break;
 		}
 		pcVal++;
@@ -119,7 +122,7 @@ Entrée : une chaîne de caractères.
 Nécessite : rien.
 Sortie : rien.
 Entraîne : Modification de la chaine pointée par pcStr
-=> tous les caractères sont en minuscule.
+-> tous les caractères sont en minuscule.
 ******************************************/
 void toLowerString(char * pcStr)
 {
@@ -141,6 +144,9 @@ Entraîne : rien.
 ******************************************/
 char * trim(char pcStr[])
 {
+	if (strlen(pcStr) == 0)
+		return "";
+
 	char pcResultat[1024] = { 0 };
 	char * pcTmp = strchr(pcStr, '\0') - 1;
 	// On suprime les espaces avant le début du mot

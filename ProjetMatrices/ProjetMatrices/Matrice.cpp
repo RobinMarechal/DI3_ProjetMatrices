@@ -769,13 +769,13 @@ void CMatrice<T>::MATverifierContenuTableau(CTableauAssociatif TABtab)
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'Matrice' non renseigné.");
 
 	if (TABtab.TABgetValeurType("NBLignes") != TAB_TYPE_ENTIER  || TABtab.TABgetValeurEntier("NBLignes") < 1)
-		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier positif.");
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier strictement positif.");
 
 	if (TABtab.TABgetValeurType("NBColonnes") != TAB_TYPE_ENTIER || TABtab.TABgetValeurEntier("NBColonnes") < 1)
-		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier positif.");
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier strictement positif.");
 
 	if (TABtab.TABgetValeurType("Matrice") != TAB_TYPE_CHAINE)
-		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'Matrice' doit etre une chaine de caractère ou une liste ('[....]')");
+		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'Matrice' doit etre une liste ('[....]')");
 }
 
 
@@ -1236,24 +1236,26 @@ Entraîne : la création d'une matrice à partir des valeurs du tableau.
 template<class T>
 CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 {
-	const char * pcStrMatrice;
+	char * pcStrMatrice;
 	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere;
+	double dValeur;
 
 	// soulève une exception en cas de contenu non conforme
 	CMatrice<T>::MATverifierContenuTableau(TABtab);
 	CMatrice<T> MATmatrice(TABtab.TABgetValeurEntier("NBLignes"), TABtab.TABgetValeurEntier("NBColonnes"));
 
 	pcStrMatrice = TABtab.TABgetValeurChaine("Matrice");
-	// On décale la chaine pour ne pas prendre en compte le '[' restant
-	pcStrMatrice++;
 
-	/////////////////////////////////unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere, uiTotalLignes = 0, uiNbValeur = 0;
-	double dValeur;
+	if (strlen(pcStrMatrice) == 0)
+	{
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : la valeur de 'Matrice' est vide.");
+	}
 
 	for (uiBoucleL = 0; uiBoucleL < MATmatrice.MATgetNbLignes(); uiBoucleL++)
 	{
 		for (uiBoucleC = 0; uiBoucleC < MATmatrice.MATgetNbColonnes(); uiBoucleC++)
 		{
+
 			char pcCoefficient[64] = { 0 };
 
 			// On gère le cas ou le coefficient est un double à virgule.
@@ -1263,7 +1265,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 			{
 				// Si on trouve '\n' ici alors qu'on a pas passé la dernière colonnes
 				if ((*pcStrMatrice == '\n' || *pcStrMatrice == '\0') && uiBoucleC > 0)
-					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Au moins une ligne enuient moins de valeurs que prevu.");
+					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Au moins une ligne contient moins de valeurs que la valeur de 'NBColonnes'.");
 				pcStrMatrice++;
 			}
 
@@ -1290,7 +1292,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 
 			if (getType(pcCoefficient) != TAB_TYPE_REEL && getType(pcCoefficient) != TAB_TYPE_ENTIER)
 			{
-				throw Cexception(EXC_ERREUR_LEXICALE, "Les coefficients de la matrice ne sont pas des réels ou des entiers.");
+				throw Cexception(EXC_ERREUR_LEXICALE, "La valeur de 'Matrice' ne doit être composée que de nombres.");
 			}
 
 			dValeur = atof(pcCoefficient);
@@ -1303,16 +1305,23 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
 
 		if (*pcStrMatrice != '\n' && *pcStrMatrice != '\0')
 		{
-			while (*pcStrMatrice != '\n' || *pcStrMatrice != '\0')
+			while (*pcStrMatrice != '\n' && *pcStrMatrice != '\0')
 			{
 				if (*pcStrMatrice != ' ' && *pcStrMatrice != '\t')
 				{
-					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Une ligne de la matrice tient plus de valeurs que le nombre de colonnes specifie.");
+					throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : Une ligne de la matrice contient plus de valeurs que la valeur de 'NBColonnes'.");
 				}
 
 				pcStrMatrice++;
 			}
 		}
+	}
+
+	// Si le reste (sans les espaces, tabulations et retours à la ligne)
+	// n'est pas vide, il y a une (des) ligne(s) en trop
+	if (trim(pcStrMatrice)[0] != 0)
+	{
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : la matrice contient plus de lignes que la valeur de 'NBLignes'.");
 	}
 
 	return MATmatrice;
