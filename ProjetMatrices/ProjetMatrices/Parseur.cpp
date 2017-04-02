@@ -66,7 +66,7 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 
 			if (cChar == '=')
 			{
-				if (bEgal)
+				if (bEgal && !bCrochetOuvrant)
 				{
 					// Il y a 2 '=' ou plus sur cette ligne.
 					strcat_s(pcMsg, 1024, "\n--> Deux '=' ou plus sur la même ligne.");
@@ -141,6 +141,63 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 }
 
 
+/*****************************************
+Extraire la partie gauche d'une ligne du fichier
+******************************************
+Entrée : la ligne du fichier à analyser
+Nécessite : la ligne contient un (et un seul) '='.
+Sortie : la partie gauche de la ligne.
+Entraîne : rien.
+******************************************/
+char * CParseur::PARextraireBalise(char * pcLigne)
+{
+	char pcTmp[1024] = { 0 };
+	char * pcEgal = NULL;
+	
+	strcpy_s(pcTmp, 1024, pcLigne);
+	pcEgal = strchr(pcTmp, '=');
+
+	// On revérifie au cas ou la méthode est appelée à un autre moment sans 
+	// analyse syntaxique au préalable.
+	if (pcEgal == NULL)
+	{
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur syntaxique : une ligne du fichier ne contient pas de '='.");
+	}
+
+	pcTmp[pcEgal - pcTmp] = '\0';
+
+	return trim(pcTmp);
+}
+
+
+/*****************************************
+Extraire la partie droite d'une ligne du fichier
+******************************************
+Entrée : la ligne du fichier à analyser
+Nécessite : la ligne contient un (et un seul) '='.
+Sortie : la partie droite de la ligne.
+Entraîne : rien.
+******************************************/
+char * CParseur::PARextraireValeur(char * pcLigne)
+{
+	char pcTmp[1024] = { 0 };
+	char * pcEgal = NULL;
+	char * pcFin = NULL;
+
+	strcpy_s(pcTmp, 1024, pcLigne);
+	pcEgal = strchr(pcTmp, '=');
+
+	// On revérifie au cas ou la méthode est appelée à un autre moment sans 
+	// analyse syntaxique au préalable.
+	if (pcEgal == NULL)
+	{
+		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur syntaxique : une ligne du fichier ne contient pas de '='.");
+	}
+
+	return trim(pcEgal + 1);
+}
+
+
 
 /*****************************************
 Parse un fichier.
@@ -166,25 +223,17 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 	// Pour chaque balise, on récupère la valeur sous forme de char * à traiter
 	while(!fichier.eof())
 	{
-		char * pcTmp,
-			pcLigne[1024] = { 0 };
-
-		char pcBalise[1024] = { 0 }, pcValeur[1024] = { 0 };
+		char pcLigne[1024] = { 0 }, 
+			pcBalise[1024] = { 0 },
+			pcValeur[1024] = { 0 };
 
 		fichier.getline(pcLigne, 1024);
 
-		// VERIFICATION DE pcLigne
+		strcpy_s(pcBalise, 1024, PARextraireBalise(pcLigne));
+		strcpy_s(pcValeur, 1024, PARextraireValeur(pcLigne));
 
-		pcTmp = strchr(pcLigne, '=');
-
-		//pcBalise = chaine avant le = sans les espaces au debut et a la fin
-		strcpy_s(pcBalise, 128, pcLigne);
-		pcBalise[strchr(pcBalise, '=') - pcBalise] = '\0';
-		strcpy_s(pcBalise, 128, trim(pcBalise));
-
-		// pcValeur = chaine après le = sans les espaces au debut et a la fin
-		strcpy_s(pcValeur, 128, trim(strchr(pcLigne, '=') + 1));
-
+		// On permet un peu de souplesse par rapport à la casse des valeurs
+		// Ex : 'TypeMatrice=DOUble' => fonctionne
 		toLowerString(pcValeur);
 
 		//ppcValeursBalises[uiBoucle][0] = '\0';
@@ -204,12 +253,11 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 				fichier.getline(pcLigne, 1024);
 			}
 
-
 			// On retire le dernier \n (si la chaine n'est pas vide)
 			if(pcValeur[0] != 0)
 				pcValeur[strlen(pcValeur) - 1] = '\0';
 
-			TABtab.TABajouterChaine(pcBalise, trim(pcValeur));
+			TABtab.TABajouterChaine(pcBalise, _strdup(trim(pcValeur)));
 		}
 		else
 		{

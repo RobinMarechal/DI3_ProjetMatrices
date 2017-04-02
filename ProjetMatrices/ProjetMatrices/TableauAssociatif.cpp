@@ -125,7 +125,14 @@ CTableauAssociatif & CTableauAssociatif::operator=(CTableauAssociatif & TABobjet
 	TABinit();
 	for (uiBoucle = 0; uiBoucle < TABobjet.uiTABnbElements; uiBoucle++)
 	{
-		TABajouter(TABobjet.ppcTABcles[uiBoucle], TABobjet.pvTABvaleurs[uiBoucle], TABobjet.puiTypes[uiBoucle]);
+		if (TABobjet.puiTypes[uiBoucle] == TAB_TYPE_CHAINE)
+		{
+			TABajouterChaine(TABobjet.ppcTABcles[uiBoucle], _strdup(TABobjet.pvTABvaleurs[uiBoucle].pcChaine));
+		}
+		else
+		{
+			TABajouter(TABobjet.ppcTABcles[uiBoucle], TABobjet.pvTABvaleurs[uiBoucle], TABobjet.puiTypes[uiBoucle]);
+		}
 	}
 
 	return *this;
@@ -272,7 +279,7 @@ Ajouter un élément de type Chaine
 *********************************************************
 Entrée : la clé de la valeur à ajouter
 Entrée : la valeur de type Chaine à ajouter
-Nécessite : rien
+Nécessite : pcVal a été allouée sur le tas.
 Sortie : rien
 Entraîne : Réallocation des tableaux en attribut
 et ajout des éléments dans leur tableau respectif
@@ -280,8 +287,7 @@ et ajout des éléments dans leur tableau respectif
 void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal) 
 {
 	Valeur vVal;
-	char * pcTmp = _strdup(pcVal);
-	vVal.pcChaine = pcTmp;
+	vVal.pcChaine = pcVal;
 	TABajouter(pcCle, vVal, TAB_TYPE_CHAINE);
 }
 
@@ -342,7 +348,7 @@ void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 	else
 	{
 		// on ajoute simplement la chaine
-		TABajouterChaine(pcCle, pcVal);
+		TABajouterChaine(pcCle, _strdup(pcVal));
 	}
 }
 

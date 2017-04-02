@@ -198,7 +198,7 @@ public:
 	*********************************************************
 	Entrée : la clé de la valeur à ajouter
 	Entrée : la valeur de type Chaine à ajouter
-	Nécessite : rien
+	Nécessite : pcVal a été allouée sur le tas.
 	Sortie : rien
 	Entraîne : Réallocation des tableaux en attribut
 	et ajout des éléments dans leur tableau respectif

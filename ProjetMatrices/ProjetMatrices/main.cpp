@@ -22,14 +22,17 @@ using namespace std;
 int main(unsigned int argc, char * argv[])
 {
 
+	char * file = "C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\ProjetMatrices\\JePasse\\fichier03.txt";
+
+
 	argc = 2;
-	argv[1] = "C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\ProjetMatrices\\JePassePas\\fichier123.txt";
+	argv[1] = file;
+
 
 	#ifndef NDEBUG
 		// Lancement des tests unitaires
 		CTestCMatrice::TMAstart();
 	#endif
-
 
 	if (argc > 1)
 	{
@@ -65,45 +68,46 @@ int main(unsigned int argc, char * argv[])
 				}
 
 				pcMATmatrices[uiBoucle - 1] = CMatrice<double>::MATgenerer(TABtab);
+				std::cout << "Fichier " << uiBoucle << " lu." << std::endl;
 			}
 		} catch(Cexception EXCe)
 		{
-			cout << EXCe.EXCgetMessage() << endl;
+			std::cout << EXCe.EXCgetMessage() << std::endl;
 
 			exit(EXIT_FAILURE);
 		}
 
-		cout << "Matrices construites : " << endl;
+		std::cout << "Matrices construites : " << std::endl;
 		 
 		for (uiBoucle = 0; uiBoucle < argc - 1; uiBoucle++)
 		{
-			cout << pcMATmatrices[uiBoucle] << endl;
+			std::cout << pcMATmatrices[uiBoucle] << std::endl;
 		}
 
-		cout << "Veuillez entrer une valeur : ";
+		std::cout << "Veuillez entrer une valeur : ";
 
-		cin >> iValeur;
+		std::cin >> iValeur;
 
 		// Affichage de la multiplication.
-		cout << "Matrice * Entier : " << endl;
+		std::cout << "Matrice * Entier : " << std::endl;
 		
 		for (uiBoucle = 0; uiBoucle < argc - 1; uiBoucle++)
 		{
 			CMatrice<double> MATtmp = pcMATmatrices[uiBoucle] * iValeur;
-			cout << MATtmp << endl;
+			std::cout << MATtmp << std::endl;
 		}
 
 		// Affichage de la division.
-		cout << "Matrice / Entier : " << endl;
+		std::cout << "Matrice / Entier : " << std::endl;
 
 		for (uiBoucle = 0; uiBoucle < argc - 1; uiBoucle++)
 		{
 			CMatrice<double> MATtmp = pcMATmatrices[uiBoucle] / iValeur;
-			cout << MATtmp << endl;
+			std::cout << MATtmp << std::endl;
 		}
 
 		// Affichage de l'addition de toutes les matrices entre elles.
-		cout << "M1 + M2 + M3 +.... : " << endl;
+		std::cout << "M1 + M2 + M3 +.... : " << std::endl;
 
 		CMatrice <double> MATsomme = pcMATmatrices[0];
 
@@ -112,10 +116,10 @@ int main(unsigned int argc, char * argv[])
 			MATsomme = MATsomme + pcMATmatrices[uiBoucle];
 		}
 
-		cout << MATsomme << endl;
+		std::cout << MATsomme << std::endl;
 
 		// Affichage de l'opération M1 - M2 + M3 - M4...
-		cout << "M1 - M2 + M3 - ... : " << endl;
+		std::cout << "M1 - M2 + M3 - ... : " << std::endl;
 		CMatrice <double> MATsommeSoustraction = pcMATmatrices[0];
 
 		for (uiBoucle = 1; uiBoucle < argc - 1; uiBoucle++)
@@ -127,10 +131,10 @@ int main(unsigned int argc, char * argv[])
 			MATsommeSoustraction = MATsommeSoustraction + iCoeff * pcMATmatrices[uiBoucle];
 		}
 
-		cout << MATsommeSoustraction << endl;
+		std::cout << MATsommeSoustraction << std::endl;
 
 		// Affichage de la multiplication de toutes les matrices entre elles.
-		cout << "M1 * M2 * M3 *.... : " << endl;
+		std::cout << "M1 * M2 * M3 *.... : " << std::endl;
 		CMatrice <double> MATproduit = pcMATmatrices[0];
 
 		try
@@ -140,11 +144,11 @@ int main(unsigned int argc, char * argv[])
 				MATproduit = MATproduit * pcMATmatrices[uiBoucle];
 			}
 					
-			cout << MATproduit << endl;
+			std::cout << MATproduit << std::endl;
 
 		} catch(Cexception EXCe)
 		{
-			cout << EXCe.EXCgetMessage() << endl;
+			std::cout << EXCe.EXCgetMessage() << std::endl;
 		}
 
 	}

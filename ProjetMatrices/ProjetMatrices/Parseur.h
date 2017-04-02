@@ -42,6 +42,28 @@ public:
 	******************************************/
 	static void PARanalyseSyntaxique(char * pcFichier);
 
+
+	/*****************************************
+	Extraire la partie gauche d'une ligne du fichier
+	******************************************
+	Entrée : la ligne du fichier à analyser
+	Nécessite : la ligne contient un (et un seul) '='.
+	Sortie : la partie gauche de la ligne.
+	Entraîne : rien.
+	******************************************/
+	static char * PARextraireBalise(char * pcLigne);
+
+
+	/*****************************************
+	Extraire la partie droite d'une ligne du fichier
+	******************************************
+	Entrée : la ligne du fichier à analyser
+	Nécessite : la ligne contient un (et un seul) '='.
+	Sortie : la partie droite de la ligne.
+	Entraîne : rien.
+	******************************************/
+	static char *  PARextraireValeur(char * pcLigne);
+
 private:
 
 	/*****************************************
