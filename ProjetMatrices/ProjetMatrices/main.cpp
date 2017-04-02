@@ -21,14 +21,6 @@ using namespace std;
 
 int main(unsigned int argc, char * argv[])
 {
-
-	char * file = "C:\\Users\\Robin\\Desktop\\Divers\\Work\\Polytech\\S6\\C++\\DI3_ProjetMatrices\\ProjetMatrices\\JePasse\\fichier03.txt";
-
-
-	argc = 2;
-	argv[1] = file;
-
-
 	#ifndef NDEBUG
 		// Lancement des tests unitaires
 		CTestCMatrice::TMAstart();
@@ -44,7 +36,6 @@ int main(unsigned int argc, char * argv[])
 
 		try
 		{
-
 			for (uiBoucle = 1; uiBoucle < argc; uiBoucle++)
 			{
 				CTableauAssociatif TABtab = CParseur::PARparserFichier(argv[uiBoucle]);
