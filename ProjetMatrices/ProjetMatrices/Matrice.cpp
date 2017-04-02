@@ -1234,7 +1234,7 @@ Sortie : une instance de CMatrice.
 Entraîne : la création d'une matrice à partir des valeurs du tableau.
 ******************************************/
 template<class T>
-CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif TABtab)
+CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif & TABtab)
 {
 	char * pcStrMatrice;
 	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere;

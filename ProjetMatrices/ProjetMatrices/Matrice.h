@@ -588,7 +588,7 @@ public:
 	Sortie : une instance de CMatrice.
 	Entraîne : la création d'une matrice à partir des valeurs du tableau.
 	******************************************/
-	static CMatrice<T> MATgenerer(CTableauAssociatif TABtab);
+	static CMatrice<T> MATgenerer(CTableauAssociatif & TABtab);
 
 
 	/*****************************************
