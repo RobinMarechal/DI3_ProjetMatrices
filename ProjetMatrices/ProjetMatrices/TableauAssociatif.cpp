@@ -172,71 +172,6 @@ void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int u
 
 
 /********************************************************
-Supprimer un élément du tableau
-*********************************************************
-Entrée : la clé à retirer du tableau
-Nécessite : L'objet possède la clé en attribut (Sinon la méthode ne fait rien)
-Sortie : rien
-Entraîne : Réduction de la mémoire allouée aux tableaux en attribut
-Et suppression de la clé pcCle et de l'élément dans les autres tableaux
-*********************************************************/
-void CTableauAssociatif::TABsupprimer(char * pcCle) 
-{
-	unsigned int uiBoucle;
-	unsigned int uiPos = TABgetIndiceCle(pcCle);
-
-	// Si l'élément n'est pas dans le tableau, on ne fait rien
-	if (uiPos == -1)
-		return;
-
-	// On décale tout ce qui est à droite de uiPos d'une case vers la gauche
-	for (uiBoucle = uiPos; uiBoucle < uiTABnbElements - 1; uiBoucle++)
-	{
-		free(ppcTABcles[uiBoucle]);
-		ppcTABcles[uiBoucle] = _strdup(ppcTABcles[uiBoucle + 1]);
-		pvTABvaleurs[uiBoucle] = pvTABvaleurs[uiBoucle + 1];
-		puiTypes[uiBoucle] = puiTypes[uiBoucle + 1];
-	}
-
-	uiTABnbElements--;
-	ppcTABcles = (char **)realloc(ppcTABcles, uiTABnbElements * sizeof(char *));
-	pvTABvaleurs = (Valeur *)realloc(pvTABvaleurs, uiTABnbElements * sizeof(Valeur));
-	puiTypes = (unsigned int *)realloc(puiTypes, sizeof(unsigned int) * uiTABnbElements);
-
-	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
-	{
-		std::cout << "TABsupprimer() : Une réallocation a échoué, le programme s'est arrêté." << std::endl;
-		exit(EXIT_FAILURE);
-	}
-
-}
-
-
-/********************************************************
-Modifier un élément du tableaux
-*********************************************************
-Entrée : la clé de la valeur à modifier
-Entrée : un union Valeur contenant la valeur à modifier
-Entrée : Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
-Nécessite : L'objet possède la clé en attribut (Sinon la méthode ne fait rien)
-Sortie : rien
-Entraîne : modification d'une valeur de chaque tableau si pcCle est bien dans le tableau
-*********************************************************/
-void CTableauAssociatif::TABmodifier(char * pcCle, Valeur vValeur, unsigned int uiType) 
-{
-	unsigned int uiPos = TABgetIndiceCle(pcCle);
-
-	// Si l'élément n'est pas dans le tableau, on ne fait rien
-	if (uiPos == -1)
-		return;
-
-	pvTABvaleurs[uiPos] = vValeur;
-	puiTypes[uiPos] = uiType;
-}
-
-
-
-/********************************************************
 Ajouter un élément de type Réel
 *********************************************************
 Entrée : la clé de la valeur à ajouter
@@ -308,7 +243,7 @@ Exemples : "7." => Entier, ".27" => Reel, "" => Chaine
 void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
 {
 	// Format : XX
-	int iType = getType(pcVal);
+	int iType = analyserType(pcVal);
 	if (iType == TAB_TYPE_ENTIER)
 	{
 		// On parse la chaine en int
@@ -400,8 +335,8 @@ int CTableauAssociatif::TABgetIndiceCle(char * pcCle) const
 Lecture de la clé à une position
 *********************************************************
 Entrée : la position dans le tableau
-Nécessite : 0 <= uiPos < Nombre d'éléments
-Sortie : un pointeur sur la clé
+Nécessite : rien.
+Sortie : un pointeur sur la clé, ou NULL si aucune clé ne correspond à uiPos
 Entraîne : rien
 Attention ! Une modification de la chaine retournée par la
 méthode entrainerait la modification de l'élement dans
@@ -409,6 +344,9 @@ le tableaux des clés, il ne s'agit pas d'une copie.
 *********************************************************/
 char * CTableauAssociatif::TABgetCle(unsigned int uiPos) const 
 {
+	if (uiPos < 0 || uiPos >= uiTABnbElements)
+		return NULL;
+
 	return ppcTABcles[uiPos];
 }
 

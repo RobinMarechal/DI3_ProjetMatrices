@@ -24,9 +24,6 @@
     <ClInclude Include="Parseur.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="TestCMatrice.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="TableauAssociatif.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
@@ -34,6 +31,9 @@
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
     <ClInclude Include="helpers.h">
+      <Filter>Fichiers d%27en-tête</Filter>
+    </ClInclude>
+    <ClInclude Include="TestsUnitaires.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
   </ItemGroup>
@@ -50,13 +50,13 @@
     <ClCompile Include="Matrice.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="TestCMatrice.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="TableauAssociatif.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
     <ClCompile Include="helpers.cpp">
+      <Filter>Fichiers sources</Filter>
+    </ClCompile>
+    <ClCompile Include="TestsUnitaires.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
   </ItemGroup>

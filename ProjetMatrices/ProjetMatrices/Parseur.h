@@ -74,17 +74,6 @@ private:
 	Sortie : rien.
 	Entraîne : initialisation de l'objet.
 	******************************************/
-	CParseur() {};
-
-
-	/*****************************************
-	Destructeur.
-	******************************************
-	Entrée : rien.
-	Nécessite : rien.
-	Sortie : rien.
-	Entraîne : rien.
-	******************************************/
-	~CParseur() {};
+	CParseur() {}; // privé pour empêcher l'instanciation de l'objet de l'extérieur.
 };
 #endif

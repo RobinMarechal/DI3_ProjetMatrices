@@ -1290,7 +1290,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif & TABtab)
 				pcCoefficient[strlen(pcCoefficient) - 1] = '\0';
 			}
 
-			if (getType(pcCoefficient) != TAB_TYPE_REEL && getType(pcCoefficient) != TAB_TYPE_ENTIER)
+			if (analyserType(pcCoefficient) != TAB_TYPE_REEL && analyserType(pcCoefficient) != TAB_TYPE_ENTIER)
 			{
 				throw Cexception(EXC_ERREUR_LEXICALE, "La valeur de 'Matrice' ne doit être composée que de nombres.");
 			}
@@ -1319,7 +1319,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif & TABtab)
 
 	// Si le reste (sans les espaces, tabulations et retours à la ligne)
 	// n'est pas vide, il y a une (des) ligne(s) en trop
-	if (trim(pcStrMatrice)[0] != 0)
+	if (supprimerEspaces(pcStrMatrice)[0] != 0)
 	{
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Format invalide : la matrice contient plus de lignes que la valeur de 'NBLignes'.");
 	}

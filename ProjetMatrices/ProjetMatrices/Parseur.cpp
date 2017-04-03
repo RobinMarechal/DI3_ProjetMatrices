@@ -166,7 +166,7 @@ char * CParseur::PARextraireBalise(char * pcLigne)
 
 	pcTmp[pcEgal - pcTmp] = '\0';
 
-	return trim(pcTmp);
+	return supprimerEspaces(pcTmp);
 }
 
 
@@ -194,7 +194,7 @@ char * CParseur::PARextraireValeur(char * pcLigne)
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur syntaxique : une ligne du fichier ne contient pas de '='.");
 	}
 
-	return trim(pcEgal + 1);
+	return supprimerEspaces(pcEgal + 1);
 }
 
 
@@ -234,7 +234,7 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 
 		// On permet un peu de souplesse par rapport à la casse des valeurs
 		// Ex : 'TypeMatrice=DOUble' => fonctionne
-		toLowerString(pcValeur);
+		transformerEnMinuscule(pcValeur);
 
 		//ppcValeursBalises[uiBoucle][0] = '\0';
 		if (*pcValeur == '[')
@@ -257,7 +257,7 @@ CTableauAssociatif CParseur::PARparserFichier(char * pcFichier)
 			if(pcValeur[0] != 0)
 				pcValeur[strlen(pcValeur) - 1] = '\0';
 
-			TABtab.TABajouterChaine(pcBalise, _strdup(trim(pcValeur)));
+			TABtab.TABajouterChaine(pcBalise, _strdup(supprimerEspaces(pcValeur)));
 		}
 		else
 		{

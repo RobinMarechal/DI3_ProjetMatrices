@@ -7,14 +7,12 @@
 #include "helpers.h"
 #include "constantes.h"
 
-using namespace std;
-
 // pour desactiver les tests : #define NDEBUG
 //#define NDEBUG
 
 #ifndef NDEBUG
 
-#include "TestCMatrice.h"
+#include "TestsUnitaires.h"
 
 #endif
 
@@ -23,14 +21,14 @@ int main(unsigned int argc, char * argv[])
 {
 	#ifndef NDEBUG
 		// Lancement des tests unitaires
-		CTestCMatrice::TMAstart();
+		CTestsUnitaires::UNIstart();
 	#endif
 
 	if (argc > 1)
 	{
 		double iValeur;
 
-		CMatrice <double> * pcMATmatrices = new CMatrice<double>[argc];
+		CMatrice <double> * pcMATmatrices = new CMatrice<double>[argc-1];
 
 		unsigned int uiBoucle;
 

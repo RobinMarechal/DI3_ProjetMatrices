@@ -140,32 +140,6 @@ public:
 
 
 	/********************************************************
-	Supprimer un élément du tableau
-	*********************************************************
-	Entrée : la clé à retirer du tableau
-	Nécessite : L'objet possède la clé en attribut (Sinon la méthode ne fait rien)
-	Sortie : rien
-	Entraîne : Réduction de la mémoire allouée aux tableaux en attribut
-	Et suppression de la clé pcCle et de l'élément dans les autres tableaux
-	*********************************************************/
-	void TABsupprimer(char * pcCle);
-
-
-	/********************************************************
-	Modifier un élément du tableaux
-	*********************************************************
-	Entrée : la clé de la valeur à modifier
-	Entrée : un union Valeur contenant la valeur à modifier
-	Entrée : Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
-	Nécessite : L'objet possède la clé en attribut (Sinon la méthode ne fait rien)
-	Sortie : rien
-	Entraîne : modification d'une valeur de chaque tableau si pcCle est bien dans le tableau
-	*********************************************************/
-	void TABmodifier(char * pcCle, Valeur vValeur, unsigned int uiType);
-
-
-
-	/********************************************************
 	Ajouter un élément de type Entier
 	*********************************************************
 	Entrée : la clé de la valeur à ajouter
@@ -253,8 +227,8 @@ public:
 	Lecture de la clé à une position
 	*********************************************************
 	Entrée : la position dans le tableau
-	Nécessite : 0 <= uiPos < Nombre d'éléments
-	Sortie : un pointeur sur la clé
+	Nécessite : rien.
+	Sortie : un pointeur sur la clé, ou NULL si aucune clé ne correspond à uiPos
 	Entraîne : rien
 	Attention ! Une modification de la chaine retournée par la
 	méthode entrainerait la modification de l'élement dans 

@@ -148,7 +148,7 @@
     <ClInclude Include="Matrice.h" />
     <ClInclude Include="Parseur.h" />
     <ClInclude Include="TableauAssociatif.h" />
-    <ClInclude Include="TestCMatrice.h" />
+    <ClInclude Include="TestsUnitaires.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Cexception.cpp" />
@@ -160,7 +160,7 @@
     </ClCompile>
     <ClCompile Include="Parseur.cpp" />
     <ClCompile Include="TableauAssociatif.cpp" />
-    <ClCompile Include="TestCMatrice.cpp" />
+    <ClCompile Include="TestsUnitaires.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

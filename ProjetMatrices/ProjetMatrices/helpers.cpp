@@ -14,7 +14,7 @@ Nécessite : rien
 Sortie : l'entier correspondant au type de la chaine
 Entraîne : (0 = entier) || (1 = réel) || (3 = chaine)
 ******************************************/
-int getType(char * pcVal)
+int analyserType(char * pcVal)
 {
 	int iEtat = 0;
 	int iType = TAB_TYPE_CHAINE;
@@ -101,7 +101,7 @@ Nécessite : pcStart >= pcEnd.
 Sortie : la sous-chaîne souhaitée (de type char *).
 Entraîne : Allocation dynamique d'un char * (malloc)
 ******************************************/
-char * subString(const char * pcStart, const char * pcEnd) {
+char * sousChaine(const char * pcStart, const char * pcEnd) {
 	unsigned int uiBoucle = 0;
 	char * pcStr = (char *)malloc(sizeof(char) * (size_t)(pcEnd - pcStart + 1));
 	while (pcStart + uiBoucle != pcEnd && pcStart[uiBoucle] != '\0')
@@ -124,7 +124,7 @@ Sortie : rien.
 Entraîne : Modification de la chaine pointée par pcStr
 -> tous les caractères sont en minuscule.
 ******************************************/
-void toLowerString(char * pcStr)
+void transformerEnMinuscule(char * pcStr)
 {
 	unsigned int uiBoucle;
 	for (uiBoucle = 0; uiBoucle < strlen(pcStr); uiBoucle++)
@@ -142,7 +142,7 @@ Nécessite : rien.
 Sortie : Une copie de la chaine de caractère sans les espaces de début et de fin.
 Entraîne : rien.
 ******************************************/
-char * trim(char pcStr[])
+char * supprimerEspaces(char pcStr[])
 {
 	if (strlen(pcStr) == 0)
 		return "";
