@@ -18,6 +18,14 @@ using namespace std;
 #define assertExceptionHasBeenThrown() CUSTOM_ASSERT(true == false)
 #define assertExceptionHasNotBeenThrown() CUSTOM_ASSERT(true == false)
 
+/*****************************************
+Teste les accesseurs.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée
+******************************************/
 void CTestCMatrice::TMAtestAccesseurs()
 {
 	cout << "TMAtestAccesseurs()";
@@ -54,6 +62,14 @@ void CTestCMatrice::TMAtestAccesseurs()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste l'opérateur +.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestOperateurPlus()
 {
 	cout << "TMAtestOperateurPlus()";
@@ -96,6 +112,14 @@ void CTestCMatrice::TMAtestOperateurPlus()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste l'opérateur -.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestOperateurMoins()
 {
 	cout << "TMAtestOperateurMoins()";
@@ -136,6 +160,14 @@ void CTestCMatrice::TMAtestOperateurMoins()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste l'opérateur =.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestOperateurEgal()
 {
 	cout << "TMAtestOperateurEgal()";
@@ -156,6 +188,14 @@ void CTestCMatrice::TMAtestOperateurEgal()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste les opérateur de comparaisons == et !=.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestOperateursComparaison()
 {
 	cout << "TMAtestOperateursComparaison()";
@@ -193,6 +233,14 @@ void CTestCMatrice::TMAtestOperateursComparaison()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste l'opérateur *.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestOperateurProduit()
 {
 	cout << "TMAtestOperateurProduit()";
@@ -252,6 +300,14 @@ void CTestCMatrice::TMAtestOperateurProduit()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste l'opérateur /.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestOperateurDiviser()
 {
 	cout << "TMAtestOperateurDiviser()";
@@ -274,6 +330,14 @@ void CTestCMatrice::TMAtestOperateurDiviser()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste l'opérateur ^.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestOperateurPuissance()
 {
 	cout << "TMAtestOperateurPuissance()";
@@ -307,6 +371,14 @@ void CTestCMatrice::TMAtestOperateurPuissance()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste de tous les opérateurs.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'appel de tous les tests sur les opérateurs.
+******************************************/
 void CTestCMatrice::TMAtestOperateurs()
 {
 	TMAtestOperateursComparaison();
@@ -365,6 +437,14 @@ void CTestCMatrice::TMAtestOperateurs()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le calcul du rang.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestCalculRang()
 {
 	cout << "TMAtestCalculRang()";
@@ -403,6 +483,14 @@ void CTestCMatrice::TMAtestCalculRang()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste l'échelonnement.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestCalculEchelonnee()
 {
 	cout << "TMAtestCalculEchelonnee()";
@@ -447,6 +535,14 @@ void CTestCMatrice::TMAtestCalculEchelonnee()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le calcul de la transposée.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestCalculTransposee()
 {
 	cout << "TMAtestCalculTransposee()";
@@ -491,6 +587,14 @@ void CTestCMatrice::TMAtestCalculTransposee()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le calcul de la sous-matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestCalculSousMatrice()
 {
 	cout << "TMAtestCalculSousMatrice()";
@@ -516,6 +620,14 @@ void CTestCMatrice::TMAtestCalculSousMatrice()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le calcul du déterminant.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestCalculDet()
 {
 	cout << "TMAtestCalculDet()";
@@ -551,6 +663,14 @@ void CTestCMatrice::TMAtestCalculDet()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le calcul de la matrice inverse.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestCalculInverse()
 {
 	cout << "TMAtestCalculInverse()";
@@ -595,6 +715,14 @@ void CTestCMatrice::TMAtestCalculInverse()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le calcul de la commatrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestCalculCommatrice()
 {
 	cout << "TMAtestCalculCommatrice()";
@@ -622,6 +750,14 @@ void CTestCMatrice::TMAtestCalculCommatrice()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le calcul de la trace.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestCalculTrace()
 {
 	cout << "TMAtestCalculTrace()";
@@ -647,6 +783,14 @@ void CTestCMatrice::TMAtestCalculTrace()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste tous les calculs.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'appel de tous les tests sur les calculs.
+******************************************/
 void CTestCMatrice::TMAtestCalculs()
 {
 	TMAtestCalculSousMatrice();
@@ -661,6 +805,14 @@ void CTestCMatrice::TMAtestCalculs()
 	TMAtestCalculTrace();
 }
 
+/*****************************************
+Teste le test de matrice nulle.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestEstNulle()
 {
 	cout << "TMAtestEstNulle()";
@@ -680,12 +832,28 @@ void CTestCMatrice::TMAtestEstNulle()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le test de matrice triangulaire.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestEstTriangulaire()
 {
 	TMAtestEstTriangulaireSuperieure();
 	TMAtestEstTriangulaireInferieure();
 }
 
+/*****************************************
+Teste le test de matrice triangulaire supérieur.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestEstTriangulaireSuperieure()
 {
 	cout << "TMAtestEstTriangulaireSuperieure()";
@@ -710,6 +878,14 @@ void CTestCMatrice::TMAtestEstTriangulaireSuperieure()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le test de matrice triangulaire inférieur.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestEstTriangulaireInferieure()
 {
 	cout << "TMAtestEstTriangulaireInferieure()";
@@ -735,6 +911,14 @@ void CTestCMatrice::TMAtestEstTriangulaireInferieure()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le test de matrice diagonale.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestEstDiagonale()
 {
 	cout << "TMAtestEstDiagonale()";
@@ -759,6 +943,14 @@ void CTestCMatrice::TMAtestEstDiagonale()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le test de matrice inversible.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestEstInversible()
 {
 	cout << "TMAtestEstInversible()";
@@ -779,6 +971,14 @@ void CTestCMatrice::TMAtestEstInversible()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le test de matrice symétrique.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestEstSymetrique()
 {
 	cout << "TMAtestEstSymetrique()";
@@ -805,6 +1005,14 @@ void CTestCMatrice::TMAtestEstSymetrique()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le test de matrice antisymétrique.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestEstAntiSymetrique()
 {
 	cout << "TMAtestEstAntiSymetrique()";
@@ -838,6 +1046,14 @@ void CTestCMatrice::TMAtestEstAntiSymetrique()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste le test de matrice carrée.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'appel de tous les tests sur les méthodes de test.
+******************************************/
 void CTestCMatrice::TMAtestTestsMatriceCarree()
 {
 	TMAtestEstTriangulaire();
@@ -847,6 +1063,14 @@ void CTestCMatrice::TMAtestTestsMatriceCarree()
 	TMAtestEstAntiSymetrique();
 }
 
+/*****************************************
+Teste la création d'une matrice diagonale.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestDiag()
 {
 	cout << "TMAtestDiag()";
@@ -860,6 +1084,14 @@ void CTestCMatrice::TMAtestDiag()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Teste les exceptions.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestCMatrice::TMAtestExceptions()
 {
 	cout << "TMAtestExceptions()";
@@ -912,6 +1144,14 @@ void CTestCMatrice::TMAtestExceptions()
 	cout << "OK" << endl;
 }
 
+/*****************************************
+Début des tests.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'appel de tous les tests.
+******************************************/
 void CTestCMatrice::TMAstart()
 {
 	cout << "------------------------------------------" << endl;

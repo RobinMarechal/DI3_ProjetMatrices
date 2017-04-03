@@ -29,7 +29,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestOperateurPlus();
 
 
@@ -41,7 +40,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestOperateurMoins();
 
 
@@ -53,7 +51,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestOperateurEgal();
 
 
@@ -65,7 +62,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestOperateursComparaison();
 
 
@@ -89,7 +85,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestOperateurDiviser();
 
 
@@ -101,7 +96,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestOperateurPuissance();
 
 
@@ -113,7 +107,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'appel de tous les tests sur les opérateurs.
 	******************************************/
-
 	void TMAtestOperateurs();
 
 
@@ -125,7 +118,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestCalculRang();
 
 
@@ -137,7 +129,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestCalculEchelonnee();
 
 
@@ -149,7 +140,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestCalculTransposee();
 
 
@@ -161,7 +151,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestCalculSousMatrice();
 
 
@@ -173,7 +162,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestCalculDet();
 
 
@@ -185,7 +173,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestCalculInverse();
 
 
@@ -197,7 +184,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestCalculCommatrice();
 
 
@@ -209,7 +195,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestCalculTrace();
 
 
@@ -221,7 +206,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'appel de tous les tests sur les calculs.
 	******************************************/
-
 	void TMAtestCalculs();
 
 
@@ -233,7 +217,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestEstNulle();
 
 
@@ -245,7 +228,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestEstTriangulaire();
 
 
@@ -257,7 +239,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestEstTriangulaireSuperieure();
 
 
@@ -269,7 +250,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestEstTriangulaireInferieure();
 
 
@@ -281,7 +261,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestEstDiagonale();
 
 
@@ -293,7 +272,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestEstInversible();
 
 
@@ -305,7 +283,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestEstSymetrique();
 
 
@@ -317,7 +294,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestEstAntiSymetrique();
 
 
@@ -329,7 +305,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'appel de tous les tests sur les méthodes de test.
 	******************************************/
-
 	void TMAtestTestsMatriceCarree();
 	
 
@@ -341,7 +316,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestDiag();
 
 
@@ -353,7 +327,6 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-
 	void TMAtestExceptions();
 
 public:
@@ -366,7 +339,6 @@ public:
 	Sortie : rien.
 	Entraîne : l'appel de tous les tests.
 	******************************************/
-
 	static void TMAstart();
 };
 
