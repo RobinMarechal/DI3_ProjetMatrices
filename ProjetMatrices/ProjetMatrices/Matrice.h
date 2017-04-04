@@ -296,7 +296,7 @@ public:
 	Sortie : rien.
 	Entraîne : rien
 	******************************************/
-	void MATafficher();
+	void MATafficher() const;
 
 
 	/*****************************************
@@ -307,7 +307,7 @@ public:
 	Sortie : le nombre de colonnes de la matrice.
 	Entraîne : rien.
 	******************************************/
-	unsigned int MATgetNbColonnes();
+	unsigned int MATgetNbColonnes() const ;
 
 
 	/*****************************************
@@ -318,7 +318,7 @@ public:
 	Sortie : le nombre de lignes de la matrice.
 	Entraîne : rien.
 	******************************************/
-	unsigned int MATgetNbLignes();
+	unsigned int MATgetNbLignes() const;
 
 
 	/*****************************************
@@ -342,7 +342,7 @@ public:
 	Sortie : un tableau contant la ligne uiLigne.
 	Entraîne : allocation (via l'operateur new) d'un tableau.
 	******************************************/
-	T * MATgetLigne(unsigned int uiLigne);
+	T * MATgetLigne(unsigned int uiLigne) const;
 
 	
 	/*****************************************
@@ -353,7 +353,7 @@ public:
 	Sortie : un tableau contant la colonnes uiColonne.
 	Entraîne : allocation (via l'operateur new) d'un tableau.
 	******************************************/
-	T * MATgetColonne(unsigned int uiColonne);
+	T * MATgetColonne(unsigned int uiColonne) const;
 
 
 	// ----- Setters ----------------------------------------
@@ -404,7 +404,7 @@ public:
 	Sortie : le rang de la matrice.
 	Entraîne : rien.
 	******************************************/
-	unsigned int MATrang();
+	unsigned int MATrang() const;
 
 
 	/*****************************************
@@ -415,7 +415,7 @@ public:
 	Sortie : une matrice échelonnées (non réduite => change le déterminant).
 	Entraîne : rien.
 	******************************************/
-	CMatrice<T> MATechelonnee();
+	CMatrice<T> MATechelonnee() const;
 
 
 	/*****************************************
@@ -426,7 +426,7 @@ public:
 	Sortie : la transposée de la matrice
 	Entraîne : rien.
 	******************************************/
-	CMatrice<T> MATtransposee();
+	CMatrice<T> MATtransposee() const;
 
 
 	/*****************************************
@@ -441,7 +441,7 @@ public:
 	sur la colonne uiColonne.
 	Entraîne : rien.
 	******************************************/
-	CMatrice<T> MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne);
+	CMatrice<T> MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne) const;
 
 
 	/*****************************************
@@ -452,7 +452,7 @@ public:
 	Sortie : la valeur du déterminant.
 	Entraîne : rien.
 	******************************************/
-	T MATdet();
+	T MATdet() const;
 
 
 	/*****************************************
@@ -463,8 +463,8 @@ public:
 	Sortie : la valeur de la trace.
 	Entraîne : rien.
 	******************************************/
-	T MATtr();
-
+	T MATtr() const;
+	 
 
 	/*****************************************
 	Calcul de la commatrice.
@@ -474,7 +474,7 @@ public:
 	Sortie : une instance de CMatrice égale a la commatrice de l'objet.
 	Entraîne : rien.
 	******************************************/
-	CMatrice<T> MATcommatrice();
+	CMatrice<T> MATcommatrice() const;
 
 
 	/*****************************************
@@ -485,7 +485,7 @@ public:
 	Sortie : une instance de CMatrice égale à l'inverse de l'objet.
 	Entraîne : Une Cexception est levée si le determinant est nul.
 	******************************************/
-	CMatrice<T> MATinverse();
+	CMatrice<T> MATinverse() const;
 
 
 	/*****************************************
@@ -496,7 +496,7 @@ public:
 	Sortie : un booléen : True = la matrice est triangulaire, False = la matrice n'est pas triangulaire.
 	Entraîne : rien.
 	******************************************/
-	bool MATestTriangulaire();
+	bool MATestTriangulaire() const;
 
 
 	/*****************************************
@@ -507,7 +507,7 @@ public:
 	Sortie : un booléen : True = la matrice est triangulaire supérieure, False = la matrice n'est pas triangulaire supérieure.
 	Entraîne : rien
 	******************************************/
-	bool MATestTriangulaireSuperieure();
+	bool MATestTriangulaireSuperieure() const;
 
 
 	/*****************************************
@@ -518,7 +518,7 @@ public:
 	Sortie : un booléen : True = la matrice est triangulaire inférieur, False = la matrice n'est pas triangulaire inférieure.
 	Entraîne : rien
 	******************************************/
-	bool MATestTriangulaireInferieure();
+	bool MATestTriangulaireInferieure() const; 
 
 
 	/*****************************************
@@ -529,7 +529,7 @@ public:
 	Sortie : un booléen : True = la matrice est diagonale, False = la matrice n'est pas diagonale.
 	Entraîne : rien.
 	******************************************/
-	bool MATestDiagonale();
+	bool MATestDiagonale() const;
 
 
 	/*****************************************
@@ -540,7 +540,7 @@ public:
 	Sortie : un booléen : True = la matrice est inversible, False = la matrice n'est pas inversible.
 	Entraîne : rien
 	******************************************/
-	bool MATestInversible();
+	bool MATestInversible() const;
 
 
 	/*****************************************
@@ -551,7 +551,7 @@ public:
 	Sortie : un booléen : True = la matrice est symétrique, False = la matrice n'est pas symétrique.
 	Entraîne : rien.
 	******************************************/
-	bool MATestSymetrique();
+	bool MATestSymetrique() const;
 
 
 	/*****************************************
@@ -562,7 +562,7 @@ public:
 	Sortie : un booléen : True = la matrice est antisymétrique, False = la matrice n'est pas antisymétrique.
 	Entraîne : rien.
 	******************************************/
-	bool MATestAntiSymetrique();
+	bool MATestAntiSymetrique() const;
 
 
 
@@ -599,7 +599,7 @@ public:
 	Sortie : un booléen : True = la matrice est nulle, False = la matrice n'est pas nulle.
 	Entraine : rien
 	******************************************/
-	bool MATestNulle();
+	bool MATestNulle() const;
 };
 
 

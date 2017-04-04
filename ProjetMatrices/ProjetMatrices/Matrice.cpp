@@ -435,7 +435,7 @@ Sortie : rien.
 Entraîne : rien
 ******************************************/
 template <class T>
-void CMatrice<T>::MATafficher()
+void CMatrice<T>::MATafficher() const
 {
 	std::cout << *this;
 }
@@ -450,7 +450,7 @@ Sortie : le nombre de colonnes de la matrice
 Entraîne : rien.
 ******************************************/
 template <class T>
-inline unsigned int CMatrice<T>::MATgetNbColonnes()
+inline unsigned int CMatrice<T>::MATgetNbColonnes() const
 {
 	return uiMATnbColonnes;
 }
@@ -465,7 +465,7 @@ Sortie : le nombre de lignes de la matrice.
 Entraîne : rien.
 ******************************************/
 template <class T>
-inline unsigned int CMatrice<T>::MATgetNbLignes()
+inline unsigned int CMatrice<T>::MATgetNbLignes() const
 {
 	return uiMATnbLignes;
 }
@@ -497,7 +497,7 @@ Sortie : T * : un tableau contant la ligne uiLigne.
 Entraîne : allocation (via l'operateur new) d'un tableau.
 ******************************************/
 template <class T>
-T * CMatrice<T>::MATgetLigne(unsigned int uiLigne)
+T * CMatrice<T>::MATgetLigne(unsigned int uiLigne) const
 {
 	unsigned int uiBoucleC;
 	T * tTab = new T[uiMATnbColonnes];
@@ -520,7 +520,7 @@ Sortie : un tableau contant la colonnes uiColonne.
 Entraîne : allocation (via l'operateur new) d'un tableau.
 ******************************************/
 template <class T>
-T * CMatrice<T>::MATgetColonne(unsigned int uiColonne)
+T * CMatrice<T>::MATgetColonne(unsigned int uiColonne) const
 {
 	return MATtransposee().MATgetLigne(uiColonne);
 }
@@ -592,7 +592,7 @@ Sortie : le rang de la matrice.
 Entraîne : rien.
 ******************************************/
 template <class T>
-unsigned int CMatrice<T>::MATrang()
+unsigned int CMatrice<T>::MATrang() const
 {
 	CMatrice<T> MATech = MATechelonnee();
 	unsigned int uiBoucleL = 0;
@@ -616,7 +616,7 @@ Sortie : une matrice échelonnées (non réduite => change le déterminant).
 Entraîne : rien.
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::MATechelonnee()
+CMatrice<T> CMatrice<T>::MATechelonnee() const
 {
 	unsigned int uiLignes,
 				 uiColonnes,
@@ -655,7 +655,7 @@ Sortie : la transposée de la matrice
 Entraîne : rien.
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::MATtransposee()
+CMatrice<T> CMatrice<T>::MATtransposee() const
 {
 	unsigned int uiBoucleL, uiBoucleC;
 	CMatrice<T> MATresultat(uiMATnbColonnes, uiMATnbLignes);
@@ -686,7 +686,7 @@ sur la colonne uiColonne.
 Entraîne : rien.
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne)
+CMatrice<T> CMatrice<T>::MATsousMatrice(unsigned int uiLigne, unsigned int uiColonne) const
 {
 	unsigned int uiBoucleL, uiBoucleC;
 	CMatrice<T> MATresultat(uiMATnbLignes - 1, uiMATnbColonnes - 1);
@@ -724,7 +724,7 @@ Sortie : un booléen : True = la matrice est nulle, False = la matrice n'est pas
 Entraine : rien
 ******************************************/
 template <class T>
-bool CMatrice<T>::MATestNulle()
+bool CMatrice<T>::MATestNulle() const
 {
 	unsigned int uiBoucleL, uiBoucleC;
 
@@ -927,7 +927,7 @@ Sortie : la valeur du déterminant.
 Entraîne : rien.
 ******************************************/
 template <class T>
-T CMatrice<T>::MATdet()
+T CMatrice<T>::MATdet() const
 {
 	if (uiMATnbLignes == 1)
 	{
@@ -979,7 +979,7 @@ Sortie : la valeur de la trace.
 Entraîne : rien.
 ******************************************/
 template <class T>
-T CMatrice<T>::MATtr()
+T CMatrice<T>::MATtr() const
 {
 	unsigned int uiBoucle;
 	T trace = 0;
@@ -1002,7 +1002,7 @@ Sortie : une instance de CMatrice égale a la commatrice de l'objet.
 Entraîne : rien.
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::MATcommatrice()
+CMatrice<T> CMatrice<T>::MATcommatrice() const
 {
 	unsigned int uiBoucleL, uiBoucleC;
 	unsigned int uiDim = MATgetNbLignes();
@@ -1035,7 +1035,7 @@ Sortie : une instance de CMatrice égale à l'inverse de l'objet.
 Entraîne : Une Cexception est levée si le determinant est nul.
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::MATinverse()
+CMatrice<T> CMatrice<T>::MATinverse() const
 {
 	T det;
 	unsigned int uiBoucleL, uiBoucleC;
@@ -1074,7 +1074,7 @@ Sortie : un booléen : True = la matrice est triangulaire, False = la matrice n'
 Entraîne : rien.
 ******************************************/
 template <class T>
-bool CMatrice<T>::MATestTriangulaire()
+bool CMatrice<T>::MATestTriangulaire() const
 {
 	return (MATestTriangulaireInferieure() || MATestTriangulaireSuperieure());
 }
@@ -1089,7 +1089,7 @@ Sortie : un booléen : True = la matrice est triangulaire inférieur, False = la
 Entraîne : rien
 ******************************************/
 template <class T>
-bool CMatrice<T>::MATestTriangulaireInferieure()
+bool CMatrice<T>::MATestTriangulaireInferieure() const
 {
 	unsigned int uiBoucleLigne, uiBoucleColonne;
 	for (uiBoucleColonne = 1; uiBoucleColonne < MATgetNbLignes(); uiBoucleColonne++)
@@ -1118,7 +1118,7 @@ Sortie : un booléen : True = la matrice est triangulaire supérieure, False = l
 Entraîne : rien
 ******************************************/
 template <class T>
-bool CMatrice<T>::MATestTriangulaireSuperieure()
+bool CMatrice<T>::MATestTriangulaireSuperieure() const
 {
 	// La transposée d'une matrice triangulaire supérieure est triangulaire inférieure
 	CMatrice<T> MATtmp = MATtransposee();
@@ -1135,7 +1135,7 @@ Sortie : un booléen : True = la matrice est diagonale, False = la matrice n'est
 Entraîne : rien.
 ******************************************/
 template <class T>
-bool CMatrice<T>::MATestDiagonale()
+bool CMatrice<T>::MATestDiagonale() const
 {
 	// Pour la compréhension du code et la maintenabilité :
 	return (MATestTriangulaireInferieure() && MATestTriangulaireSuperieure());
@@ -1151,7 +1151,7 @@ Sortie : un booléen : True = la matrice est inversible, False = la matrice n'es
 Entraîne : rien
 ******************************************/
 template <class T>
-bool CMatrice<T>::MATestInversible()
+bool CMatrice<T>::MATestInversible() const
 {
 	return (uiMATnbColonnes == uiMATnbLignes && MATdet() != 0);
 }
@@ -1166,7 +1166,7 @@ Sortie : un booléen : True = la matrice est symétrique, False = la matrice n'e
 Entraîne : rien.
 ******************************************/
 template <class T>
-bool CMatrice<T>::MATestSymetrique()
+bool CMatrice<T>::MATestSymetrique() const
 {
 	return (MATtransposee() == *this);
 }
@@ -1181,7 +1181,7 @@ Sortie : un booléen : True = la matrice est antisymétrique, False = la matrice
 Entraîne : rien.
 ******************************************/
 template <class T>
-bool CMatrice<T>::MATestAntiSymetrique()
+bool CMatrice<T>::MATestAntiSymetrique() const
 {
 	return (MATtransposee() == (*this * -1));
 }
