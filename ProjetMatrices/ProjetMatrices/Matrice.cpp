@@ -58,7 +58,7 @@ Sortie : rien.
 Entraîne : l'initialisation de l'objet par copie de MATmatrice
 *****************************************/
 template <class T>
-CMatrice<T>::CMatrice(CMatrice<T> & MATmatrice)
+CMatrice<T>::CMatrice(const CMatrice<T> & MATmatrice)
 {
 	unsigned int uiLigne, uiColonne;
 
@@ -107,7 +107,7 @@ Sortie : Référence de la valeur à la position (i, j) dans la matrice.
 Entraîne : rien.
 *****************************************/
 template <class T>
-inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne)
+inline T & CMatrice<T>::operator()(unsigned int uiLigne, unsigned int uiColonne) const
 {
 	return pptMATmatrice[uiColonne][uiLigne];
 }
@@ -123,7 +123,7 @@ Sortie : instance de la classe CMatrice
 Entraîne : Copie des valeurs des attributs de l'objet en paramètre
 ******************************************/
 template <class T>
-CMatrice<T> & CMatrice<T>::operator=(CMatrice<T> & MATmatrice)
+CMatrice<T> & CMatrice<T>::operator=(const CMatrice<T> & MATmatrice)
 {
 	unsigned int uiLigne;
 	unsigned int uiColonne;
@@ -158,7 +158,7 @@ Sortie : booléen : true = les matrices sont identiques, false = les matrices so
 Entraîne : rien
 ******************************************/
 template <class T>
-bool CMatrice<T>::operator==(CMatrice<T> & MATmatrice)
+bool CMatrice<T>::operator==(const CMatrice<T> & MATmatrice) const
 {
 	if (uiMATnbColonnes != MATmatrice.uiMATnbColonnes || uiMATnbLignes != MATmatrice.uiMATnbLignes)
 		return false;
@@ -189,7 +189,7 @@ Sortie : booléen : true = les matrices sont différentes, false = les matrices 
 Entraîne : rien
 ******************************************/
 template <class T>
-bool CMatrice<T>::operator!=( CMatrice<T> & MATmatrice)
+bool CMatrice<T>::operator!=(const CMatrice<T> & MATmatrice) const
 {
 	return !(*this == MATmatrice);
 }
@@ -204,7 +204,7 @@ Sortie : objet CMatrice<T> résultant de la somme.
 Entraîne : rien
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::operator+(const T & tValeur)
+CMatrice<T> CMatrice<T>::operator+(const T & tValeur) const
 {
 	unsigned int uiLigne;
 	unsigned int uiColonne;
@@ -232,7 +232,7 @@ Sortie : instance de la classe CMatrice contenant le résultat de la somme.
 Entraîne : rien
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::operator+( CMatrice<T> & MATmatrice)
+CMatrice<T> CMatrice<T>::operator+(const CMatrice<T> & MATmatrice) const
 {
 	unsigned int uiBoucleL, uiBoucleC;
 
@@ -259,7 +259,7 @@ Sortie : instance de la classe CMatrice contenant le résultat du produit.
 Entraîne : rien
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::operator*(const T & tValeur)
+CMatrice<T> CMatrice<T>::operator*(const T & tValeur) const
 {
 	unsigned int uiLigne;
 	unsigned int uiColonne;
@@ -288,7 +288,7 @@ Sortie : instance de la classe CMatrice contenant le résultat du produit.
 Entraîne : rien
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::operator*( CMatrice<T> & MATmatrice)
+CMatrice<T> CMatrice<T>::operator*(const CMatrice<T> & MATmatrice) const
 {
 	unsigned int uiBoucleL, uiBoucleC, uiBouclePdt;
 	CMatrice<T> MATresultat(uiMATnbLignes, MATmatrice.uiMATnbColonnes);
@@ -323,7 +323,7 @@ Sortie : instance de la classe CMatrice contenant le résultat de la soustractio
 Entraîne : rien
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::operator-(const T & tValeur)
+CMatrice<T> CMatrice<T>::operator-(const T & tValeur) const
 {
 	return operator+(-tValeur);
 }
@@ -338,7 +338,7 @@ Sortie : instance de la classe CMatrice contenant le résultat de la soustractio
 Entraîne : rien
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::operator-(CMatrice<T> & MATmatrice)
+CMatrice<T> CMatrice<T>::operator-(const CMatrice<T> & MATmatrice) const
 {
 	return operator+(MATmatrice * -1);
 }
@@ -353,7 +353,7 @@ Sortie : instance de la classe CMatrice contenant le résultat de la division.
 Entraîne : Une Cexception est levée si tValeur = 0
 ******************************************/
 template <class T>
-CMatrice<T> CMatrice<T>::operator/(const T & tValeur)
+CMatrice<T> CMatrice<T>::operator/(const T & tValeur) const
 {
 	// On ne peux pas utiliser l'operateur * car il pose problème pour les types entiers
 	// Ex : M / 4 = M * 1/4, mais 1/4 = 0 en cas de type entier
@@ -365,7 +365,7 @@ CMatrice<T> CMatrice<T>::operator/(const T & tValeur)
 	unsigned int uiLigne;
 	unsigned int uiColonne;
 
-	CMatrice<T> MATmatrice(*this);
+	CMatrice<T> MATmatrice = *this;
 
 	for (uiColonne = 0; uiColonne < uiMATnbColonnes; uiColonne++)
 	{
@@ -388,7 +388,7 @@ Sortie : instance de la classe CMatrice contenant le résultat de M^(iPuissance)
 Entraîne : Une Cexception est levée si iPuissance = 0
 ******************************************/
 template<class T>
-CMatrice<T> CMatrice<T>::operator^(int iPuissance)
+CMatrice<T> CMatrice<T>::operator^(int iPuissance) const
 {
 	if (iPuissance == 0)
 	{
@@ -482,7 +482,7 @@ Sortie : le coefficient à la position (uiLigne, uiColonne) par référence.
 Entraîne : rien.
 ******************************************/
 template <class T>
-inline T & CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne)
+inline T & CMatrice<T>::MATgetValeur(unsigned int uiLigne, unsigned int uiColonne) const
 {
 	return (*this)(uiLigne, uiColonne);
 }
@@ -826,7 +826,7 @@ Sortie : un booléen. True : ligne nulle, False : la ligne n'est pas nulle.
 Entraîne : rien
 ******************************************/
 template<class T>
-bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne)
+bool CMatrice<T>::MATligneEstNulle(unsigned int uiLigne) const
 {
 	unsigned int uiBoucleC;
 

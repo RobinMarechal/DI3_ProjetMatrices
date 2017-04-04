@@ -65,7 +65,7 @@ private:
 	Sortie : un booléen. True : ligne nulle, False : la ligne n'est pas nulle.
 	Entraîne : rien
 	******************************************/
-	bool MATligneEstNulle(unsigned int uiLigne);
+	bool MATligneEstNulle(unsigned int uiLigne) const;
 
 
 	/*****************************************
@@ -135,7 +135,7 @@ public:
 	Sortie : rien.
 	Entraîne : l'initialisation de l'objet par copie de MATmatrice
 	*****************************************/
-	CMatrice(CMatrice<T> & MATmatrice);
+	CMatrice(const CMatrice<T> & MATmatrice);
 
 
 	/****************************************
@@ -161,7 +161,7 @@ public:
 	Sortie : Référence de la valeur à la position (i, j) dans la matrice.
 	Entraîne : rien.
 	*****************************************/
-	T & operator()(unsigned int uiLigne, unsigned int uiColonne);
+	T & operator()(unsigned int uiLigne, unsigned int uiColonne) const;
 
 
 	/*****************************************
@@ -172,7 +172,7 @@ public:
 	Sortie : instance de la classe CMatrice
 	Entraîne : Copie des valeurs des attributs de l'objet en paramètre
 	******************************************/
-	CMatrice<T> & operator=(CMatrice<T> & MATmatrice);
+	CMatrice<T> & operator=(const CMatrice<T> & MATmatrice);
 
 
 	/*****************************************
@@ -183,7 +183,7 @@ public:
 	Sortie : booléen : true = les matrices sont identiques, false = les matrices sont différentes
 	Entraîne : rien
 	******************************************/
-	bool operator==(CMatrice<T> & MATmatrice);
+	bool operator==(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -194,7 +194,7 @@ public:
 	Sortie : booléen : true = les matrices sont différentes, false = les matrices sont identiques
 	Entraîne : rien
 	******************************************/
-	bool operator!=(CMatrice<T> & MATmatrice);
+	bool operator!=(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -205,7 +205,7 @@ public:
 	Sortie : objet CMatrice<T> résultant de la somme.
 	Entraîne : rien
 	******************************************/
-	CMatrice<T> operator+(const T & tValeur);
+	CMatrice<T> operator+(const T & tValeur) const;
 
 
 	/*****************************************
@@ -216,7 +216,7 @@ public:
 	Sortie : instance de la classe CMatrice contenant le résultat de la somme.
 	Entraîne : rien
 	******************************************/
-	CMatrice<T> operator+(CMatrice & MATmatrice);
+	CMatrice<T> operator+(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -227,7 +227,7 @@ public:
 	Sortie : instance de la classe CMatrice contenant le résultat du produit.
 	Entraîne : rien
 	******************************************/
-	CMatrice<T> operator*(const T & tValeur);
+	CMatrice<T> operator*(const T & tValeur) const;
 
 
 	/*****************************************
@@ -239,7 +239,7 @@ public:
 	Sortie : instance de la classe CMatrice contenant le résultat du produit.
 	Entraîne : rien
 	******************************************/
-	CMatrice<T> operator*(CMatrice<T> & MATmatrice);
+	CMatrice<T> operator*(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -250,7 +250,7 @@ public:
 	Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
 	Entraîne : rien
 	******************************************/
-	CMatrice<T> operator-(const T & tValeur);
+	CMatrice<T> operator-(const T & tValeur) const;
 	
 
 	/*****************************************
@@ -261,7 +261,7 @@ public:
 	Sortie : instance de la classe CMatrice contenant le résultat de la soustraction.
 	Entraîne : rien
 	******************************************/
-	CMatrice<T> operator-(CMatrice<T> & MATmatrice);
+	CMatrice<T> operator-(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -272,7 +272,7 @@ public:
 	Sortie : instance de la classe CMatrice contenant le résultat de la division.
 	Entraîne : Une Cexception est levée si tValeur = 0
 	******************************************/
-	CMatrice<T> operator/(const T & tValeur);
+	CMatrice<T> operator/(const T & tValeur) const;
 
 
 	/*****************************************
@@ -283,7 +283,7 @@ public:
 	Sortie : instance de la classe CMatrice contenant le résultat de M^(iPuissance).
 	Entraîne : Une Cexception est levée si iPuissance = 0
 	******************************************/
-	CMatrice<T> operator^(int iPuissance);
+	CMatrice<T> operator^(int iPuissance) const;
 
 
 	// ----- Getters ----------------------------------------
@@ -331,7 +331,7 @@ public:
 	Sortie : le coefficient à la position (uiLigne, uiColonne) par référence.
 	Entraîne : rien.
 	******************************************/
-	T & MATgetValeur(unsigned int uiLigne, unsigned int uiColonne);
+	T & MATgetValeur(unsigned int uiLigne, unsigned int uiColonne) const;
 
 
 	/*****************************************
