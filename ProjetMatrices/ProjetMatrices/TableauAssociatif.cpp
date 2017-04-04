@@ -76,7 +76,7 @@ Entraîne : Création de l'objet en recopiant TABobjet.
 => La recopie des tableau se fait en recopiant les valeurs,
 et non l'adresse des pointeurs
 *********************************************************/
-CTableauAssociatif::CTableauAssociatif(CTableauAssociatif & TABobjet) 
+CTableauAssociatif::CTableauAssociatif(const CTableauAssociatif & TABobjet) 
 {
 	unsigned int uiBoucle;
 	TABinit();
@@ -118,7 +118,7 @@ Sortie : rien
 Entraîne : La recopie des tableau en recopier les valeurs,
 et non l'adresse des pointeurs
 *********************************************************/
-CTableauAssociatif & CTableauAssociatif::operator=(CTableauAssociatif & TABobjet) 
+CTableauAssociatif & CTableauAssociatif::operator=(const CTableauAssociatif & TABobjet) 
 {
 	unsigned int uiBoucle;
 	TABdetruire();
@@ -148,7 +148,7 @@ Sortie : rien
 Entraîne : Réduction de la mémoire allouée aux tableaux en attribut
 Et suppression de la clé pcCle et de l'élément dans les autres tableaux
 *********************************************************/
-void CTableauAssociatif::TABsupprimer(char * pcCle)
+void CTableauAssociatif::TABsupprimer(const char * pcCle)
 {
 	unsigned int uiBoucle;
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
@@ -211,7 +211,7 @@ Sortie : rien
 Entraîne : La réallocations des trois tableaux et l'insertion
 des éléments dans les tableaux respectifs.
 *********************************************************/
-void CTableauAssociatif::TABajouter(char * pcCle, Valeur vValeur, unsigned int uiType) 
+void CTableauAssociatif::TABajouter(const char * pcCle, Valeur vValeur, unsigned int uiType) 
 {
 	uiTABnbElements++;
 	ppcTABcles = (char **)realloc(ppcTABcles, uiTABnbElements * sizeof(char*));
@@ -241,7 +241,7 @@ Sortie : rien
 Entraîne : Réallocation des tableaux en attribut
 et ajout des éléments dans leur tableau respectif
 *********************************************************/
-void CTableauAssociatif::TABajouterEntier(char * pcCle, int iVal) 
+void CTableauAssociatif::TABajouterEntier(const char * pcCle, int iVal) 
 {
 	Valeur vVal;
 	vVal.iEntier = iVal;
@@ -260,7 +260,7 @@ Sortie : rien
 Entraîne : Réallocation des tableaux en attribut
 et ajout des éléments dans leur tableau respectif
 *********************************************************/
-void CTableauAssociatif::TABajouterReel(char * pcCle, double dVal) 
+void CTableauAssociatif::TABajouterReel(const char * pcCle, double dVal) 
 {
 	Valeur vVal;
 	vVal.dReel = dVal;
@@ -279,7 +279,7 @@ Sortie : rien
 Entraîne : Réallocation des tableaux en attribut
 et ajout des éléments dans leur tableau respectif
 *********************************************************/
-void CTableauAssociatif::TABajouterChaine(char * pcCle, char * pcVal) 
+void CTableauAssociatif::TABajouterChaine(const char * pcCle, char * pcVal) 
 {
 	Valeur vVal;
 	vVal.pcChaine = pcVal;
@@ -300,7 +300,7 @@ et l'ajoute au tableau avec le bon type
 Exemples : "1.12" => Reel, "5" => Entier, "a12" => Chaine
 Exemples : "7." => Entier, ".27" => Reel, "" => Chaine
 *********************************************************/
-void CTableauAssociatif::TABajouterAuto(char * pcCle, char * pcVal)
+void CTableauAssociatif::TABajouterAuto(const char * pcCle, char * pcVal)
 {
 	// Format : XX
 	int iType = analyserType(pcVal);
@@ -374,7 +374,7 @@ Sortie : La position de la clé.
 == -1 : La clé n'est pas dans le tableau.
 Entraîne : rien
 *********************************************************/
-int CTableauAssociatif::TABgetIndiceCle(char * pcCle) const 
+int CTableauAssociatif::TABgetIndiceCle(const char * pcCle) const 
 {
 	unsigned int uiBoucle;
 
@@ -420,7 +420,7 @@ Nécessite : pcCle est dans le tableau des clés
 Sortie : un union Valeur
 Entraîne : rien
 *********************************************************/
-Valeur CTableauAssociatif::TABgetValeur(char * pcCle) const 
+Valeur CTableauAssociatif::TABgetValeur(const char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 	return pvTABvaleurs[uiPos];
@@ -436,7 +436,7 @@ Nécessite : 0 <= uiPos < Nombre d'éléments
 Sortie : un union Valeur
 Entraîne : rien
 *********************************************************/
-Valeur CTableauAssociatif::TABgetValeurPos(unsigned int uiPos)
+Valeur CTableauAssociatif::TABgetValeurPos(unsigned int uiPos) const
 {
 	return pvTABvaleurs[uiPos];
 }
@@ -451,7 +451,7 @@ Nécessite : 0 <= uiPos < Nombre d'éléments
 Sortie: Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
 Entraîne : rien
 *********************************************************/
-unsigned int CTableauAssociatif::TABgetValeurType(unsigned int uiPos)
+unsigned int CTableauAssociatif::TABgetValeurType(unsigned int uiPos) const
 {
 	return puiTypes[uiPos];
 }
@@ -466,7 +466,7 @@ Nécessite : pcCle est dans le tableau des clés
 Sortie : Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
 Entraîne : rien
 *********************************************************/
-unsigned int CTableauAssociatif::TABgetValeurType(char * pcCle)
+unsigned int CTableauAssociatif::TABgetValeurType(const char * pcCle) const
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 	return TABgetValeurType(uiPos);
@@ -485,7 +485,7 @@ Entraîne : rien
 Attention ! Si la valeur n'a pas été stockée en tant qu'Entier,
 La valeur sera faussée.
 *********************************************************/
-int CTableauAssociatif::TABgetValeurEntier(char * pcCle) const 
+int CTableauAssociatif::TABgetValeurEntier(const char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 
@@ -512,7 +512,7 @@ Entraîne : rien
 Attention ! Si la valeur a été stockée en tant que Chaine,
 la valeur sera faussée.
 *********************************************************/
-double CTableauAssociatif::TABgetValeurReel(char * pcCle) const 
+double CTableauAssociatif::TABgetValeurReel(const char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 
@@ -539,7 +539,7 @@ Entraîne : rien
 Attention ! Si la valeur n'a pas été stockée en tant qu'Entier,
 La valeur sera faussée.
 *********************************************************/
-char * CTableauAssociatif::TABgetValeurChaine(char * pcCle) const 
+char * CTableauAssociatif::TABgetValeurChaine(const char * pcCle) const 
 {
 	unsigned int uiPos = TABgetIndiceCle(pcCle);
 	return pvTABvaleurs[uiPos].pcChaine;

@@ -85,7 +85,7 @@ class CTableauAssociatif
 	Entraîne : La réallocations des trois tableaux et l'insertion
 	des éléments dans les tableaux respectifs.
 	*********************************************************/
-	void TABajouter(char * pcCle, Valeur vValeur, unsigned int uiType);
+	void TABajouter( const char * pcCle, Valeur vValeur, unsigned int uiType);
 
 
 public:
@@ -112,7 +112,7 @@ public:
 	=> La recopie des tableau se fait en recopiant les valeurs, 
 	et non l'adresse des pointeurs
 	*********************************************************/
-	CTableauAssociatif(CTableauAssociatif & TABobjet);
+	CTableauAssociatif(const CTableauAssociatif & TABobjet);
 
 
 	/********************************************************
@@ -136,7 +136,7 @@ public:
 	Entraîne : La recopie des tableau en recopier les valeurs, 
 	et non l'adresse des pointeurs
 	*********************************************************/
-	CTableauAssociatif & operator=(CTableauAssociatif & TABobjet);
+	CTableauAssociatif & operator=(const CTableauAssociatif & TABobjet);
 
 
 	/********************************************************
@@ -148,7 +148,7 @@ public:
 	Entraîne : Réduction de la mémoire allouée aux tableaux en attribut
 	Et suppression de la clé pcCle et de l'élément dans les autres tableaux
 	*********************************************************/
-	void TABsupprimer(char * pcCle);
+	void TABsupprimer(const char * pcCle);
 
 
 	/********************************************************
@@ -161,7 +161,7 @@ public:
 	Entraîne : Réallocation des tableaux en attribut
 			et ajout des éléments dans leur tableau respectif
 	*********************************************************/
-	void TABajouterEntier(char * pcCle, int iVal);
+	void TABajouterEntier(const char * pcCle, int iVal);
 
 
 
@@ -175,7 +175,7 @@ public:
 	Entraîne : Réallocation des tableaux en attribut
 			et ajout des éléments dans leur tableau respectif
 	*********************************************************/
-	void TABajouterReel(char * pcCle, double dVal);
+	void TABajouterReel( const char * pcCle, double dVal);
 
 
 
@@ -189,7 +189,7 @@ public:
 	Entraîne : Réallocation des tableaux en attribut
 	et ajout des éléments dans leur tableau respectif
 	*********************************************************/
-	void TABajouterChaine(char * pcCle, char * pcVal);
+	void TABajouterChaine( const char * pcCle, char * pcVal);
 
 
 
@@ -205,7 +205,7 @@ public:
 	Exemples : "1.12" => Reel, "5" => Entier, "a12" => Chaine
 	Exemples : "7." => Entier, ".27" => Reel, "" => Chaine
 	*********************************************************/
-	void TABajouterAuto(char * pcCle, char * pcVal);
+	void TABajouterAuto( const char * pcCle, char * pcVal);
 
 
 
@@ -231,7 +231,7 @@ public:
 	== -1 : La clé n'est pas dans le tableau.
 	Entraîne : rien
 	*********************************************************/
-	int TABgetIndiceCle(char * pcCle) const;
+	int TABgetIndiceCle( const char * pcCle) const;
 
 
 
@@ -258,7 +258,7 @@ public:
 	Sortie : un union Valeur
 	Entraîne : rien
 	*********************************************************/
-	Valeur TABgetValeur(char * pcCle) const;
+	Valeur TABgetValeur( const char * pcCle) const;
 
 
 
@@ -270,7 +270,7 @@ public:
 	Sortie : un union Valeur
 	Entraîne : rien
 	*********************************************************/
-	Valeur TABgetValeurPos(unsigned int uiPos);
+	Valeur TABgetValeurPos(unsigned int uiPos) const;
 
 
 
@@ -282,7 +282,7 @@ public:
 	Sortie: Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
 	Entraîne : rien
 	*********************************************************/
-	unsigned int TABgetValeurType(unsigned int uiPos);
+	unsigned int TABgetValeurType(unsigned int uiPos) const;
 
 
 
@@ -294,7 +294,7 @@ public:
 	Sortie : Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
 	Entraîne : rien
 	*********************************************************/
-	unsigned int TABgetValeurType(char * pcCle);
+	unsigned int TABgetValeurType( const char * pcCle) const;
 
 
 
@@ -312,7 +312,7 @@ public:
 	Attention ! Si la valeur a été stockée en tant que Chaine,
 	la valeur sera faussée.
 	*********************************************************/
-	int TABgetValeurEntier(char * pcCle) const;
+	int TABgetValeurEntier( const char * pcCle) const;
 
 
 
@@ -328,7 +328,7 @@ public:
 	Attention ! Si la valeur a été stockée en tant que Chaine,
 	la valeur sera faussée.
 	*********************************************************/
-	double TABgetValeurReel(char * pcCle) const;
+	double TABgetValeurReel( const char * pcCle) const;
 
 
 
@@ -344,7 +344,7 @@ public:
 	Attention ! Si la valeur n'a pas été stockée en tant qu'Entier,
 	La valeur sera faussée.
 	*********************************************************/
-	char * TABgetValeurChaine(char * pcCle) const;
+	char * TABgetValeurChaine( const char * pcCle) const;
 
 
 };
