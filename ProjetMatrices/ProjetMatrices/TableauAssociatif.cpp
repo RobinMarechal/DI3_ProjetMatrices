@@ -139,6 +139,66 @@ CTableauAssociatif & CTableauAssociatif::operator=(CTableauAssociatif & TABobjet
 }
 
 
+/********************************************************
+Supprimer un élément du tableau
+*********************************************************
+Entrée : la clé à retirer du tableau
+Nécessite : L'objet possède la clé en attribut (Sinon la méthode ne fait rien)
+Sortie : rien
+Entraîne : Réduction de la mémoire allouée aux tableaux en attribut
+Et suppression de la clé pcCle et de l'élément dans les autres tableaux
+*********************************************************/
+void CTableauAssociatif::TABsupprimer(char * pcCle)
+{
+	unsigned int uiBoucle;
+	unsigned int uiPos = TABgetIndiceCle(pcCle);
+
+	// Si l'élément n'est pas dans le tableau, on ne fait rien
+	if (uiPos == -1)
+		return;
+
+	// On free la clé
+	free(ppcTABcles[uiPos]);
+
+	// Si c'est une chaine qu'on supprime, on la free
+	if (puiTypes[uiPos] == TAB_TYPE_CHAINE)
+	{
+		free(pvTABvaleurs[uiPos].pcChaine);
+	}
+
+	// On décale tout ce qui est à droite de uiPos d'une case vers la gauche
+	for (uiBoucle = uiPos; uiBoucle < uiTABnbElements - 1; uiBoucle++)
+	{
+		ppcTABcles[uiBoucle] = ppcTABcles[uiBoucle + 1];
+		pvTABvaleurs[uiBoucle] = pvTABvaleurs[uiBoucle + 1];
+		puiTypes[uiBoucle] = puiTypes[uiBoucle + 1];
+	}
+
+	// On met le pointeur de la dernière case de ppcTABcles à NULL
+	// Pas de fuite de mémoire car le pointeur a été copié dans l'avant dernière case
+	ppcTABcles[uiTABnbElements - 1] = NULL;
+
+	// Si le dernier élément du tableau est une chaine, on met le pointeur à null
+	// On ne la free pas car on a coppié le pointeur dans l'avant dernière 'case'
+	if (puiTypes[uiTABnbElements - 1] == TAB_TYPE_CHAINE)
+	{
+		pvTABvaleurs[uiTABnbElements - 1].pcChaine = NULL;
+	}
+
+	uiTABnbElements--;
+	ppcTABcles = (char **)realloc(ppcTABcles, uiTABnbElements * sizeof(char *));
+	pvTABvaleurs = (Valeur *)realloc(pvTABvaleurs, uiTABnbElements * sizeof(Valeur));
+	puiTypes = (unsigned int *)realloc(puiTypes, sizeof(unsigned int) * uiTABnbElements);
+
+	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
+	{
+		std::cout << "TABsupprimer() : Une réallocation a échoué, le programme s'est arrêté." << std::endl;
+		exit(EXIT_FAILURE);
+	}
+
+}
+
+
 
 /********************************************************
 Ajout d'un union au tableau associatif

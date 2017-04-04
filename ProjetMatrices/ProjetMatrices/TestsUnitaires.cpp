@@ -940,6 +940,7 @@ void CTestsUnitaires::UNItestsCTableauAssociatif()
 
 	assertionEgalite(TABt.TABgetNbElements(), 0);
 
+	unsigned int uiPos;
 	double dReel = 5.2;
 	int iEntier = 7;
 	char * pcStr = "abc";
@@ -959,6 +960,14 @@ void CTestsUnitaires::UNItestsCTableauAssociatif()
 	// test indices
 	assertionEgalite(TABt.TABgetIndiceCle("entier"), 1);
 	assertionEgalite(TABt.TABgetIndiceCle("absent"), -1);
+
+	// test suppression
+	TABt.TABajouterChaine("chaine2", _strdup("def"));
+	TABt.TABajouterChaine("chaine3", _strdup("ijk"));
+	uiPos = TABt.TABgetIndiceCle("chaine2");
+	TABt.TABsupprimer("chaine2");
+	assertionEgalite(TABt.TABgetIndiceCle("chaine3"), uiPos);
+	assertionVraie(strcmp(TABt.TABgetValeurChaine("chaine3"), "ijk") == 0);
 
 	// Test valeurs
 	assertionEgalite(TABt.TABgetValeurReel("reel"), dReel);

@@ -140,6 +140,18 @@ public:
 
 
 	/********************************************************
+	Supprimer un élément du tableau
+	*********************************************************
+	Entrée : la clé à retirer du tableau
+	Nécessite : L'objet possède la clé en attribut (Sinon la méthode ne fait rien)
+	Sortie : rien
+	Entraîne : Réduction de la mémoire allouée aux tableaux en attribut
+	Et suppression de la clé pcCle et de l'élément dans les autres tableaux
+	*********************************************************/
+	void TABsupprimer(char * pcCle);
+
+
+	/********************************************************
 	Ajouter un élément de type Entier
 	*********************************************************
 	Entrée : la clé de la valeur à ajouter
@@ -333,6 +345,8 @@ public:
 	La valeur sera faussée.
 	*********************************************************/
 	char * TABgetValeurChaine(char * pcCle) const;
+
+
 };
 
 #endif
