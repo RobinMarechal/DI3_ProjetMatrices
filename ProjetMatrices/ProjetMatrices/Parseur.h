@@ -63,17 +63,5 @@ public:
 	Entraîne : rien.
 	******************************************/
 	static char *  PARextraireValeur(char * pcLigne);
-
-private:
-
-	/*****************************************
-	Constructeur par défaut.
-	******************************************
-	Entrée : rien.
-	Nécessite : rien.
-	Sortie : rien.
-	Entraîne : initialisation de l'objet.
-	******************************************/
-	CParseur() {}; // privé pour empêcher l'instanciation de l'objet de l'extérieur.
 };
 #endif
