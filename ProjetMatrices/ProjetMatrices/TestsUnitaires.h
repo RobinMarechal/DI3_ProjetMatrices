@@ -362,7 +362,6 @@ public:
 	Sortie : rien.
 	Entraîne : l'appel de tous les tests.
 	******************************************/
-
 	static void UNIstart();
 };
 
