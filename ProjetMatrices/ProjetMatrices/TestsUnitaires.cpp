@@ -75,6 +75,16 @@ void CTestsUnitaires::UNItestAccesseurs()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste l'opérateur +.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestOperateurPlus()
 {
 	cout << "UNItestOperateurPlus()";
@@ -117,6 +127,16 @@ void CTestsUnitaires::UNItestOperateurPlus()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste l'opérateur -.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestOperateurMoins()
 {
 	cout << "UNItestOperateurMoins()";
@@ -157,6 +177,16 @@ void CTestsUnitaires::UNItestOperateurMoins()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste l'opérateur =.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestOperateurEgal()
 {
 	cout << "UNItestOperateurEgal()";
@@ -177,6 +207,16 @@ void CTestsUnitaires::UNItestOperateurEgal()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste les opérateur de comparaisons == et !=.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestOperateursComparaison()
 {
 	cout << "UNItestOperateursComparaison()";
@@ -214,6 +254,16 @@ void CTestsUnitaires::UNItestOperateursComparaison()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste l'opérateur *.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestOperateurProduit()
 {
 	cout << "UNItestOperateurProduit()";
@@ -273,6 +323,16 @@ void CTestsUnitaires::UNItestOperateurProduit()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste l'opérateur /.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestOperateurDiviser()
 {
 	cout << "UNItestOperateurDiviser()";
@@ -295,6 +355,16 @@ void CTestsUnitaires::UNItestOperateurDiviser()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste l'opérateur ^.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestOperateurPuissance()
 {
 	cout << "UNItestOperateurPuissance()";
@@ -328,6 +398,16 @@ void CTestsUnitaires::UNItestOperateurPuissance()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste de tous les opérateurs.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'appel de tous les tests sur les opérateurs.
+******************************************/
 void CTestsUnitaires::UNItestOperateurs()
 {
 	UNItestOperateursComparaison();
@@ -386,6 +466,16 @@ void CTestsUnitaires::UNItestOperateurs()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le calcul du rang.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestCalculRang()
 {
 	cout << "UNItestCalculRang()";
@@ -424,6 +514,16 @@ void CTestsUnitaires::UNItestCalculRang()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste l'échelonnement.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestCalculEchelonnee()
 {
 	cout << "UNItestCalculEchelonnee()";
@@ -468,6 +568,16 @@ void CTestsUnitaires::UNItestCalculEchelonnee()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le calcul de la transposée.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestCalculTransposee()
 {
 	cout << "UNItestCalculTransposee()";
@@ -512,6 +622,16 @@ void CTestsUnitaires::UNItestCalculTransposee()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le calcul de la sous-matrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestCalculSousMatrice()
 {
 	cout << "UNItestCalculSousMatrice()";
@@ -537,6 +657,16 @@ void CTestsUnitaires::UNItestCalculSousMatrice()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le calcul du déterminant.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestCalculDet()
 {
 	cout << "UNItestCalculDet()";
@@ -572,6 +702,16 @@ void CTestsUnitaires::UNItestCalculDet()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le calcul de la matrice inverse.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestCalculInverse()
 {
 	cout << "UNItestCalculInverse()";
@@ -616,6 +756,16 @@ void CTestsUnitaires::UNItestCalculInverse()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le calcul de la commatrice.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestCalculCommatrice()
 {
 	cout << "UNItestCalculCommatrice()";
@@ -643,6 +793,16 @@ void CTestsUnitaires::UNItestCalculCommatrice()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le calcul de la trace.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestCalculTrace()
 {
 	cout << "UNItestCalculTrace()";
@@ -668,6 +828,15 @@ void CTestsUnitaires::UNItestCalculTrace()
 	cout << "OK" << endl;
 }
 
+
+/*****************************************
+Teste tous les calculs.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'appel de tous les tests sur les calculs.
+******************************************/
 void CTestsUnitaires::UNItestCalculs()
 {
 	UNItestCalculSousMatrice();
@@ -682,6 +851,16 @@ void CTestsUnitaires::UNItestCalculs()
 	UNItestCalculTrace();
 }
 
+
+
+/*****************************************
+Teste le test de matrice nulle.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestEstNulle()
 {
 	cout << "UNItestEstNulle()";
@@ -701,12 +880,32 @@ void CTestsUnitaires::UNItestEstNulle()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le test de matrice triangulaire.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestEstTriangulaire()
 {
 	UNItestEstTriangulaireSuperieure();
 	UNItestEstTriangulaireInferieure();
 }
 
+
+
+/*****************************************
+Teste le test de matrice triangulaire supérieur.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestEstTriangulaireSuperieure()
 {
 	cout << "UNItestEstTriangulaireSuperieure()";
@@ -731,6 +930,16 @@ void CTestsUnitaires::UNItestEstTriangulaireSuperieure()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le test de matrice triangulaire inférieur.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestEstTriangulaireInferieure()
 {
 	cout << "UNItestEstTriangulaireInferieure()";
@@ -756,6 +965,16 @@ void CTestsUnitaires::UNItestEstTriangulaireInferieure()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le test de matrice diagonale.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestEstDiagonale()
 {
 	cout << "UNItestEstDiagonale()";
@@ -780,6 +999,16 @@ void CTestsUnitaires::UNItestEstDiagonale()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le test de matrice inversible.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestEstInversible()
 {
 	cout << "UNItestEstInversible()";
@@ -800,6 +1029,16 @@ void CTestsUnitaires::UNItestEstInversible()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le test de matrice symétrique.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestEstSymetrique()
 {
 	cout << "UNItestEstSymetrique()";
@@ -826,6 +1065,16 @@ void CTestsUnitaires::UNItestEstSymetrique()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le test de matrice antisymétrique.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestEstAntiSymetrique()
 {
 	cout << "UNItestEstAntiSymetrique()";
@@ -859,6 +1108,16 @@ void CTestsUnitaires::UNItestEstAntiSymetrique()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le test de matrice carrée.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'appel de tous les tests sur les méthodes de test.
+******************************************/
 void CTestsUnitaires::UNItestTestsMatriceCarree()
 {
 	UNItestEstTriangulaire();
@@ -868,6 +1127,16 @@ void CTestsUnitaires::UNItestTestsMatriceCarree()
 	UNItestEstAntiSymetrique();
 }
 
+
+
+/*****************************************
+Teste la création d'une matrice diagonale.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestDiag()
 {
 	cout << "UNItestDiag()";
@@ -881,6 +1150,16 @@ void CTestsUnitaires::UNItestDiag()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste les exceptions.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestExceptions()
 {
 	cout << "UNItestExceptions()";
@@ -933,6 +1212,16 @@ void CTestsUnitaires::UNItestExceptions()
 	cout << "OK" << endl;
 }
 
+
+
+/*****************************************
+Teste le fonctionnement global de CTableauAssociatif
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
 void CTestsUnitaires::UNItestsCTableauAssociatif()
 {
 	cout << "UNItestsCTableauAssociatif()";
@@ -1017,6 +1306,15 @@ void CTestsUnitaires::UNItestsCTableauAssociatif()
 	cout << "OK" << endl;
 }
 
+
+/*****************************************
+Début des tests.
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'appel de tous les tests.
+******************************************/
 void CTestsUnitaires::UNIstart()
 {
 	cout << "------------------------------------------" << endl;
