@@ -199,7 +199,6 @@ void CTableauAssociatif::TABsupprimer(const char * pcCle)
 }
 
 
-
 /********************************************************
 Ajout d'un union au tableau associatif
 *********************************************************

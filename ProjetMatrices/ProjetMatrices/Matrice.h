@@ -38,13 +38,13 @@ private:
 	Vérifie le contenu d'une instance de CTableauAssociatif
 	pour créer un objet CMatrice
 	******************************************
-	Entrée : Une instance de CTableauAssociatif.
+	Entrée : Un pointeur sur une instance de CTableauAssociatif.
 	Nécessite : rien.
 	Sortie : rien.
 	Entraîne : une Cexception  est levée si le tableau de contient pas "NBColonnes", "NBLignes" et "Matrice",
 			ou que les types correspondants sont incorrects (resp. Entier, Entier, Chaine)
 	******************************************/
-	static void MATverifierContenuTableau(CTableauAssociatif TABtab);
+	static void MATverifierContenuTableau(CTableauAssociatif * TABtab);
 
 	/*****************************************
 	Initialisation de la matrice.
@@ -583,12 +583,12 @@ public:
 	/*****************************************
 	Génération d'une matrice .
 	******************************************
-	Entrée : une instance de CTableauAssociatif.
+	Entrée : Un pointeur sur une instance de CTableauAssociatif.
 	Nécessite : rien.
 	Sortie : une instance de CMatrice.
 	Entraîne : la création d'une matrice à partir des valeurs du tableau.
 	******************************************/
-	static CMatrice<T> MATgenerer(CTableauAssociatif & TABtab);
+	static CMatrice<T> MATgenerer(CTableauAssociatif * TABtab);
 
 
 	/*****************************************

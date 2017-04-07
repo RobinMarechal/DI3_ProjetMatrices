@@ -747,34 +747,34 @@ bool CMatrice<T>::MATestNulle() const
 Vérifie le contenu d'une instance de CTableauAssociatif
 pour créer un objet CMatrice
 ******************************************
-Entrée : Une instance de CTableauAssociatif.
+Entrée : Un pointeur sur une instance de CTableauAssociatif.
 Nécessite : rien.
 Sortie : rien.
 Entraîne : une Cexception  est levée si le tableau de contient pas "NBColonnes", "NBLignes" et "Matrice",
 		ou que les types correspondants sont incorrects (resp. Entier, Entier, Chaine)
 ******************************************/
 template<class T>
-void CMatrice<T>::MATverifierContenuTableau(CTableauAssociatif TABtab)
+void CMatrice<T>::MATverifierContenuTableau(CTableauAssociatif * TABtab)
 {
-	if (TABtab.TABgetIndiceCle("TypeMatrice") == -1)
+	if (TABtab->TABgetIndiceCle("TypeMatrice") == -1)
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'TypeMatrice' non renseigné.");
 
-	if (TABtab.TABgetIndiceCle("NBLignes") == -1)
+	if (TABtab->TABgetIndiceCle("NBLignes") == -1)
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'NBLignes' non renseigné.");
 
-	if (TABtab.TABgetIndiceCle("NBColonnes") == -1)
+	if (TABtab->TABgetIndiceCle("NBColonnes") == -1)
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'NBColonnes' non renseigné.");
 
-	if (TABtab.TABgetIndiceCle("Matrice") == -1)
+	if (TABtab->TABgetIndiceCle("Matrice") == -1)
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'Matrice' non renseigné.");
 
-	if (TABtab.TABgetValeurType("NBLignes") != TAB_TYPE_ENTIER  || TABtab.TABgetValeurEntier("NBLignes") < 1)
+	if (TABtab->TABgetValeurType("NBLignes") != TAB_TYPE_ENTIER  || TABtab->TABgetValeurEntier("NBLignes") < 1)
 		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier strictement positif.");
 
-	if (TABtab.TABgetValeurType("NBColonnes") != TAB_TYPE_ENTIER || TABtab.TABgetValeurEntier("NBColonnes") < 1)
+	if (TABtab->TABgetValeurType("NBColonnes") != TAB_TYPE_ENTIER || TABtab->TABgetValeurEntier("NBColonnes") < 1)
 		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier strictement positif.");
 
-	if (TABtab.TABgetValeurType("Matrice") != TAB_TYPE_CHAINE)
+	if (TABtab->TABgetValeurType("Matrice") != TAB_TYPE_CHAINE)
 		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'Matrice' doit etre une liste ('[....]')");
 }
 
@@ -1228,13 +1228,13 @@ CMatrice<T> CMatrice<T>::MATdiag(unsigned int uiDim, const T ptDiag[])
 /*****************************************
 Génération d'une matrice .
 ******************************************
-Entrée : une instance de CTableauAssociatif.
+Entrée : Un pointeur sur une instance de CTableauAssociatif.
 Nécessite : rien.
 Sortie : une instance de CMatrice.
 Entraîne : la création d'une matrice à partir des valeurs du tableau.
 ******************************************/
 template<class T>
-CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif & TABtab)
+CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif * TABtab)
 {
 	char * pcStrMatrice;
 	unsigned int uiBoucleL, uiBoucleC, uiIndiceCaractere;
@@ -1242,9 +1242,9 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif & TABtab)
 
 	// soulève une exception en cas de contenu non conforme
 	CMatrice<T>::MATverifierContenuTableau(TABtab);
-	CMatrice<T> MATmatrice(TABtab.TABgetValeurEntier("NBLignes"), TABtab.TABgetValeurEntier("NBColonnes"));
+	CMatrice<T> MATmatrice(TABtab->TABgetValeurEntier("NBLignes"), TABtab->TABgetValeurEntier("NBColonnes"));
 
-	pcStrMatrice = TABtab.TABgetValeurChaine("Matrice");
+	pcStrMatrice = TABtab->TABgetValeurChaine("Matrice");
 
 	if (strlen(pcStrMatrice) == 0)
 	{
@@ -1261,7 +1261,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif & TABtab)
 			// On gère le cas ou le coefficient est un double à virgule.
 			uiIndiceCaractere = 0;
 
-			while (isspace(*pcStrMatrice) || *pcStrMatrice == '\n' || *pcStrMatrice == '\0')
+			while (*pcStrMatrice == '\t' || *pcStrMatrice == ' ' || *pcStrMatrice == '\n' || *pcStrMatrice == '\0')
 			{
 				// Si on trouve '\n' ici alors qu'on a pas passé la dernière colonnes
 				if ((*pcStrMatrice == '\n' || *pcStrMatrice == '\0') && uiBoucleC > 0)
@@ -1271,7 +1271,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif & TABtab)
 
 			pcCoefficient[uiIndiceCaractere] = *pcStrMatrice;
 
-			while (*pcStrMatrice != '\0' && !isspace(*pcStrMatrice) && *pcStrMatrice != '\n')
+			while (*pcStrMatrice != '\0' && *pcStrMatrice != '\t' && *pcStrMatrice != ' ' && *pcStrMatrice != '\n')
 			{
 				pcCoefficient[uiIndiceCaractere] = *pcStrMatrice;
 				// On remplace les potentielles ',' par '.'

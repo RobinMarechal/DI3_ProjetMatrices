@@ -147,14 +147,14 @@ char * supprimerEspaces(char pcStr[])
 	if (strlen(pcStr) == 0)
 		return "";
 
-	char pcResultat[1024] = { 0 };
+	char * pcResultat = new char[1024];
 	char * pcTmp = strchr(pcStr, '\0') - 1;
 	// On suprime les espaces avant le début du mot
-	while (isspace(*pcStr))
+	while (*pcStr == ' ' || *pcStr == '\t')
 		pcStr++;
 
 	// On supprime les espaces après la fin du mot
-	while (isspace(*pcTmp))
+	while (*pcTmp == ' ' || *pcTmp == '\t')
 		pcTmp--;
 
 	strncpy_s(pcResultat, 1024 , pcStr, pcTmp - pcStr + 1);
