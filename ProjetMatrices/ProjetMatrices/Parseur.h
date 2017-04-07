@@ -20,16 +20,17 @@ Classe permettant de créer un CTableau associatif
 class CParseur
 {
 public:
-	
+
 	/*****************************************
 	Parse un fichier.
 	******************************************
 	Entrée : le chemin du fichier à parser.
 	Nécessite : rien.
-	Sortie : une instance de CTableauAssociatif contenant les données du fichier.
+	Sortie : une instance de CTableauAssociatif contenant les données du fichier allouée sur le tas.
 	Entraîne : soulève une Cexception en cas d'erreur de syntaxe dans le fichier
+	Entraîne : Allocation d'une chaine de caractère (via new).
 	******************************************/
-	static CTableauAssociatif PARparserFichier(char * pcFichier);
+	static CTableauAssociatif * PARparserFichier(char * pcFichier);
 
 
 	/*****************************************
@@ -48,8 +49,8 @@ public:
 	******************************************
 	Entrée : la ligne du fichier à analyser
 	Nécessite : la ligne contient un (et un seul) '='.
-	Sortie : la partie gauche de la ligne.
-	Entraîne : rien.
+	Sortie : la partie gauche de la ligne allouée sur le tas.
+	Entraîne : Allocation d'une chaine de caractère (via new).
 	******************************************/
 	static char * PARextraireBalise(char * pcLigne);
 
@@ -59,8 +60,8 @@ public:
 	******************************************
 	Entrée : la ligne du fichier à analyser
 	Nécessite : la ligne contient un (et un seul) '='.
-	Sortie : la partie droite de la ligne.
-	Entraîne : rien.
+	Sortie : la partie droite de la ligne allouée sur le tas.
+	Entraîne : Allocation d'une chaine de caractère (via new).
 	******************************************/
 	static char *  PARextraireValeur(char * pcLigne);
 };

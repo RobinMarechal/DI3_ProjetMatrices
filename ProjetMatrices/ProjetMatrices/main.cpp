@@ -72,10 +72,10 @@ int main(unsigned int argc, char * argv[])
 		{
 			for (uiBoucle = 1; uiBoucle < argc; uiBoucle++)
 			{
-				CTableauAssociatif TABtab = CParseur::PARparserFichier(argv[uiBoucle]);
+				CTableauAssociatif * TABtab = CParseur::PARparserFichier(argv[uiBoucle]);
 
 				// On verifie que 'TypeMatrice' est bien precise dans le fichier
-				if (TABtab.TABgetIndiceCle("TypeMatrice") == -1)
+				if (TABtab->TABgetIndiceCle("TypeMatrice") == -1)
 				{
 					char pcMsg[1024];
 					sprintf_s(pcMsg, 1024, "Le champs 'TypeMatrice' n'est pas specifie dans le fichier %s.", argv[uiBoucle]);
@@ -85,7 +85,7 @@ int main(unsigned int argc, char * argv[])
 				}
 
 				// On verifie que la matrice est bien de type 'double'.
-				if (strcmp(TABtab.TABgetValeurChaine("TypeMatrice"), "double") != 0 || strlen(TABtab.TABgetValeurChaine("TypeMatrice")) != strlen("double"))
+				if (strcmp(TABtab->TABgetValeurChaine("TypeMatrice"), "double") != 0 || strlen(TABtab->TABgetValeurChaine("TypeMatrice")) != strlen("double"))
 				{
 					char pcMsg[1024];
 					sprintf_s(pcMsg, 1024, "La valeur de TypeMatrice n'est pas 'double' dans le fichier %s.", argv[uiBoucle]);
@@ -95,6 +95,9 @@ int main(unsigned int argc, char * argv[])
 				}
 
 				pcMATmatrices[uiBoucle - 1] = CMatrice<double>::MATgenerer(TABtab);
+
+				delete TABtab;
+
 				std::cout << "Fichier " << uiBoucle << " lu." << std::endl;
 			}
 		} catch(Cexception EXCe)

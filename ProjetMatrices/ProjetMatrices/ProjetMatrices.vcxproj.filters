@@ -47,9 +47,6 @@
     <ClCompile Include="main.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
-    <ClCompile Include="Matrice.cpp">
-      <Filter>Fichiers sources</Filter>
-    </ClCompile>
     <ClCompile Include="TableauAssociatif.cpp">
       <Filter>Fichiers sources</Filter>
     </ClCompile>
