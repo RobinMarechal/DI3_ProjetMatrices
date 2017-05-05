@@ -144,7 +144,7 @@ Entraîne : rien.
 ******************************************/
 char * supprimerEspaces(char pcStr[])
 {
-	if (strlen(pcStr) == 0)
+	if (strlen(pcStr) == 0 || *pcStr == '\n')
 		return "";
 
 	char * pcResultat = new char[1024];
