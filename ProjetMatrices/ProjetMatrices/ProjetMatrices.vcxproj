@@ -146,8 +146,10 @@
     <ClInclude Include="constantes.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="Matrice.h" />
+    <ClInclude Include="OperationMatrice.h" />
     <ClInclude Include="Parseur.h" />
     <ClInclude Include="TableauAssociatif.h" />
+    <ClInclude Include="TesteurMatrice.h" />
     <ClInclude Include="TestsUnitaires.h" />
   </ItemGroup>
   <ItemGroup>

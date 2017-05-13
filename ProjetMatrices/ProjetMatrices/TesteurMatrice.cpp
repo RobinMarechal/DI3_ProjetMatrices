@@ -24,9 +24,9 @@ Sortie : un booléen : True = la matrice est triangulaire, False = la matrice n'e
 Entraîne : rien.
 ******************************************/
 template <class T>
-bool CTesteurMatrice<T>::TESestTriangulaire() const
+bool CTesteurMatrice<T>::TESestTriangulaire(const CMatrice<T> & MATmatrice) const
 {
-	return (TESestTriangulaireInferieure() || TESestTriangulaireSuperieure());
+	return (TESestTriangulaireInferieure(MATmatrice) || TESestTriangulaireSuperieure(MATmatrice));
 }
 
 
@@ -39,14 +39,15 @@ Sortie : un booléen : True = la matrice est triangulaire inférieur, False = la m
 Entraîne : rien
 ******************************************/
 template <class T>
-bool CTesteurMatrice<T>::TESestTriangulaireInferieure() const
+bool CTesteurMatrice<T>::TESestTriangulaireInferieure(const CMatrice<T> & MATmatrice) const
 {
 	unsigned int uiBoucleLigne, uiBoucleColonne;
-	for (uiBoucleColonne = 1; uiBoucleColonne < MATgetNbLignes(); uiBoucleColonne++)
+
+	for (uiBoucleColonne = 1; uiBoucleColonne < MATmatrice.MATgetNbLignes(); uiBoucleColonne++)
 	{
 		for (uiBoucleLigne = 0; uiBoucleLigne < uiBoucleColonne; uiBoucleLigne++)
 		{
-			if (MATgetValeur(uiBoucleLigne, uiBoucleColonne) != 0)
+			if (MATmatrice.MATgetValeur(uiBoucleLigne, uiBoucleColonne) != 0)
 			{
 				// Si l'element dans le triangle inferieure est non nul
 				// Alors la matrice n'est pas triangulaire inferieure
@@ -68,7 +69,7 @@ Sortie : un booléen : True = la matrice est triangulaire supérieure, False = la 
 Entraîne : rien
 ******************************************/
 template <class T>
-bool CTesteurMatrice<T>::TESestTriangulaireSuperieure() const
+bool CTesteurMatrice<T>::TESestTriangulaireSuperieure(const CMatrice<T> & MATmatrice) const
 {
 	// La transposée d'une matrice triangulaire supérieure est triangulaire inférieure
 	CMatrice<T> MATtmp = MATtransposee();
@@ -85,10 +86,10 @@ Sortie : un booléen : True = la matrice est diagonale, False = la matrice n'est 
 Entraîne : rien.
 ******************************************/
 template <class T>
-bool CTesteurMatrice<T>::TESestDiagonale() const
+bool CTesteurMatrice<T>::TESestDiagonale(const CMatrice<T> & MATmatrice) const
 {
 	// Pour la compréhension du code et la maintenabilité :
-	return (TESestTriangulaireInferieure() && TESestTriangulaireSuperieure());
+	return (TESestTriangulaireInferieure(MATmatrice) && TESestTriangulaireSuperieure(MATmatrice));
 }
 
 
@@ -101,9 +102,9 @@ Sortie : un booléen : True = la matrice est inversible, False = la matrice n'est
 Entraîne : rien
 ******************************************/
 template <class T>
-bool CTesteurMatrice<T>::TESestInversible() const
+bool CTesteurMatrice<T>::TESestInversible(const CMatrice<T> & MATmatrice) const
 {
-	return (uiMATnbColonnes == uiMATnbLignes && MATdet() != 0);
+	return (MATmatrice.uiMATnbColonnes == MATmatrice.uiMATnbLignes && MATdet() != 0);
 }
 
 
@@ -116,7 +117,7 @@ Sortie : un booléen : True = la matrice est symétrique, False = la matrice n'est
 Entraîne : rien.
 ******************************************/
 template <class T>
-bool CTesteurMatrice<T>::TESestSymetrique() const
+bool CTesteurMatrice<T>::TESestSymetrique(const CMatrice<T> & MATmatrice) const
 {
 	return (MATtransposee() == *this);
 }
@@ -131,7 +132,7 @@ Sortie : un booléen : True = la matrice est antisymétrique, False = la matrice n
 Entraîne : rien.
 ******************************************/
 template <class T>
-bool CTesteurMatrice<T>::TESestAntiSymetrique() const
+bool CTesteurMatrice<T>::TESestAntiSymetrique(const CMatrice<T> & MATmatrice) const
 {
 	return (MATtransposee() == (*this * -1));
 }
@@ -146,15 +147,15 @@ Sortie : un booléen : True = la matrice est nulle, False = la matrice n'est pas 
 Entraine : rien
 ******************************************/
 template <class T>
-bool CTesteurMatrice<T>::TESestNulle() const
+bool CTesteurMatrice<T>::TESestNulle(const CMatrice<T> & MATmatrice) const
 {
 	unsigned int uiBoucleL, uiBoucleC;
 
-	for (uiBoucleL = 0; uiBoucleL < uiMATnbLignes; uiBoucleL++)
+	for (uiBoucleL = 0; uiBoucleL < MATmatrice.uiMATnbLignes; uiBoucleL++)
 	{
-		for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+		for (uiBoucleC = 0; uiBoucleC < MATmatrice.uiMATnbColonnes; uiBoucleC++)
 		{
-			if (MATgetValeur(uiBoucleL, uiBoucleC) != 0)
+			if (MATmatrice.MATgetValeur(uiBoucleL, uiBoucleC) != 0)
 			{
 				return false;
 			}
@@ -174,14 +175,14 @@ Sortie : True : ligne nulle, False : la ligne n'est pas nulle.
 Entraîne : rien
 ******************************************/
 template<class T>
-bool CTesteurMatrice<T>::MATligneEstNulle(unsigned int uiLigne) const
+bool CTesteurMatrice<T>::TESligneEstNulle(const CMatrice<T> & MATmatrice, unsigned int uiLigne) const
 {
 	unsigned int uiBoucleC;
 
-	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+	for (uiBoucleC = 0; uiBoucleC < MATmatrice.uiMATnbColonnes; uiBoucleC++)
 	{
 		// Si au moins une valeur est non nulle, alors la ligne n'est pas nulle
-		if (MATgetValeur(uiLigne, uiBoucleC) != 0)
+		if (MATmatrice.MATgetValeur(uiLigne, uiBoucleC) != 0)
 		{
 			return false;
 		}
@@ -199,15 +200,15 @@ Nécessite : rien
 Sortie : True : ligne nulle, False : la ligne n'est pas nulle.
 Entraîne : rien
 ******************************************/
-template<class T>
-bool CTesteurMatrice<T>::MATcolonneEstNulle(unsigned int uiLigne) const
+template <class T>
+bool CTesteurMatrice<T>::TEScolonneEstNulle(const CMatrice<T> & MATmatrice, unsigned int uiLigne) const
 {
 	unsigned int uiBoucleC;
 
-	for (uiBoucleC = 0; uiBoucleC < uiMATnbColonnes; uiBoucleC++)
+	for (uiBoucleC = 0; uiBoucleC < MATmatrice.uiMATnbColonnes; uiBoucleC++)
 	{
 		// Si au moins une valeur est non nulle, alors la ligne n'est pas nulle
-		if (MATgetValeur(uiLigne, uiBoucleC) != 0)
+		if (MATmatrice.MATgetValeur(uiLigne, uiBoucleC) != 0)
 		{
 			return false;
 		}

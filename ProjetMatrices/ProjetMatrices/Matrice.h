@@ -391,7 +391,6 @@ public:
 	Sortie : une instance de CMatrice.
 	Entraîne : la création d'une matrice à partir des valeurs du tableau.
 	******************************************/
-	template <class T>
 	static CMatrice<T> MATgenerer(CTableauAssociatif * TABtab);
 };
 

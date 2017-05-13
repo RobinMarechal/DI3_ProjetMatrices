@@ -4,8 +4,7 @@
 #include "Matrice.h"
 #include "OperationMatrice.h"
 
-class COperationMatrice;
-
+template <class T>
 class CTesteurMatrice
 {
 public:
@@ -21,8 +20,7 @@ public:
 	Sortie : un booléen : True = la matrice est triangulaire, False = la matrice n'est pas triangulaire.
 	Entraîne : rien.
 	******************************************/
-	template <class T>
-	bool TESestTriangulaire(const CMAtrice<T> & MATmatrice) const;
+	bool TESestTriangulaire(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -33,8 +31,7 @@ public:
 	Sortie : un booléen : True = la matrice est triangulaire supérieure, False = la matrice n'est pas triangulaire supérieure.
 	Entraîne : rien
 	******************************************/
-	template <class T>
-	bool TESestTriangulaireSuperieure(const CMAtrice<T> & MATmatrice) const;
+	bool TESestTriangulaireSuperieure(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -45,8 +42,7 @@ public:
 	Sortie : un booléen : True = la matrice est triangulaire inférieur, False = la matrice n'est pas triangulaire inférieure.
 	Entraîne : rien
 	******************************************/
-	template <class T>
-	bool TESestTriangulaireInferieure(const CMAtrice<T> & MATmatrice) const;
+	bool TESestTriangulaireInferieure(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -57,8 +53,7 @@ public:
 	Sortie : un booléen : True = la matrice est diagonale, False = la matrice n'est pas diagonale.
 	Entraîne : rien.
 	******************************************/
-	template <class T>
-	bool TESestDiagonale(const CMAtrice<T> & MATmatrice) const;
+	bool TESestDiagonale(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -69,8 +64,7 @@ public:
 	Sortie : un booléen : True = la matrice est inversible, False = la matrice n'est pas inversible.
 	Entraîne : rien
 	******************************************/
-	template <class T>
-	bool TESestInversible(const CMAtrice<T> & MATmatrice) const;
+	bool TESestInversible(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -81,8 +75,7 @@ public:
 	Sortie : un booléen : True = la matrice est symétrique, False = la matrice n'est pas symétrique.
 	Entraîne : rien.
 	******************************************/
-	template <class T>
-	bool TESestSymetrique(const CMAtrice<T> & MATmatrice) const;
+	bool TESestSymetrique(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
@@ -93,20 +86,18 @@ public:
 	Sortie : un booléen : True = la matrice est antisymétrique, False = la matrice n'est pas antisymétrique.
 	Entraîne : rien.
 	******************************************/
-	template <class T>
-	bool TESestAntiSymetrique(const CMAtrice<T> & MATmatrice) const;
+	bool TESestAntiSymetrique(const CMatrice<T> & MATmatrice) const;
 
 
 	/*****************************************
-	Test si une ligne est null
+	Test si une ligne est nulle
 	******************************************
 	Entrée : l'indice de la ligne
 	Nécessite : rien
 	Sortie : True : ligne nulle, False : la ligne n'est pas nulle.
 	Entraîne : rien
 	******************************************/
-	template <class T>
-	bool TESligneEstNulle(const CMAtrice<T> & MATmatrice, unsigned int uiLigne) const;
+	bool TESligneEstNulle(const CMatrice<T> & MATmatrice, unsigned int uiLigne) const;
 
 
 	/*****************************************
@@ -117,8 +108,7 @@ public:
 	Sortie : True : ligne nulle, False : la ligne n'est pas nulle.
 	Entraîne : rien
 	******************************************/
-	template <class T>
-	bool TEScolonneEstNulle(const CMAtrice<T> & MATmatrice, unsigned int uiLigne) const;
+	bool TEScolonneEstNulle(const CMatrice<T> & MATmatrice, unsigned int uiLigne) const;
 
 
 	/*****************************************
@@ -129,8 +119,7 @@ public:
 	Sortie : un booléen : True = la matrice est nulle, False = la matrice n'est pas nulle.
 	Entraine : rien
 	******************************************/
-	template <class T>
-	bool TESestNulle(const CMAtrice<T> & MATmatrice) const;
+	bool TESestNulle(const CMatrice<T> & MATmatrice) const;
 };
 
 #include "TesteurMatrice.cpp"
