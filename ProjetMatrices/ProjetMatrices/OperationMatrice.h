@@ -5,6 +5,9 @@
 #include "TesteurMatrice.h"
 
 template <class T>
+class CTesteurMatrice;
+
+template <class T>
 class COperationMatrice
 {
 public:

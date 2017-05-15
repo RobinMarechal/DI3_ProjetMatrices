@@ -71,7 +71,7 @@ class CTableauAssociatif
 	Sortie : rien
 	Entraîne : Libération de la mémoire allouée pour les attributs
 	*********************************************************/
-	void TABdetruire();
+	void TABdetruire() const;
 
 
 	/********************************************************

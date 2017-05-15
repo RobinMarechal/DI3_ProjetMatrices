@@ -40,7 +40,6 @@ void CParseur::PARanalyseSyntaxique(char * pcFichier)
 		char pcLigne[256] = { 0 };
 		char pcMsg[1024] = { 0 };
 		unsigned int uiBoucle = 0;
-		char * pcTestLigneVide = nullptr;
 		iLigne++;
 		IFSfichier.getline(pcLigne, 256);
 
@@ -157,14 +156,14 @@ Entraîne : Allocation d'une chaine de caractère (via new).
 char * CParseur::PARextraireBalise(char * pcLigne)
 {
 	char pcTmp[1024] = { 0 };
-	char * pcEgal = NULL;
+	char * pcEgal;
 	
 	strcpy_s(pcTmp, 1024, pcLigne);
 	pcEgal = strchr(pcTmp, '=');
 
 	// On revérifie au cas ou la méthode est appelée à un autre moment sans 
 	// analyse syntaxique au préalable.
-	if (pcEgal == NULL)
+	if (pcEgal == nullptr)
 	{
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur syntaxique : une ligne du fichier ne contient pas de '='.");
 	}
@@ -186,15 +185,14 @@ Entraîne : Allocation d'une chaine de caractère (via new).
 char * CParseur::PARextraireValeur(char * pcLigne)
 {
 	char pcTmp[1024] = { 0 };
-	char * pcEgal = NULL;
-	char * pcFin = NULL;
+	char * pcEgal;
 
 	strcpy_s(pcTmp, 1024, pcLigne);
 	pcEgal = strchr(pcTmp, '=');
 
 	// On revérifie au cas ou la méthode est appelée à un autre moment sans 
 	// analyse syntaxique au préalable.
-	if (pcEgal == NULL)
+	if (pcEgal == nullptr)
 	{
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur syntaxique : une ligne du fichier ne contient pas de '='.");
 	}
@@ -233,7 +231,7 @@ CTableauAssociatif * CParseur::PARparserFichier(char * pcFichier)
 			pcBalise[1024] = { 0 },
 			pcValeur[1024] = { 0 };
 
-		char * pcTestLigneVide = nullptr;
+		char * pcTestLigneVide;
 
 		fichier.getline(pcLigne, 1024);
 
@@ -261,7 +259,7 @@ CTableauAssociatif * CParseur::PARparserFichier(char * pcFichier)
 			fichier.getline(pcLigne, 1024);
 
 			// Tant qu'on n'est pas a la fin du fichier
-			while (strchr(pcLigne, ']') == NULL)
+			while (strchr(pcLigne, ']') == nullptr)
 			{
 				unsigned int uiNouvelleTaille = strlen(pcLigne) + strlen(pcValeur) + 1;
 

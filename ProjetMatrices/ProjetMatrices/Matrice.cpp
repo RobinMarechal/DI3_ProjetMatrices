@@ -6,6 +6,7 @@
 #include "TableauAssociatif.h"
 #include "helpers.h"
 #include "constantes.h"
+#include "OperationMatrice.h"
 
 using namespace std;
 
@@ -390,7 +391,7 @@ Entraîne : Une Cexception est levée si iPuissance = 0
 template<class T>
 CMatrice<T> CMatrice<T>::operator^(int iPuissance) const
 {
-	COperationMatrice <T> OPMoperation;
+	COperationMatrice<T> OPMoperation;
 
 	if (iPuissance == 0)
 	{
@@ -410,7 +411,7 @@ CMatrice<T> CMatrice<T>::operator^(int iPuissance) const
 	}
 
 	CMatrice<T> MATresultat(*this);
-	for (uiBoucle = 1; uiBoucle < (unsigned int)iPuissance; uiBoucle++)
+	for (uiBoucle = 1; uiBoucle < (unsigned int) (iPuissance); uiBoucle++)
 	{
 		MATresultat = MATresultat * *this;
 	}
@@ -418,7 +419,7 @@ CMatrice<T> CMatrice<T>::operator^(int iPuissance) const
 	// Puis on inverse le resultat si la puissance etait negative
 	if (bNegatif)
 	{
-		MATresultat = MATresultat.MATinverse();
+		MATresultat = OPMoperation.OPMinverse(MATresultat);
 	}
 
 	return MATresultat;
@@ -524,7 +525,8 @@ Entraîne : allocation (via l'operateur new) d'un tableau.
 template <class T>
 T * CMatrice<T>::MATgetColonne(unsigned int uiColonne) const
 {
-	return MATtransposee().MATgetLigne(uiColonne);
+	COperationMatrice<T> OPMoperation;
+	return OPMoperation.OPMtransposee(*this).MATgetLigne(uiColonne);
 }
 
 
@@ -632,7 +634,7 @@ void CMatrice<T>::MATinitMatrice()
 {
 	unsigned int uiBoucle;
 	// On alloue uiMATnbColonnes colonnes
-	pptMATmatrice = (T **) malloc(sizeof(T *) * uiMATnbColonnes);
+	pptMATmatrice = (T **) (malloc(sizeof(T *) * uiMATnbColonnes));
 
 	if (pptMATmatrice == nullptr)
 	{
@@ -692,10 +694,11 @@ template<class T>
 void CMatrice<T>::MATajouterColonnes(int iNb)
 {
 	// Ajouter une colonne revient a ajouter une ligne à la transposee
-	CMatrice<T> MATtmp = MATtransposee();
+	COperationMatrice<T> OPMop;
+	CMatrice<T> MATtmp = OPMop.OPMtransposee(*this);
 	MATtmp.MATsetNbLignes(iNb + MATtmp.uiMATnbLignes);
 	
-	*this = MATtmp.MATtransposee();
+	*this = OPMop.OPMtransposee(MATtmp);
 }
 
 

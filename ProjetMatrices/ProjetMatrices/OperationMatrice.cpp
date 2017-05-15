@@ -26,13 +26,14 @@ Entraîne : rien.
 template <class T>
 unsigned int COperationMatrice<T>::OPMrang(const CMatrice<T> & MATmatrice) const
 {
-	CTesteurMatrice TEStesteur;
-	const CMatrice<T> MATech = MATechelonnee(MATmatrice);
+	CTesteurMatrice<T> TEStesteur;
+	COperationMatrice<T> OPMop;
+	const CMatrice<T> MATech = OPMop.OPMechelonnee(MATmatrice);
 	unsigned int uiBoucleL = 0;
 	unsigned int uiNbLignes = MATmatrice.MATgetNbLignes();
 
 	// On échelonne la matrice et compte le nombre de lignes non nulles
-	while (uiBoucleL < uiNbLignes && TEStesteur.TESligneEstNulle(MATech, uiBoucleL))
+	while (uiBoucleL < uiNbLignes && !TEStesteur.TESligneEstNulle(MATech, uiBoucleL))
 	{
 		uiBoucleL++;
 	}
@@ -70,7 +71,7 @@ CMatrice<T> COperationMatrice<T>::OPMechelonnee(const CMatrice<T> & MATmatrice) 
 			iPivot = MATresult.MATgetValeur(uiIndicePivot, uiIndicePivot);
 			iCoefficientLigne = MATresult.MATgetValeur(uiLignes, uiIndicePivot);
 
-			for (uiColonnes = 0; uiColonnes < uiMATnbColonnes; uiColonnes++)
+			for (uiColonnes = 0; uiColonnes < uiNbColonnes; uiColonnes++)
 			{
 				MATresult.MATsetValeur(uiLignes, uiColonnes, iPivot * MATresult.MATgetValeur(uiLignes, uiColonnes)
 					- iCoefficientLigne * MATresult.MATgetValeur(uiIndicePivot, uiColonnes));
@@ -168,19 +169,19 @@ Entraîne : rien.
 template <class T>
 T COperationMatrice<T>::OPMdet(const CMatrice<T> & MATmatrice) const
 {
-	if (uiMATnbLignes == 1)
+	if (MATmatrice.MATgetNbLignes() == 1)
 	{
 		return MATmatrice(0, 0);
 	}
 	else
 	{
 		T tDeterminant = 0;
-		CTesteurMatrice TEStesteur;
+		CTesteurMatrice<T> TEStesteur;
 		unsigned int uiNbLignes = MATmatrice.MATgetNbLignes();
 		unsigned int uiNbColonnes = MATmatrice.MATgetNbColonnes();
 
 		// Le determinant d'une matrice triangulaire est le produit des élements de la diagonale
-		if (TEStesteur.MATestTriangulaire(MATmatrice))
+		if (TEStesteur.TESestTriangulaire(MATmatrice))
 		{
 			tDeterminant = MATmatrice(0, 0);
 			unsigned int uiBoucle;
@@ -198,7 +199,7 @@ T COperationMatrice<T>::OPMdet(const CMatrice<T> & MATmatrice) const
 			// Formule de Leibniz
 			for (uiBoucleL = 0; uiBoucleL < uiNbLignes; uiBoucleL++)
 			{
-				CMatrice<T> MATsousMat = MATsousMatrice(uiBoucleL, 0);
+				CMatrice<T> MATsousMat = OPMsousMatrice(MATmatrice, uiBoucleL, 0);
 				int iSignature = -1;
 				if ((uiBoucleL) % 2 == 0)
 					iSignature = 1;
@@ -229,7 +230,7 @@ T COperationMatrice<T>::OPMtr(const CMatrice<T> & MATmatrice) const
 
 	for (uiBoucle = 0; uiBoucle < uiNbLignes; uiBoucle++)
 	{
-		trace += MATmatrice(uiBoucle, uiBoucle);
+		tTrace += MATmatrice(uiBoucle, uiBoucle);
 	}
 
 	return tTrace;
@@ -260,7 +261,7 @@ CMatrice<T> COperationMatrice<T>::OPMcommatrice(const CMatrice<T> & MATmatrice) 
 			if ((uiBoucleL + uiBoucleC) % 2 == 0)
 				iSignature = 1;
 
-			MATresultat(uiBoucleL, uiBoucleC) = iSignature * OMPdet(MATsousMat);
+			MATresultat(uiBoucleL, uiBoucleC) = iSignature * OPMdet(MATsousMat);
 		}
 	}
 
@@ -281,11 +282,9 @@ template <class T>
 CMatrice<T> COperationMatrice<T>::OPMinverse(const CMatrice<T> & MATmatrice) const
 {
 	T tDet;
-	unsigned int uiBoucleL, uiBoucleC;
-	unsigned int uiDim = MATmatrice.MATgetNbLignes();
 	CMatrice<T> MATcomm, MATtransComm;
 
-	tDet = MATdet();
+	tDet = OPMdet(MATmatrice);
 
 	if (tDet == 0)
 	{

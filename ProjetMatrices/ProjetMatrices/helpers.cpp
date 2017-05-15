@@ -14,7 +14,7 @@ Nécessite : rien
 Sortie : l'entier correspondant au type de la chaine
 Entraîne : (0 = entier) || (1 = réel) || (3 = chaine)
 ******************************************/
-int analyserType(char * pcVal)
+int analyserType(char* pcVal)
 {
 	int iEtat = 0;
 	int iType = TAB_TYPE_CHAINE;
@@ -35,7 +35,11 @@ int analyserType(char * pcVal)
 		case 1:
 			if (cChar == '.') iEtat = 4;
 			else if (cChar == 'e' || cChar == 'E') iEtat = 6;
-			else { iType = TAB_TYPE_ENTIER; bStop = true; }
+			else
+			{
+				iType = TAB_TYPE_ENTIER;
+				bStop = true;
+			}
 			break;
 
 		case 2:
@@ -48,20 +52,36 @@ int analyserType(char * pcVal)
 			if (cChar == '.') iEtat = 4;
 			else if (cChar == 'e' || cChar == 'E') iEtat = 6;
 			else if (cChar >= '0' && cChar <= '9') iEtat = 3;
-			else if (cChar == '\0') { iType = TAB_TYPE_ENTIER; bStop = true; }
-			else { iType = TAB_TYPE_CHAINE; bStop = true; }
+			else if (cChar == '\0')
+			{
+				iType = TAB_TYPE_ENTIER;
+				bStop = true;
+			}
+			else
+			{
+				iType = TAB_TYPE_CHAINE;
+				bStop = true;
+			}
 			break;
 
 		case 4:
 			if (cChar >= '0' && cChar <= '9') iEtat = 5;
-			else if (cChar == '\0') { iType = TAB_TYPE_ENTIER; bStop = true; } // Car "7." => 7 avec atof()
+			else if (cChar == '\0')
+			{
+				iType = TAB_TYPE_ENTIER;
+				bStop = true;
+			} // Car "7." => 7 avec atof()
 			else iEtat = -1;
 			break;
 
 		case 5:
 			if (cChar == 'e' || cChar == 'E') iEtat = 6;
 			else if (cChar >= '0' && cChar <= '9') iEtat = 5;
-			else { iType = TAB_TYPE_REEL; bStop = true; }
+			else
+			{
+				iType = TAB_TYPE_REEL;
+				bStop = true;
+			}
 			break;
 
 		case 6:
@@ -77,13 +97,20 @@ int analyserType(char * pcVal)
 
 		case 8:
 			if (cChar >= '0' && cChar <= '9') iEtat = 8;
-			else { iType = TAB_TYPE_REEL; bStop = true; }
+			else
+			{
+				iType = TAB_TYPE_REEL;
+				bStop = true;
+			}
 			break;
 
 		case -1:
 			iType = TAB_TYPE_CHAINE;
 			bStop = true;
 			break;
+		default: iType = TAB_TYPE_NON_DEFINI;
+			bStop = true;
+			break;;
 		}
 		pcVal++;
 	}
@@ -101,9 +128,10 @@ Nécessite : pcStart >= pcEnd.
 Sortie : la sous-chaîne souhaitée (de type char *).
 Entraîne : Allocation dynamique d'un char * (malloc)
 ******************************************/
-char * sousChaine(const char * pcStart, const char * pcEnd) {
+char* sousChaine(const char* pcStart, const char* pcEnd)
+{
 	unsigned int uiBoucle = 0;
-	char * pcStr = (char *)malloc(sizeof(char) * (size_t)(pcEnd - pcStart + 1));
+	char* pcStr = static_cast<char *>(malloc(sizeof(char) * static_cast<size_t>(pcEnd - pcStart + 1)));
 	while (pcStart + uiBoucle != pcEnd && pcStart[uiBoucle] != '\0')
 	{
 		pcStr[uiBoucle] = pcStart[uiBoucle];
@@ -124,7 +152,7 @@ Sortie : rien.
 Entraîne : Modification de la chaine pointée par pcStr
 -> tous les caractères sont en minuscule.
 ******************************************/
-void transformerEnMinuscule(char * pcStr)
+void transformerEnMinuscule(char* pcStr)
 {
 	unsigned int uiBoucle;
 	for (uiBoucle = 0; uiBoucle < strlen(pcStr); uiBoucle++)
@@ -142,13 +170,13 @@ Nécessite : rien.
 Sortie : Une copie de la chaine de caractère sans les espaces de début et de fin.
 Entraîne : rien.
 ******************************************/
-char * supprimerEspaces(char pcStr[])
+char* supprimerEspaces(char pcStr[])
 {
 	if (strlen(pcStr) == 0 || *pcStr == '\n')
 		return "";
 
-	char * pcResultat = new char[1024];
-	char * pcTmp = strchr(pcStr, '\0') - 1;
+	char* pcResultat = new char[1024];
+	char* pcTmp = strchr(pcStr, '\0') - 1;
 	// On suprime les espaces avant le début du mot
 	while (*pcStr == ' ' || *pcStr == '\t')
 		pcStr++;
@@ -157,8 +185,7 @@ char * supprimerEspaces(char pcStr[])
 	while (*pcTmp == ' ' || *pcTmp == '\t')
 		pcTmp--;
 
-	strncpy_s(pcResultat, 1024 , pcStr, pcTmp - pcStr + 1);
+	strncpy_s(pcResultat, 1024, pcStr, pcTmp - pcStr + 1);
 
 	return pcResultat;
 }
-

@@ -7,10 +7,11 @@
 #include "constantes.h"
 #include "TableauAssociatif.h"
 #include "OperationMatrice.h"
+#include "TesteurMatrice.h"
 
 class CTestsUnitaires
 {
-private:
+public:
 
 
 	/*****************************************
@@ -21,7 +22,7 @@ private:
 	Sortie : rien.
 	Entraîne : la création de l'objet.
 	******************************************/
-	CTestsUnitaires(); // privée pour empecher la création d'un objet CTestsUnitaires de l'extérieur.
+	CTestsUnitaires(); 
 
 	/*****************************************
 	Teste les accesseurs.
@@ -31,7 +32,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestAccesseurs();
+	void UNItestAccesseurs() const;
 
 
 	/*****************************************
@@ -42,7 +43,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestOperateurPlus();
+	void UNItestOperateurPlus() const;
 
 
 	/*****************************************
@@ -53,7 +54,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestOperateurMoins();
+	void UNItestOperateurMoins() const;
 
 
 	/*****************************************
@@ -64,7 +65,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestOperateurEgal();
+	void UNItestOperateurEgal() const;
 
 
 	/*****************************************
@@ -75,7 +76,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestOperateursComparaison();
+	void UNItestOperateursComparaison() const;
 
 
 	/*****************************************
@@ -86,7 +87,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestOperateurProduit();
+	void UNItestOperateurProduit() const;
 
 
 	/*****************************************
@@ -97,7 +98,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestOperateurDiviser();
+	void UNItestOperateurDiviser() const;
 
 
 	/*****************************************
@@ -108,7 +109,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestOperateurPuissance();
+	void UNItestOperateurPuissance() const;
 
 
 	/*****************************************
@@ -119,7 +120,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'appel de tous les tests sur les opérateurs.
 	******************************************/
-	void UNItestOperateurs();
+	void UNItestOperateurs() const;
 
 
 	/*****************************************
@@ -130,7 +131,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestCalculRang();
+	void UNItestCalculRang() const;
 
 
 	/*****************************************
@@ -141,7 +142,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestCalculEchelonnee();
+	void UNItestCalculEchelonnee() const;
 
 
 	/*****************************************
@@ -152,7 +153,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestCalculTransposee();
+	void UNItestCalculTransposee() const;
 
 
 	/*****************************************
@@ -163,7 +164,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestCalculSousMatrice();
+	void UNItestCalculSousMatrice() const;
 
 
 	/*****************************************
@@ -174,7 +175,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestCalculDet();
+	void UNItestCalculDet() const;
 
 
 	/*****************************************
@@ -185,7 +186,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestCalculInverse();
+	void UNItestCalculInverse() const;
 
 
 	/*****************************************
@@ -196,7 +197,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestCalculCommatrice();
+	void UNItestCalculCommatrice() const;
 
 
 	/*****************************************
@@ -207,7 +208,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestCalculTrace();
+	void UNItestCalculTrace() const;
 
 
 	/*****************************************
@@ -218,7 +219,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'appel de tous les tests sur les calculs.
 	******************************************/
-	void UNItestCalculs();
+	void UNItestCalculs() const;
 
 
 	/*****************************************
@@ -229,7 +230,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestEstNulle();
+	void UNItestEstNulle() const;
 
 
 	/*****************************************
@@ -240,7 +241,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestEstTriangulaire();
+	void UNItestEstTriangulaire() const;
 
 
 	/*****************************************
@@ -251,7 +252,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestEstTriangulaireSuperieure();
+	void UNItestEstTriangulaireSuperieure() const;
 
 
 	/*****************************************
@@ -262,7 +263,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestEstTriangulaireInferieure();
+	void UNItestEstTriangulaireInferieure() const;
 
 
 	/*****************************************
@@ -273,7 +274,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestEstDiagonale();
+	void UNItestEstDiagonale() const;
 
 
 	/*****************************************
@@ -284,7 +285,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestEstInversible();
+	void UNItestEstInversible() const;
 
 
 	/*****************************************
@@ -295,7 +296,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestEstSymetrique();
+	void UNItestEstSymetrique() const;
 
 
 	/*****************************************
@@ -306,7 +307,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestEstAntiSymetrique();
+	void UNItestEstAntiSymetrique() const;
 
 
 	/*****************************************
@@ -317,7 +318,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'appel de tous les tests sur les méthodes de test.
 	******************************************/
-	void UNItestTestsMatriceCarree();
+	void UNItestTestsMatriceCarree() const;
 	
 
 	/*****************************************
@@ -328,7 +329,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestDiag();
+	void UNItestDiag() const;
 
 
 	/*****************************************
@@ -339,7 +340,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestExceptions();
+	void UNItestExceptions() const;
 
 
 
@@ -351,9 +352,7 @@ private:
 	Sortie : rien.
 	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 	******************************************/
-	void UNItestsCTableauAssociatif();
-
-public:
+	void UNItestsCTableauAssociatif() const;
 
 	/*****************************************
 	Début des tests.

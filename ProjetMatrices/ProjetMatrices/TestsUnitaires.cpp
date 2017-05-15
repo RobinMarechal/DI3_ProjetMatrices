@@ -6,6 +6,8 @@
 #include "helpers.h"
 #include "constantes.h"
 #include "TableauAssociatif.h"
+#include "TesteurMatrice.h"
+#include "OperationMatrice.h"
 
 using namespace std;
 
@@ -28,7 +30,9 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : la création de l'objet.
 ******************************************/
-CTestsUnitaires::CTestsUnitaires() {}
+CTestsUnitaires::CTestsUnitaires()
+{
+}
 
 
 /*****************************************
@@ -39,7 +43,7 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestAccesseurs()
+void CTestsUnitaires::UNItestAccesseurs() const
 {
 	cout << "UNItestAccesseurs()";
 
@@ -76,7 +80,6 @@ void CTestsUnitaires::UNItestAccesseurs()
 }
 
 
-
 /*****************************************
 Teste l'opérateur +.
 ******************************************
@@ -85,7 +88,7 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestOperateurPlus()
+void CTestsUnitaires::UNItestOperateurPlus() const
 {
 	cout << "UNItestOperateurPlus()";
 	CMatrice<int> MATm1(2, 2), MATm2(2, 2);
@@ -128,7 +131,6 @@ void CTestsUnitaires::UNItestOperateurPlus()
 }
 
 
-
 /*****************************************
 Teste l'opérateur -.
 ******************************************
@@ -137,7 +139,7 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestOperateurMoins()
+void CTestsUnitaires::UNItestOperateurMoins() const
 {
 	cout << "UNItestOperateurMoins()";
 	CMatrice<int> MATm1(2, 2), MATm2(2, 2);
@@ -178,7 +180,6 @@ void CTestsUnitaires::UNItestOperateurMoins()
 }
 
 
-
 /*****************************************
 Teste l'opérateur =.
 ******************************************
@@ -187,7 +188,7 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestOperateurEgal()
+void CTestsUnitaires::UNItestOperateurEgal() const
 {
 	cout << "UNItestOperateurEgal()";
 
@@ -208,7 +209,6 @@ void CTestsUnitaires::UNItestOperateurEgal()
 }
 
 
-
 /*****************************************
 Teste les opérateur de comparaisons == et !=.
 ******************************************
@@ -217,7 +217,7 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestOperateursComparaison()
+void CTestsUnitaires::UNItestOperateursComparaison() const
 {
 	cout << "UNItestOperateursComparaison()";
 
@@ -255,7 +255,6 @@ void CTestsUnitaires::UNItestOperateursComparaison()
 }
 
 
-
 /*****************************************
 Teste l'opérateur *.
 ******************************************
@@ -264,10 +263,11 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestOperateurProduit()
+void CTestsUnitaires::UNItestOperateurProduit() const
 {
 	cout << "UNItestOperateurProduit()";
 
+	CTesteurMatrice<int> TESt;
 	CMatrice<int> MATid(2, 2), MATm1(2, 2), MATm2(2, 3), MATm3(3, 2);
 
 	MATid(0, 0) = 1;
@@ -295,7 +295,7 @@ void CTestsUnitaires::UNItestOperateurProduit()
 	MATm2(1, 1) = 5;
 	MATm2(1, 2) = 6;
 
-	assertionVraie((MATm2 * MATm3).MATestNulle());
+	assertionVraie(TESt.TESestNulle(MATm2 * MATm3));
 
 	// | 7  8  |
 	// | 9  10 |
@@ -324,7 +324,6 @@ void CTestsUnitaires::UNItestOperateurProduit()
 }
 
 
-
 /*****************************************
 Teste l'opérateur /.
 ******************************************
@@ -333,9 +332,11 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestOperateurDiviser()
+void CTestsUnitaires::UNItestOperateurDiviser() const
 {
 	cout << "UNItestOperateurDiviser()";
+
+	CTesteurMatrice<int> TESt;
 
 	CMatrice<int> MATm(2, 2), MATm1(2, 2);
 
@@ -350,11 +351,10 @@ void CTestsUnitaires::UNItestOperateurDiviser()
 	MATm1(1, 1) = 1;
 
 	assertionEgalite(MATm / 4, MATm1);
-	assertionVraie((MATm / 10).MATestNulle());
+	assertionVraie(TESt.TESestNulle(MATm / 10));
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -365,9 +365,11 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestOperateurPuissance()
+void CTestsUnitaires::UNItestOperateurPuissance() const
 {
 	cout << "UNItestOperateurPuissance()";
+
+	COperationMatrice<double> OPMo;
 
 	// | 0 0 |
 	// | 0 0 |
@@ -389,7 +391,7 @@ void CTestsUnitaires::UNItestOperateurPuissance()
 
 	assertionEgalite(MATnulle22 ^ 2, MATnulle22);
 	assertionEgalite(MATm22 ^ 1, MATm22);
-	assertionEgalite(MATm22 ^(-1), MATm22.MATinverse());
+	assertionEgalite(MATm22 ^ (-1), OPMo.OPMinverse(MATm22));
 	assertionEgalite((MATm22 ^-1) ^ -1, MATm22);
 	assertionEgalite((MATm22 ^ 2) ^ 3, MATm22 ^ 6);
 	assertionEgalite(MATm22 ^ 2, MATm22 * MATm22);
@@ -397,7 +399,6 @@ void CTestsUnitaires::UNItestOperateurPuissance()
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -408,7 +409,7 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'appel de tous les tests sur les opérateurs.
 ******************************************/
-void CTestsUnitaires::UNItestOperateurs()
+void CTestsUnitaires::UNItestOperateurs() const
 {
 	UNItestOperateursComparaison();
 	UNItestOperateurEgal();
@@ -419,7 +420,7 @@ void CTestsUnitaires::UNItestOperateurs()
 
 	cout << "UNItestOperateurs()";
 
-	CMatrice<int> MATm231(2, 3), MATm232(2, 3), MATm32(3, 2), MATtest(2, 2), MATres(2, 2); 
+	CMatrice<int> MATm231(2, 3), MATm232(2, 3), MATm32(3, 2), MATtest(2, 2), MATres(2, 2);
 
 	// | 1  2  3 |
 	// | 4  5  6 |
@@ -467,7 +468,6 @@ void CTestsUnitaires::UNItestOperateurs()
 }
 
 
-
 /*****************************************
 Teste le calcul du rang.
 ******************************************
@@ -476,13 +476,14 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestCalculRang()
+void CTestsUnitaires::UNItestCalculRang() const
 {
 	cout << "UNItestCalculRang()";
 
+	COperationMatrice<int> OPMo;
 	CMatrice<int> MATm(2, 2), MATm2(2, 3);
 
-	assertionEgalite(MATm.MATrang(), 0);
+	assertionEgalite(OPMo.OPMrang(MATm), 0);
 
 	// | 1  2 |
 	// | 3  4 |
@@ -490,15 +491,15 @@ void CTestsUnitaires::UNItestCalculRang()
 	MATm(0, 1) = 2;
 	MATm(1, 0) = 3;
 	MATm(1, 1) = 4;
-	assertionEgalite(MATm.MATrang(), 2);
+	assertionEgalite(OPMo.OPMrang(MATm), 2);
 
 	// | 1  2 |
 	// | 3  6 |
 	MATm(1, 1) = 6;
 
-	assertionEgalite(MATm.MATrang(), 1);
+	assertionEgalite(OPMo.OPMrang(MATm), 1);
 
-	
+
 	// | 1  2  3 |
 	// | 4  5  6 |
 	MATm2(0, 0) = 1;
@@ -508,12 +509,11 @@ void CTestsUnitaires::UNItestCalculRang()
 	MATm2(1, 1) = 5;
 	MATm2(1, 2) = 6;
 
-	assertionEgalite(MATm2.MATrang(), 2);
-	assertionEgalite(MATm2.MATtransposee().MATrang(), MATm2.MATrang());
+	assertionEgalite(OPMo.OPMrang(MATm2), 2);
+	assertionEgalite(OPMo.OPMrang(OPMo.OPMtransposee(MATm2)), OPMo.OPMrang(MATm2));
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -524,26 +524,27 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestCalculEchelonnee()
+void CTestsUnitaires::UNItestCalculEchelonnee() const
 {
 	cout << "UNItestCalculEchelonnee()";
 
+	COperationMatrice<double> OPMo;
 	CMatrice<double> MATm1(2, 2), MATm2(2, 2);
 
-	assertionEgalite(MATm1, MATm1.MATechelonnee());
+	assertionEgalite(MATm1, OPMo.OPMechelonnee(MATm1));
 
 	// | 1  0 |
 	// | 0  2 |
 	MATm1(0, 0) = 1;
 	MATm1(1, 1) = 2;
 
-	assertionEgalite(MATm1, MATm1.MATechelonnee());
+	assertionEgalite(MATm1, OPMo.OPMechelonnee(MATm1));
 
 	// | 1  3 |
 	// | 0  2 |
 	MATm1(0, 1) = 3;
 
-	assertionEgalite(MATm1, MATm1.MATechelonnee());
+	assertionEgalite(MATm1, OPMo.OPMechelonnee(MATm1));
 
 	// | 2  4 |
 	// | 4  5 |
@@ -553,21 +554,20 @@ void CTestsUnitaires::UNItestCalculEchelonnee()
 	MATm1(1, 1) = 5;
 
 	// Tests independants de l'implementation des fonctions...
-	assertionDifference(MATm1.MATechelonnee()(0, 0), 0);
-	assertionDifference(MATm1.MATechelonnee()(0, 1), 0);
-	assertionEgalite(MATm1.MATechelonnee()(1, 0), 0);
-	assertionDifference(MATm1.MATechelonnee()(1, 1), 0);
+	assertionDifference(OPMo.OPMechelonnee(MATm1)(0, 0), 0);
+	assertionDifference(OPMo.OPMechelonnee(MATm1)(0, 1), 0);
+	assertionEgalite(OPMo.OPMechelonnee(MATm1)(1, 0), 0);
+	assertionDifference(OPMo.OPMechelonnee(MATm1)(1, 1), 0);
 
 	MATm1(1, 1) = 8;
 
-	assertionDifference(MATm1.MATechelonnee()(0, 0), 0);
-	assertionDifference(MATm1.MATechelonnee()(0, 1), 0);
-	assertionEgalite(MATm1.MATechelonnee()(1, 0), 0);
-	assertionEgalite(MATm1.MATechelonnee()(1, 1), 0);
-	
+	assertionDifference(OPMo.OPMechelonnee(MATm1)(0, 0), 0);
+	assertionDifference(OPMo.OPMechelonnee(MATm1)(0, 1), 0);
+	assertionEgalite(OPMo.OPMechelonnee(MATm1)(1, 0), 0);
+	assertionEgalite(OPMo.OPMechelonnee(MATm1)(1, 1), 0);
+
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -578,10 +578,11 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestCalculTransposee()
+void CTestsUnitaires::UNItestCalculTransposee() const
 {
 	cout << "UNItestCalculTransposee()";
 
+	COperationMatrice<int> OPMo;
 	CMatrice<int> MATm22(2, 2), MATm23(2, 3), MATm32(3, 2);
 
 	// | 1  0 |
@@ -589,14 +590,14 @@ void CTestsUnitaires::UNItestCalculTransposee()
 	MATm22(0, 0) = 1;
 	MATm22(1, 1) = 1;
 
-	assertionEgalite(MATm22.MATtransposee(), MATm22);
+	assertionEgalite(OPMo.OPMtransposee(MATm22), MATm22);
 
 	// | 1  2 |
 	// | 0  1 |
 	MATm22(0, 1) = 2;
 
-	assertionEgalite(MATm22.MATtransposee().MATtransposee(), MATm22);
-	assertionEgalite(MATm22.MATtransposee()(1, 0), 2);
+	assertionEgalite(OPMo.OPMtransposee(OPMo.OPMtransposee(MATm22)), MATm22);
+	assertionEgalite(OPMo.OPMtransposee(MATm22)(1, 0), 2);
 
 	// | 1  2  3 |
 	// | 4  5  6 |
@@ -617,11 +618,10 @@ void CTestsUnitaires::UNItestCalculTransposee()
 	MATm32(2, 0) = 3;
 	MATm32(2, 1) = 6;
 
-	assertionEgalite(MATm23.MATtransposee(), MATm32);
+	assertionEgalite(OPMo.OPMtransposee(MATm23), MATm32);
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -632,9 +632,10 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestCalculSousMatrice()
+void CTestsUnitaires::UNItestCalculSousMatrice() const
 {
 	cout << "UNItestCalculSousMatrice()";
+	COperationMatrice<int> OPMo;
 	CMatrice<int> MATm22(2, 3), MATsousM11(1, 2);
 
 	// | 1  2  3 |
@@ -650,13 +651,12 @@ void CTestsUnitaires::UNItestCalculSousMatrice()
 	MATsousM11(0, 0) = 1;
 	MATsousM11(0, 1) = 3;
 
-	assertionEgalite(MATm22.MATsousMatrice(0, 0).MATgetNbLignes(), 1);
-	assertionEgalite(MATm22.MATsousMatrice(0, 0).MATgetNbColonnes(), 2);
-	assertionEgalite(MATm22.MATsousMatrice(1, 1), MATsousM11);
+	assertionEgalite(OPMo.OPMsousMatrice(MATm22, 0, 0).MATgetNbLignes(), 1);
+	assertionEgalite(OPMo.OPMsousMatrice(MATm22, 0, 0).MATgetNbColonnes(), 2);
+	assertionEgalite(OPMo.OPMsousMatrice(MATm22, 1, 1), MATsousM11);
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -667,41 +667,41 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestCalculDet()
+void CTestsUnitaires::UNItestCalculDet() const
 {
 	cout << "UNItestCalculDet()";
+	COperationMatrice<int> OPMo;
 	CMatrice<int> MATm22(2, 2);
 
-	assertionEgalite(MATm22.MATdet(), 0);
+	assertionEgalite(OPMo.OPMdet(MATm22), 0);
 
 	// | 1 0 |
 	// | 0 4 |
 	MATm22(0, 0) = 1;
 	MATm22(1, 1) = 4;
 
-	assertionEgalite(MATm22.MATdet(), 4);
+	assertionEgalite(OPMo.OPMdet(MATm22), 4);
 
 	// | 1 2 |
 	// | 0 4 |
 	MATm22(0, 1) = 2;
 
-	assertionEgalite(MATm22.MATdet(), 4);
+	assertionEgalite(OPMo.OPMdet(MATm22), 4);
 
 	// | 1 2 |
 	// | 3 4 |
 	MATm22(1, 0) = 3;
-	
-	assertionEgalite(MATm22.MATdet(), 1 * 4 - 2 * 3);
+
+	assertionEgalite(OPMo.OPMdet(MATm22), 1 * 4 - 2 * 3);
 
 	CMatrice<int> MATm22_2 = MATm22 + 2;
 
-	assertionEgalite((MATm22 * MATm22_2).MATdet(), MATm22.MATdet() * MATm22_2.MATdet());
-	assertionEgalite((MATm22 * 3).MATdet(), MATm22.MATdet() * (3 * 3));
-	assertionDifference((MATm22 + MATm22_2).MATdet(), MATm22.MATdet() + MATm22_2.MATdet());
+	assertionEgalite(OPMo.OPMdet(MATm22 * MATm22_2), OPMo.OPMdet(MATm22) * OPMo.OPMdet(MATm22_2));
+	assertionEgalite(OPMo.OPMdet(MATm22 * 3), OPMo.OPMdet(MATm22) * 9)
+	assertionDifference(OPMo.OPMdet(MATm22 + MATm22_2), OPMo.OPMdet(MATm22) + OPMo.OPMdet(MATm22_2));
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -712,11 +712,12 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestCalculInverse()
+void CTestsUnitaires::UNItestCalculInverse() const
 {
 	cout << "UNItestCalculInverse()";
 	// Le cas du déterminant nul est testé dans UNItestExceptions()
 
+	COperationMatrice<double> OPMo;
 	CMatrice<double> MATm22(2, 2);
 	CMatrice<double> MATinv22(2, 2);
 
@@ -730,13 +731,13 @@ void CTestsUnitaires::UNItestCalculInverse()
 	MATm22(0, 0) = 1;
 	MATm22(1, 1) = 1;
 
-	assertionEgalite(MATm22.MATinverse(), MATm22);
+	assertionEgalite(OPMo.OPMinverse(MATm22), MATm22);
 
 	// 1 0
 	// 0 4
 	MATm22(1, 1) = 4;
 
-	assertionEgalite(MATm22.MATinverse(), MATinv22);
+	assertionEgalite(OPMo.OPMinverse(MATm22), MATinv22);
 
 	// 1 2
 	// 3 4
@@ -750,12 +751,11 @@ void CTestsUnitaires::UNItestCalculInverse()
 	MATinv22(1, 0) = 1.5;
 	MATinv22(1, 1) = -0.5;
 
-	assertionEgalite(MATm22.MATinverse().MATinverse(), MATm22);
-	assertionEgalite(MATm22.MATinverse(), MATinv22);
+	assertionEgalite(OPMo.OPMinverse(OPMo.OPMinverse(MATm22)), MATm22);
+	assertionEgalite(OPMo.OPMinverse(MATm22), MATinv22);
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -766,13 +766,15 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestCalculCommatrice()
+void CTestsUnitaires::UNItestCalculCommatrice() const
 {
 	cout << "UNItestCalculCommatrice()";
+
+	COperationMatrice<int> OPMo;
 	CMatrice<int> MATm22(2, 2);
 	CMatrice<int> MATcomm22(2, 2);
 
-	assertionEgalite(MATm22.MATcommatrice(), MATm22);
+	assertionEgalite(OPMo.OPMcommatrice(MATm22), MATm22);
 
 	// | 1 2 |
 	// | 3 4 |
@@ -788,11 +790,10 @@ void CTestsUnitaires::UNItestCalculCommatrice()
 	MATcomm22(1, 0) = -2;
 	MATcomm22(1, 1) = 1;
 
-	assertionEgalite(MATm22.MATcommatrice(), MATcomm22);
+	assertionEgalite(OPMo.OPMcommatrice(MATm22), MATcomm22);
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -803,13 +804,14 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestCalculTrace()
+void CTestsUnitaires::UNItestCalculTrace() const
 {
 	cout << "UNItestCalculTrace()";
 
+	COperationMatrice<int> OPMo;
 	CMatrice<int> MATm22(2, 2);
 
-	assertionEgalite(MATm22.MATtr(), 0);
+	assertionEgalite(OPMo.OPMtr(MATm22), 0);
 
 	// | 1 2 |
 	// | 3 4 |
@@ -818,12 +820,12 @@ void CTestsUnitaires::UNItestCalculTrace()
 	MATm22(1, 0) = 3;
 	MATm22(1, 1) = 4;
 
-	assertionEgalite(MATm22.MATtr(), 5);
-	assertionEgalite(MATm22.MATtransposee().MATtr(), MATm22.MATtr());
+	assertionEgalite(OPMo.OPMtr(MATm22), 5);
+	assertionEgalite(OPMo.OPMtr(OPMo.OPMtransposee(MATm22)) , OPMo.OPMtr(MATm22));
 
 	CMatrice<int> MATm22_2 = MATm22 * 2 - 1;
 
-	assertionEgalite((MATm22 + MATm22_2).MATtr(), MATm22.MATtr() + MATm22_2.MATtr());
+	assertionEgalite(OPMo.OPMtr(MATm22 + MATm22_2), OPMo.OPMtr(MATm22) + OPMo.OPMtr(MATm22_2));
 
 	cout << "OK" << endl;
 }
@@ -837,7 +839,7 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'appel de tous les tests sur les calculs.
 ******************************************/
-void CTestsUnitaires::UNItestCalculs()
+void CTestsUnitaires::UNItestCalculs() const
 {
 	UNItestCalculSousMatrice();
 	UNItestCalculEchelonnee();
@@ -852,7 +854,6 @@ void CTestsUnitaires::UNItestCalculs()
 }
 
 
-
 /*****************************************
 Teste le test de matrice nulle.
 ******************************************
@@ -861,25 +862,26 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestEstNulle()
+void CTestsUnitaires::UNItestEstNulle() const
 {
 	cout << "UNItestEstNulle()";
 
+	CTesteurMatrice<int> TESt;
 	CMatrice<int> MATm(2, 2);
+
 	MATm(0, 0) = 0;
 	MATm(0, 1) = 0;
 	MATm(1, 0) = 0;
 	MATm(1, 1) = 0;
 
-	assertionVraie(MATm.MATestNulle())
+	assertionVraie(TESt.TESestNulle(MATm));
 
 	MATm(0, 1) = 2;
 
-	assertionFausse(MATm.MATestNulle());
+	assertionFausse(TESt.TESestNulle(MATm));
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -890,12 +892,11 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestEstTriangulaire()
+void CTestsUnitaires::UNItestEstTriangulaire() const
 {
 	UNItestEstTriangulaireSuperieure();
 	UNItestEstTriangulaireInferieure();
 }
-
 
 
 /*****************************************
@@ -906,30 +907,35 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestEstTriangulaireSuperieure()
+void CTestsUnitaires::UNItestEstTriangulaireSuperieure() const
 {
 	cout << "UNItestEstTriangulaireSuperieure()";
+
+	CTesteurMatrice<int> TESt;
+
 	// | 1 2 |
 	// | 0 4 |
 	CMatrice<int> MATm22(2, 2);
+
+	assertionVraie(TESt.TESestTriangulaireSuperieure(MATm22));
+	assertionVraie(TESt.TESestTriangulaireInferieure(MATm22));
+
 	MATm22(0, 0) = 1;
 	MATm22(0, 1) = 2;
 	MATm22(1, 1) = 4;
 
-	assertionVraie(MATm22.MATestTriangulaireSuperieure());
-	assertionFausse(MATm22.MATestTriangulaireInferieure());
+	assertionVraie(TESt.TESestTriangulaireSuperieure(MATm22));
+	assertionFausse(TESt.TESestTriangulaireInferieure(MATm22));
 
 	// | 1 2 |
 	// | 5 4 |
 	MATm22(1, 0) = 5;
 
-	assertionFausse(MATm22.MATestTriangulaireSuperieure());
+	assertionFausse(TESt.TESestTriangulaireSuperieure(MATm22));
 
-	assertionVraie((CMatrice<int>(2, 2)).MATestTriangulaireSuperieure());
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -940,31 +946,35 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestEstTriangulaireInferieure()
+void CTestsUnitaires::UNItestEstTriangulaireInferieure() const
 {
 	cout << "UNItestEstTriangulaireInferieure()";
+
+	CTesteurMatrice<int> TESt;
 
 	// | 1 0 |
 	// | 3 4 |
 	CMatrice<int> MATm22(2, 2);
+
+	assertionVraie(TESt.TESestTriangulaireSuperieure(MATm22));
+	assertionVraie(TESt.TESestTriangulaireInferieure(MATm22));
+
 	MATm22(0, 0) = 1;
 	MATm22(1, 0) = 3;
 	MATm22(1, 1) = 4;
 
-	assertionVraie(MATm22.MATestTriangulaireInferieure());
-	assertionFausse(MATm22.MATestTriangulaireSuperieure());
+	assertionVraie(TESt.TESestTriangulaireInferieure(MATm22));
+	assertionFausse(TESt.TESestTriangulaireSuperieure(MATm22));
 
 	// | 1 5 |
 	// | 3 4 |
 	MATm22(0, 1) = 5;
 
-	assertionFausse(MATm22.MATestTriangulaireInferieure());
+	assertionFausse(TESt.TESestTriangulaireInferieure(MATm22));
 
-	assertionVraie((CMatrice<int>(2, 2)).MATestTriangulaireInferieure());
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -975,30 +985,31 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestEstDiagonale()
+void CTestsUnitaires::UNItestEstDiagonale() const
 {
 	cout << "UNItestEstDiagonale()";
 
+	CTesteurMatrice<int> TESt;
+
 	CMatrice<int> MATm22(2, 2);
-	assertionVraie(MATm22.MATestDiagonale());
+	assertionVraie(TESt.TESestDiagonale(MATm22));
 
 	// | 1 0 |
 	// | 0 4 |
 	MATm22(0, 0) = 1;
 	MATm22(1, 1) = 4;
 
-	assertionVraie(MATm22.MATestDiagonale());
+	assertionVraie(TESt.TESestDiagonale(MATm22));
 
 	// | 1 2 |
 	// | 3 4 |
 	MATm22(0, 1) = 2;
 	MATm22(1, 0) = 3;
 
-	assertionFausse(MATm22.MATestDiagonale());
+	assertionFausse(TESt.TESestDiagonale(MATm22));
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -1009,13 +1020,14 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestEstInversible()
+void CTestsUnitaires::UNItestEstInversible() const
 {
 	cout << "UNItestEstInversible()";
 
+	CTesteurMatrice<int> TESt;
 	CMatrice<int> MATm22(2, 2);
 
-	assertionFausse(MATm22.MATestInversible());
+	assertionFausse(TESt.TESestInversible(MATm22));
 
 	// | 1 2 |
 	// | 3 4 |
@@ -1024,11 +1036,10 @@ void CTestsUnitaires::UNItestEstInversible()
 	MATm22(1, 0) = 3;
 	MATm22(1, 1) = 4;
 
-	assertionVraie(MATm22.MATestInversible());
+	assertionVraie(TESt.TESestInversible(MATm22));
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -1039,13 +1050,14 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestEstSymetrique()
+void CTestsUnitaires::UNItestEstSymetrique() const
 {
 	cout << "UNItestEstSymetrique()";
 
+	CTesteurMatrice<int> TESt;
 	CMatrice<int> MATm22(2, 2);
 
-	assertionVraie(MATm22.MATestSymetrique());
+	assertionVraie(TESt.TESestSymetrique(MATm22));
 
 	// | 1 2 |
 	// | 3 4 |
@@ -1054,17 +1066,16 @@ void CTestsUnitaires::UNItestEstSymetrique()
 	MATm22(1, 0) = 3;
 	MATm22(1, 1) = 4;
 
-	assertionFausse(MATm22.MATestSymetrique());
+	assertionFausse(TESt.TESestSymetrique(MATm22));
 
 	// | 1 2 |
 	// | 2 4 |
 	MATm22(1, 0) = 2;
 
-	assertionVraie(MATm22.MATestSymetrique());
+	assertionVraie(TESt.TESestSymetrique(MATm22));
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -1075,13 +1086,14 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestEstAntiSymetrique()
+void CTestsUnitaires::UNItestEstAntiSymetrique() const
 {
 	cout << "UNItestEstAntiSymetrique()";
 
+	CTesteurMatrice<int> TESt;
 	CMatrice<int> MATm22(2, 2);
 
-	assertionVraie(MATm22.MATestAntiSymetrique());
+	assertionVraie(TESt.TESestAntiSymetrique(MATm22));
 
 	// | 1 2 |
 	// | 3 4 |
@@ -1090,24 +1102,23 @@ void CTestsUnitaires::UNItestEstAntiSymetrique()
 	MATm22(1, 0) = 3;
 	MATm22(1, 1) = 4;
 
-	assertionFausse(MATm22.MATestAntiSymetrique());
+	assertionFausse(TESt.TESestAntiSymetrique(MATm22));
 
 	// | 1  2 |
 	// | -2 4 |
 	MATm22(1, 0) = -2;
 
-	assertionFausse(MATm22.MATestAntiSymetrique());
+	assertionFausse(TESt.TESestAntiSymetrique(MATm22));
 
 	// | 0  2 |
 	// | -2 0 |
 	MATm22(0, 0) = 0;
 	MATm22(1, 1) = 0;
 
-	assertionVraie(MATm22.MATestAntiSymetrique());
+	assertionVraie(TESt.TESestAntiSymetrique(MATm22));
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -1118,7 +1129,7 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'appel de tous les tests sur les méthodes de test.
 ******************************************/
-void CTestsUnitaires::UNItestTestsMatriceCarree()
+void CTestsUnitaires::UNItestTestsMatriceCarree() const
 {
 	UNItestEstTriangulaire();
 	UNItestEstDiagonale();
@@ -1126,7 +1137,6 @@ void CTestsUnitaires::UNItestTestsMatriceCarree()
 	UNItestEstSymetrique();
 	UNItestEstAntiSymetrique();
 }
-
 
 
 /*****************************************
@@ -1137,21 +1147,20 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestDiag()
+void CTestsUnitaires::UNItestDiag() const
 {
-	COperationMatrice <int> OPMoperation;
+	COperationMatrice<int> OPMo;
 
 	cout << "UNItestDiag()";
-	const int iTab[] = { 1, 2, 4 };
+	const int iTab[] = {1, 2, 4};
 
-	CMatrice<int> MATm22 = OPMoperation.OPMcreerMatriceDiagonale(3, iTab);
+	CMatrice<int> MATm22 = OPMo.OPMcreerMatriceDiagonale(3, iTab);
 
-	assertionEgalite(MATm22.MATdet(), 8);
-	assertionEgalite(MATm22.MATtr(), 7);
+	assertionEgalite(OPMo.OPMdet(MATm22), 8);
+	assertionEgalite(OPMo.OPMtr(MATm22), 7);
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -1162,7 +1171,7 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestExceptions()
+void CTestsUnitaires::UNItestExceptions() const
 {
 	cout << "UNItestExceptions()";
 
@@ -1177,16 +1186,19 @@ void CTestsUnitaires::UNItestExceptions()
 		MATm23 / 0;
 		assertionExceptionSoulevee();
 	}
-	catch (Cexception EXCe) {
+	catch (Cexception EXCe)
+	{
 		cout << ".";
 	}
 
 	// Ne doit pas lever d'exception 
-	try {
+	try
+	{
 		MATm23 / 2;
 		cout << ".";
 	}
-	catch (Cexception EXCe) {
+	catch (Cexception EXCe)
+	{
 		assertionExceptionNonSoulevee();
 	}
 
@@ -1198,22 +1210,24 @@ void CTestsUnitaires::UNItestExceptions()
 		MATm33 ^ 0;
 		assertionExceptionSoulevee();
 	}
-	catch (Cexception EXCe) {
+	catch (Cexception EXCe)
+	{
 		cout << ".";
 	}
 
 	// Ne doit pas lever d'exception 
-	try {
+	try
+	{
 		MATm33 ^ 2;
 		cout << ".";
 	}
-	catch (Cexception EXCe) {
+	catch (Cexception EXCe)
+	{
 		assertionExceptionNonSoulevee();
 	}
 
 	cout << "OK" << endl;
 }
-
 
 
 /*****************************************
@@ -1224,7 +1238,7 @@ Nécessite : rien.
 Sortie : rien.
 Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
-void CTestsUnitaires::UNItestsCTableauAssociatif()
+void CTestsUnitaires::UNItestsCTableauAssociatif() const
 {
 	cout << "UNItestsCTableauAssociatif()";
 	CTableauAssociatif TABt;
@@ -1234,9 +1248,9 @@ void CTestsUnitaires::UNItestsCTableauAssociatif()
 	unsigned int uiPos;
 	double dReel = 5.2;
 	int iEntier = 7;
-	char * pcStr = "abc";
+	char* pcStr = "abc";
 	// alocation dynamique car on va tester que le free ne modifie pas la valeur dans le tableau
-	char * pcChaine = _strdup(pcStr);
+	char* pcChaine = _strdup(pcStr);
 
 	TABt.TABajouterReel("reel", dReel);
 	TABt.TABajouterEntier("entier", iEntier);
@@ -1278,7 +1292,7 @@ void CTestsUnitaires::UNItestsCTableauAssociatif()
 	assertionEgalite(TABt.TABgetValeurType("reel auto"), TAB_TYPE_REEL);
 	assertionEgalite(TABt.TABgetValeurType("entier auto"), TAB_TYPE_ENTIER);
 	assertionEgalite(TABt.TABgetValeurType("chaine auto"), TAB_TYPE_CHAINE);
-	
+
 	free(pcChaine);
 	assertionVraie(strcmp(TABt.TABgetValeurChaine("chaine auto"), pcStr) == 0);
 

@@ -1,7 +1,5 @@
 #include "TesteurMatrice.h"
 
-
-
 template <class T>
 CTesteurMatrice<T>::CTesteurMatrice()
 {
@@ -42,8 +40,9 @@ template <class T>
 bool CTesteurMatrice<T>::TESestTriangulaireInferieure(const CMatrice<T> & MATmatrice) const
 {
 	unsigned int uiBoucleLigne, uiBoucleColonne;
+	unsigned int uiNbLignes = MATmatrice.MATgetNbLignes();
 
-	for (uiBoucleColonne = 1; uiBoucleColonne < MATmatrice.MATgetNbLignes(); uiBoucleColonne++)
+	for (uiBoucleColonne = 1; uiBoucleColonne < uiNbLignes; uiBoucleColonne++)
 	{
 		for (uiBoucleLigne = 0; uiBoucleLigne < uiBoucleColonne; uiBoucleLigne++)
 		{
@@ -72,8 +71,10 @@ template <class T>
 bool CTesteurMatrice<T>::TESestTriangulaireSuperieure(const CMatrice<T> & MATmatrice) const
 {
 	// La transposée d'une matrice triangulaire supérieure est triangulaire inférieure
-	CMatrice<T> MATtmp = MATtransposee();
-	return MATtmp.TESestTriangulaireInferieure();
+	COperationMatrice<T> OPMoperation;
+	CTesteurMatrice<T> TESt;
+	CMatrice<T> MATtmp = OPMoperation.OPMtransposee(MATmatrice);
+	return TESt.TESestTriangulaireInferieure(MATtmp);
 }
 
 
@@ -104,7 +105,8 @@ Entraîne : rien
 template <class T>
 bool CTesteurMatrice<T>::TESestInversible(const CMatrice<T> & MATmatrice) const
 {
-	return (MATmatrice.uiMATnbColonnes == MATmatrice.uiMATnbLignes && MATdet() != 0);
+	COperationMatrice<T> OPMoperation;
+	return (MATmatrice.MATgetNbLignes() == MATmatrice.MATgetNbColonnes() && OPMoperation.OPMdet(MATmatrice) != 0);
 }
 
 
@@ -119,7 +121,8 @@ Entraîne : rien.
 template <class T>
 bool CTesteurMatrice<T>::TESestSymetrique(const CMatrice<T> & MATmatrice) const
 {
-	return (MATtransposee() == *this);
+	COperationMatrice<T> OPMoperation;
+	return (OPMoperation.OPMtransposee(MATmatrice) == MATmatrice);
 }
 
 
@@ -134,7 +137,8 @@ Entraîne : rien.
 template <class T>
 bool CTesteurMatrice<T>::TESestAntiSymetrique(const CMatrice<T> & MATmatrice) const
 {
-	return (MATtransposee() == (*this * -1));
+	COperationMatrice<T> OPMoperation;
+	return (OPMoperation.OPMtransposee(MATmatrice) == (MATmatrice * -1));
 }
 
 
@@ -150,10 +154,12 @@ template <class T>
 bool CTesteurMatrice<T>::TESestNulle(const CMatrice<T> & MATmatrice) const
 {
 	unsigned int uiBoucleL, uiBoucleC;
+	unsigned int uiNbLignes = MATmatrice.MATgetNbLignes();
+	unsigned int uiNbColonnes = MATmatrice.MATgetNbColonnes();
 
-	for (uiBoucleL = 0; uiBoucleL < MATmatrice.uiMATnbLignes; uiBoucleL++)
+	for (uiBoucleL = 0; uiBoucleL < uiNbLignes; uiBoucleL++)
 	{
-		for (uiBoucleC = 0; uiBoucleC < MATmatrice.uiMATnbColonnes; uiBoucleC++)
+		for (uiBoucleC = 0; uiBoucleC < uiNbColonnes; uiBoucleC++)
 		{
 			if (MATmatrice.MATgetValeur(uiBoucleL, uiBoucleC) != 0)
 			{
@@ -178,11 +184,12 @@ template<class T>
 bool CTesteurMatrice<T>::TESligneEstNulle(const CMatrice<T> & MATmatrice, unsigned int uiLigne) const
 {
 	unsigned int uiBoucleC;
+	unsigned int uiNbColonnes = MATmatrice.MATgetNbColonnes();
 
-	for (uiBoucleC = 0; uiBoucleC < MATmatrice.uiMATnbColonnes; uiBoucleC++)
+	for (uiBoucleC = 0; uiBoucleC <uiNbColonnes; uiBoucleC++)
 	{
 		// Si au moins une valeur est non nulle, alors la ligne n'est pas nulle
-		if (MATmatrice.MATgetValeur(uiLigne, uiBoucleC) != 0)
+		if (MATmatrice(uiLigne, uiBoucleC) != 0)
 		{
 			return false;
 		}

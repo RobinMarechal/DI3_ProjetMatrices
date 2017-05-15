@@ -19,9 +19,9 @@ les pointeurs à NULL et le nombre d'élément à 0
 *********************************************************/
 void CTableauAssociatif::TABinit() 
 {
-	ppcTABcles = NULL;
-	pvTABvaleurs = NULL;
-	puiTypes = NULL;
+	ppcTABcles = nullptr;
+	pvTABvaleurs = nullptr;
+	puiTypes = nullptr;
 	uiTABnbElements = 0;
 }
 
@@ -35,7 +35,7 @@ Nécessite : rien
 Sortie : rien
 Entraîne : Libération de la mémoire allouée pour les attributs
 *********************************************************/
-void CTableauAssociatif::TABdetruire() 
+void CTableauAssociatif::TABdetruire() const
 {
 	unsigned int uiBoucle;
 
@@ -176,13 +176,13 @@ void CTableauAssociatif::TABsupprimer(const char * pcCle)
 
 	// On met le pointeur de la dernière case de ppcTABcles à NULL
 	// Pas de fuite de mémoire car le pointeur a été copié dans l'avant dernière case
-	ppcTABcles[uiTABnbElements - 1] = NULL;
+	ppcTABcles[uiTABnbElements - 1] = nullptr;
 
 	// Si le dernier élément du tableau est une chaine, on met le pointeur à null
 	// On ne la free pas car on a coppié le pointeur dans l'avant dernière 'case'
 	if (puiTypes[uiTABnbElements - 1] == TAB_TYPE_CHAINE)
 	{
-		pvTABvaleurs[uiTABnbElements - 1].pcChaine = NULL;
+		pvTABvaleurs[uiTABnbElements - 1].pcChaine = nullptr;
 	}
 
 	uiTABnbElements--;
@@ -190,7 +190,7 @@ void CTableauAssociatif::TABsupprimer(const char * pcCle)
 	pvTABvaleurs = (Valeur *)realloc(pvTABvaleurs, uiTABnbElements * sizeof(Valeur));
 	puiTypes = (unsigned int *)realloc(puiTypes, sizeof(unsigned int) * uiTABnbElements);
 
-	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
+	if (ppcTABcles == nullptr || pvTABvaleurs == nullptr || puiTypes == nullptr)
 	{
 		std::cout << "TABsupprimer() : Une réallocation a échoué, le programme s'est arrêté." << std::endl;
 		exit(EXIT_FAILURE);
@@ -217,7 +217,7 @@ void CTableauAssociatif::TABajouter(const char * pcCle, Valeur vValeur, unsigned
 	pvTABvaleurs = (Valeur *)realloc(pvTABvaleurs, uiTABnbElements * sizeof(Valeur));
 	puiTypes = (unsigned int *)realloc(puiTypes, uiTABnbElements * sizeof(unsigned int));
 
-	if (ppcTABcles == NULL || pvTABvaleurs == NULL || puiTypes == NULL)
+	if (ppcTABcles == nullptr || pvTABvaleurs == nullptr || puiTypes == nullptr)
 	{
 		std::cout << "TABajouter() : Une réallocation a échoué, le programme s'est arrêté." << std::endl;
 		exit(EXIT_FAILURE);
@@ -329,7 +329,7 @@ void CTableauAssociatif::TABajouterAuto(const char * pcCle, char * pcVal)
 		*strchr(pcStr, '\0') = '0';
 
 		// On remplace ',' par '.' s'il faut
-		if (strchr(pcStr, ',') != NULL)
+		if (strchr(pcStr, ',') != nullptr)
 			pcStr[strchr(pcStr, ',') - pcStr] = '.';
 
 		// On parse la chaine en double;
@@ -404,7 +404,7 @@ le tableaux des clés, il ne s'agit pas d'une copie.
 char * CTableauAssociatif::TABgetCle(unsigned int uiPos) const 
 {
 	if (uiPos < 0 || uiPos >= uiTABnbElements)
-		return NULL;
+		return nullptr;
 
 	return ppcTABcles[uiPos];
 }

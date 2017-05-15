@@ -156,11 +156,8 @@
     <ClCompile Include="Cexception.cpp" />
     <ClCompile Include="helpers.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Matrice.cpp" />
-    <ClCompile Include="OperationMatrice.cpp" />
     <ClCompile Include="Parseur.cpp" />
     <ClCompile Include="TableauAssociatif.cpp" />
-    <ClCompile Include="TesteurMatrice.cpp" />
     <ClCompile Include="TestsUnitaires.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
