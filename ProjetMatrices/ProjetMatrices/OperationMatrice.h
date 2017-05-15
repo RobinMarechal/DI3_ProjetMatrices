@@ -4,8 +4,6 @@
 #include "Matrice.h"
 #include "TesteurMatrice.h"
 
-class CTesteurMatrice;
-
 template <class T>
 class COperationMatrice
 {

@@ -6,6 +6,7 @@
 #include "helpers.h"
 #include "constantes.h"
 #include "TableauAssociatif.h"
+#include "OperationMatrice.h"
 
 class CTestsUnitaires
 {

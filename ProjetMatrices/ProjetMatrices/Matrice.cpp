@@ -390,6 +390,8 @@ Entraîne : Une Cexception est levée si iPuissance = 0
 template<class T>
 CMatrice<T> CMatrice<T>::operator^(int iPuissance) const
 {
+	COperationMatrice <T> OPMoperation;
+
 	if (iPuissance == 0)
 	{
 		// Impossible dans certains cas...

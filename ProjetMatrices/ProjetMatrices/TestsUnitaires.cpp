@@ -1,5 +1,5 @@
 #include "TestsUnitaires.h"
-#include "Matrice.h"
+//#include "Matrice.h"
 #include "Cexception.h"
 #include <assert.h>
 #include <iostream>
@@ -1139,10 +1139,12 @@ Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
 ******************************************/
 void CTestsUnitaires::UNItestDiag()
 {
+	COperationMatrice <int> OPMoperation;
+
 	cout << "UNItestDiag()";
 	const int iTab[] = { 1, 2, 4 };
 
-	CMatrice<int> MATm22 = CMatrice<int>::MATdiag(3, iTab);
+	CMatrice<int> MATm22 = OPMoperation.OPMcreerMatriceDiagonale(3, iTab);
 
 	assertionEgalite(MATm22.MATdet(), 8);
 	assertionEgalite(MATm22.MATtr(), 7);
