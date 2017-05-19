@@ -4,7 +4,7 @@
 #include <assert.h>
 #include "Matrice.h"
 #include "helpers.h"
-#include "constantes.h"
+
 #include "TableauAssociatif.h"
 #include "OperationMatrice.h"
 #include "TesteurMatrice.h"

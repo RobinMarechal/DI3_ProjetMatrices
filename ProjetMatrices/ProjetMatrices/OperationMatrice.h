@@ -3,6 +3,7 @@
 
 #include "Matrice.h"
 #include "TesteurMatrice.h"
+#include "Cexception.h"
 
 template <class T>
 class CTesteurMatrice;
@@ -121,6 +122,8 @@ public:
 	******************************************/
 	CMatrice<T> OPMcreerMatriceDiagonale(unsigned int uiDim, const T ptDiag[]);
 
+
+	CMatrice<T> OPMfactorisationCholeski(CMatrice<T>& MATmatrice);
 };
 
 #include "OperationMatrice.cpp"

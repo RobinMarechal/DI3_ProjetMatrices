@@ -1,5 +1,5 @@
 #include "helpers.h"
-#include "constantes.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -17,7 +17,7 @@ Entraîne : (0 = entier) || (1 = réel) || (3 = chaine)
 int analyserType(char* pcVal)
 {
 	int iEtat = 0;
-	int iType = TAB_TYPE_CHAINE;
+	int iType = TYPE_CHAINE;
 	bool bStop = false;
 	while (!bStop)
 	{
@@ -37,7 +37,7 @@ int analyserType(char* pcVal)
 			else if (cChar == 'e' || cChar == 'E') iEtat = 6;
 			else
 			{
-				iType = TAB_TYPE_ENTIER;
+				iType = TYPE_ENTIER;
 				bStop = true;
 			}
 			break;
@@ -54,12 +54,12 @@ int analyserType(char* pcVal)
 			else if (cChar >= '0' && cChar <= '9') iEtat = 3;
 			else if (cChar == '\0')
 			{
-				iType = TAB_TYPE_ENTIER;
+				iType = TYPE_ENTIER;
 				bStop = true;
 			}
 			else
 			{
-				iType = TAB_TYPE_CHAINE;
+				iType = TYPE_CHAINE;
 				bStop = true;
 			}
 			break;
@@ -68,7 +68,7 @@ int analyserType(char* pcVal)
 			if (cChar >= '0' && cChar <= '9') iEtat = 5;
 			else if (cChar == '\0')
 			{
-				iType = TAB_TYPE_ENTIER;
+				iType = TYPE_ENTIER;
 				bStop = true;
 			} // Car "7." => 7 avec atof()
 			else iEtat = -1;
@@ -79,7 +79,7 @@ int analyserType(char* pcVal)
 			else if (cChar >= '0' && cChar <= '9') iEtat = 5;
 			else
 			{
-				iType = TAB_TYPE_REEL;
+				iType = TYPE_REEL;
 				bStop = true;
 			}
 			break;
@@ -99,16 +99,16 @@ int analyserType(char* pcVal)
 			if (cChar >= '0' && cChar <= '9') iEtat = 8;
 			else
 			{
-				iType = TAB_TYPE_REEL;
+				iType = TYPE_REEL;
 				bStop = true;
 			}
 			break;
 
 		case -1:
-			iType = TAB_TYPE_CHAINE;
+			iType = TYPE_CHAINE;
 			bStop = true;
 			break;
-		default: iType = TAB_TYPE_NON_DEFINI;
+		default: iType = TYPE_NON_DEFINI;
 			bStop = true;
 			break;;
 		}

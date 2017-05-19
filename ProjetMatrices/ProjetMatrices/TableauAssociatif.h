@@ -7,7 +7,7 @@
 
 #include "Cexception.h"
 #include "helpers.h"
-#include "constantes.h"
+
 
 /**************************************************
 Union permettant de stocker une valeur dans le 
@@ -79,7 +79,7 @@ class CTableauAssociatif
 	*********************************************************
 	Entrée : la clé,
 	Entrée : l'union contenant la valeur,
-	Entrée : Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
+	Entrée : Le type de la valeur (TYPE_CHAINE, TYPE_REEL, ou TYPE_ENTIER)
 	Nécessite : rien
 	Sortie : rien
 	Entraîne : La réallocations des trois tableaux et l'insertion
@@ -279,7 +279,7 @@ public:
 	*********************************************************
 	Entrée : la position
 	Nécessite : 0 <= uiPos < Nombre d'éléments
-	Sortie: Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
+	Sortie: Le type de la valeur (TYPE_CHAINE, TYPE_REEL, ou TYPE_ENTIER)
 	Entraîne : rien
 	*********************************************************/
 	unsigned int TABgetValeurType(unsigned int uiPos) const;
@@ -291,7 +291,7 @@ public:
 	*********************************************************
 	Entrée : la clé
 	Nécessite : pcCle est dans le tableau des clés
-	Sortie : Le type de la valeur (TAB_TYPE_CHAINE, TAB_TYPE_REEL, ou TAB_TYPE_ENTIER)
+	Sortie : Le type de la valeur (TYPE_CHAINE, TYPE_REEL, ou TYPE_ENTIER)
 	Entraîne : rien
 	*********************************************************/
 	unsigned int TABgetValeurType( const char * pcCle) const;

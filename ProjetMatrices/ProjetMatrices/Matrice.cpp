@@ -5,7 +5,6 @@
 #include "Cexception.h"
 #include "TableauAssociatif.h"
 #include "helpers.h"
-#include "constantes.h"
 #include "OperationMatrice.h"
 
 using namespace std;

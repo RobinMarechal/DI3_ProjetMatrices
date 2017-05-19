@@ -5,7 +5,6 @@
 #include "TableauAssociatif.h"
 #include "Cexception.h"
 #include "helpers.h"
-#include "constantes.h"
 
 /*************************************
 Classe permettant de gérer des matrices

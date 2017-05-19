@@ -5,7 +5,20 @@
 #include <string.h>
 #include <stdlib.h>
 #include "helpers.h"
-#include "constantes.h"
+
+
+/*******************************************
+Codes d'exception
+********************************************/
+#define EXC_ERREUR_SYNTAXIQUE 0
+#define EXC_ECHEC_ALLOCATION 1
+#define EXC_ACCES_MEMOIRE 2
+#define EXC_DIMENSIONS_INVALIDES 3
+#define EXC_DIVISION_PAR_ZERO 4
+#define EXC_PUISSANCE_ZERO 5
+#define EXC_ERREUR_LEXICALE 6
+#define EXC_FICHIER_INTROUVABLE 7
+#define EXC_CALCUL_IMPOSSIBLE 8
 
 /*************************************
 Classe de gestion d'exceptions

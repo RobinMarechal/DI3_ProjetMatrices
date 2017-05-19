@@ -143,7 +143,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Cexception.h" />
-    <ClInclude Include="constantes.h" />
     <ClInclude Include="helpers.h" />
     <ClInclude Include="Matrice.h" />
     <ClInclude Include="OperationMatrice.h" />

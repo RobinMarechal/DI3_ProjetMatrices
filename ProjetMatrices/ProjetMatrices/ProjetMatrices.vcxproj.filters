@@ -27,9 +27,6 @@
     <ClInclude Include="TableauAssociatif.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>
-    <ClInclude Include="constantes.h">
-      <Filter>Fichiers d%27en-tête</Filter>
-    </ClInclude>
     <ClInclude Include="helpers.h">
       <Filter>Fichiers d%27en-tête</Filter>
     </ClInclude>

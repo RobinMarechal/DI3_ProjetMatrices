@@ -4,7 +4,7 @@
 #include <assert.h>
 #include <iostream>
 #include "helpers.h"
-#include "constantes.h"
+
 #include "TableauAssociatif.h"
 #include "TesteurMatrice.h"
 #include "OperationMatrice.h"
@@ -1258,9 +1258,9 @@ void CTestsUnitaires::UNItestsCTableauAssociatif() const
 
 	// Tests types
 	assertionEgalite(TABt.TABgetNbElements(), 3);
-	assertionEgalite(TABt.TABgetValeurType("reel"), TAB_TYPE_REEL);
-	assertionEgalite(TABt.TABgetValeurType("entier"), TAB_TYPE_ENTIER);
-	assertionEgalite(TABt.TABgetValeurType("chaine"), TAB_TYPE_CHAINE);
+	assertionEgalite(TABt.TABgetValeurType("reel"), TYPE_REEL);
+	assertionEgalite(TABt.TABgetValeurType("entier"), TYPE_ENTIER);
+	assertionEgalite(TABt.TABgetValeurType("chaine"), TYPE_CHAINE);
 
 	// test indices
 	assertionEgalite(TABt.TABgetIndiceCle("entier"), 1);
@@ -1289,9 +1289,9 @@ void CTestsUnitaires::UNItestsCTableauAssociatif() const
 	TABt.TABajouterAuto("entier auto", "7");
 	TABt.TABajouterAuto("chaine auto", pcChaine);
 
-	assertionEgalite(TABt.TABgetValeurType("reel auto"), TAB_TYPE_REEL);
-	assertionEgalite(TABt.TABgetValeurType("entier auto"), TAB_TYPE_ENTIER);
-	assertionEgalite(TABt.TABgetValeurType("chaine auto"), TAB_TYPE_CHAINE);
+	assertionEgalite(TABt.TABgetValeurType("reel auto"), TYPE_REEL);
+	assertionEgalite(TABt.TABgetValeurType("entier auto"), TYPE_ENTIER);
+	assertionEgalite(TABt.TABgetValeurType("chaine auto"), TYPE_CHAINE);
 
 	free(pcChaine);
 	assertionVraie(strcmp(TABt.TABgetValeurChaine("chaine auto"), pcStr) == 0);

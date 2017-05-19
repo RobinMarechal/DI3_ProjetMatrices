@@ -2,11 +2,18 @@
 #define HERLPERS_H
 
 #include "helpers.h"
-#include "constantes.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <iostream>
+
+/*******************************************
+Types de données
+********************************************/
+#define TYPE_NON_DEFINI 0
+#define TYPE_ENTIER 1
+#define TYPE_REEL 2
+#define TYPE_CHAINE 3
 
 /*****************************************
 Retourne le type correspondant à la chaine en paramètre

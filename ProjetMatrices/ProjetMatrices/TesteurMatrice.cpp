@@ -223,3 +223,11 @@ bool CTesteurMatrice<T>::TEScolonneEstNulle(const CMatrice<T> & MATmatrice, unsi
 
 	return true;
 }
+
+
+
+template <class T>
+bool CTesteurMatrice<T>::TESestCarree(const CMatrice<T>& MATmatrice) const
+{
+	return MATmatrice.MATgetNbLignes() == MATmatrice.MATgetNbColonnes();
+}

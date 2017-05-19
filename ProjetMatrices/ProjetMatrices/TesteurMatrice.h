@@ -120,6 +120,8 @@ public:
 	Entraine : rien
 	******************************************/
 	bool TESestNulle(const CMatrice<T> & MATmatrice) const;
+
+	bool TESestCarree(const CMatrice<T> & MATmatrice) const;
 };
 
 #include "TesteurMatrice.cpp"

@@ -334,3 +334,50 @@ CMatrice<T> COperationMatrice<T>::OPMcreerMatriceDiagonale(unsigned int uiDim, c
 	}
 	return MATresultat;
 }
+
+
+template <class T>
+CMatrice<T> COperationMatrice<T>::OPMfactorisationCholeski(CMatrice<T>& MATmatrice)
+{
+	CTesteurMatrice<T> TEStesteur;
+
+	if (!TEStesteur.TESestCarree(MATmatrice))
+		throw Cexception(EXC_DIMENSIONS_INVALIDES, "La matrice n'est pas carree.");
+	
+	T tSomme;
+	unsigned int uiBoucleI, uiBoucleJ, uiBoucleK;
+	unsigned int uiDim = MATmatrice.MATgetNbLignes();
+
+	// Matrice L de la factorisation de choleski
+	CMatrice<T> MATresult(uiDim, uiDim);
+	MATresult(0, 0) = sqrt(MATmatrice(0, 0));
+
+
+	for(uiBoucleI = 1; uiBoucleI < uiDim; uiBoucleI++)
+	{
+		for(uiBoucleJ = 0; uiBoucleJ < uiBoucleI; uiBoucleJ++)
+		{
+			tSomme = 0;
+			for(uiBoucleK = 0; uiBoucleK < uiBoucleJ; uiBoucleK++)
+			{
+				tSomme = tSomme + MATresult(uiBoucleI, uiBoucleK) * MATresult(uiBoucleI, uiBoucleK);
+			}
+
+			MATresult(uiBoucleI, uiBoucleJ) = (MATmatrice(uiBoucleI, uiBoucleJ) - tSomme) / MATresult(uiBoucleJ, uiBoucleJ);
+		}
+
+		tSomme = 0;
+		for(uiBoucleK = 0; uiBoucleK < uiBoucleI; uiBoucleK++)
+		{
+			tSomme = tSomme + MATresult(uiBoucleI, uiBoucleK) * MATresult(uiBoucleI, uiBoucleK);
+		}
+
+		if (tSomme <= 0)
+			throw Cexception(EXC_CALCUL_IMPOSSIBLE, "La matrice n'est pas definie positive, le calcul de la factorisation de Choleski est impossible.");
+	
+		MATresult(uiBoucleI, uiBoucleI) = sqrt(MATmatrice(uiBoucleJ, uiBoucleJ) - tSomme);
+	}
+
+	return MATresult;
+
+}
