@@ -845,6 +845,7 @@ void CTestsUnitaires::UNItestCalculs() const
 	UNItestCalculEchelonnee();
 	UNItestCalculTransposee();
 	UNItestCalculRang();
+	UNItestCholeski();
 
 	// Matrices carrees
 	UNItestCalculDet();
@@ -1318,6 +1319,120 @@ void CTestsUnitaires::UNItestsCTableauAssociatif() const
 	assertionEgalite(TABt3.TABgetValeurReel("reel"), dReel);
 	assertionEgalite(TABt3.TABgetValeurEntier("entier"), iEntier);
 	assertionVraie(strcmp(TABt.TABgetValeurChaine("chaine auto"), TABt3.TABgetValeurChaine("chaine auto")) == 0);
+
+	cout << "OK" << endl;
+}
+
+
+/*****************************************
+Test du calcul de la factorisation de Choleski
+******************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+******************************************/
+void CTestsUnitaires::UNItestCholeski() const
+{
+	cout << "UNItestCholeski()";
+
+	COperationMatrice<double> OPMoperation;
+
+	// | 1  1  1  1  |
+	// | 1  5  5  5  |
+	// | 1  5  14 14 |
+	// | 1  5  14 15 |
+	CMatrice<double> MATdefPos(4, 4);
+
+	// | 0  1  1  1  |
+	// | 1  5  5  5  |
+	// | 1  5  14 14 |
+	// | 1  5  14 15 |
+	CMatrice<double> MATnonDefPos(4, 4);
+
+	// | 1  12 1  1  |
+	// | 1  5  5  5  |
+	// | 1  5  14 14 |
+	// | 1  5  14 15 |
+	CMatrice<double> MATnonSym(4, 4);
+
+	// | 0 0 |
+	CMatrice<double> MATnonCarree(1, 2);
+
+	MATdefPos(0, 0) = 1;
+	MATdefPos(0, 1) = 1;
+	MATdefPos(0, 2) = 1;
+	MATdefPos(0, 3) = 1;
+
+	MATdefPos(1, 0) = 1;
+	MATdefPos(1, 1) = 5;
+	MATdefPos(1, 2) = 5;
+	MATdefPos(1, 3) = 5;
+
+	MATdefPos(2, 0) = 1;
+	MATdefPos(2, 1) = 5;
+	MATdefPos(2, 2) = 14;
+	MATdefPos(2, 3) = 14;
+
+	MATdefPos(3, 0) = 1;
+	MATdefPos(3, 1) = 5;
+	MATdefPos(3, 2) = 14;
+	MATdefPos(3, 3) = 15;
+
+	MATnonDefPos = MATdefPos;
+	MATnonDefPos(0, 0) = 0;
+
+	MATnonSym = MATdefPos;
+	MATnonSym(0, 1) = 12;
+	
+
+	try
+	{
+		CMatrice<double> MATresult = OPMoperation.OPMfactorisationCholeski(MATdefPos);
+		assertionEgalite(MATdefPos, MATresult * OPMoperation.OPMtransposee(MATresult));
+		cout << "." << endl;
+	}
+	catch (Cexception EXCe)
+	{
+		// Ne doit pas lever d'exception
+		assertionExceptionNonSoulevee();
+	}
+
+
+	try
+	{
+		OPMoperation.OPMfactorisationCholeski(MATnonDefPos);
+		// doit lever une exception
+		assertionExceptionSoulevee();
+	}
+	catch (Cexception EXCe)
+	{
+		assertionEgalite(EXCe.EXCgetValeur(), EXC_CALCUL_IMPOSSIBLE);
+	}
+
+
+	try
+	{
+		OPMoperation.OPMfactorisationCholeski(MATnonSym);
+		// doit lever une exception
+		assertionExceptionSoulevee();
+	}
+	catch (Cexception EXCe)
+	{
+		assertionEgalite(EXCe.EXCgetValeur(), EXC_CALCUL_IMPOSSIBLE);
+	}
+
+
+	try
+	{
+		OPMoperation.OPMfactorisationCholeski(MATnonCarree);
+		// doit lever une exception
+		assertionExceptionSoulevee();
+	}
+	catch (Cexception EXCe)
+	{
+		assertionEgalite(EXCe.EXCgetValeur(), EXC_DIMENSIONS_INVALIDES);
+	}
 
 	cout << "OK" << endl;
 }

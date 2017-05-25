@@ -55,36 +55,72 @@ int main(unsigned int argc, char* argv[])
 	CTestsUnitaires::UNIstart();
 #endif
 
-	CMatrice<double> m(4, 4);
+	unsigned int uiBoucle;
 
-	m(0, 0) = 1;
-	m(0, 1) = 1;
-	m(0, 2) = 1;
-	m(0, 3) = 1;
+	for (uiBoucle = 1; uiBoucle < argc; uiBoucle++)
+	{
+		try
+		{
+			CMatrice<double> MATmatrice;
+			CMatrice<double> MATresultat;
+			COperationMatrice<double> OPMoperation;
+			CTableauAssociatif* TABtab = CParseur::PARparserFichier(argv[uiBoucle]);
 
-	m(1, 0) = 1;
-	m(1, 1) = 5;
-	m(1, 2) = 5;
-	m(1, 3) = 5;
+			// On verifie que 'TypeMatrice' est bien precise dans le fichier
+			if (TABtab->TABgetIndiceCle("TypeMatrice") == -1)
+			{
+				char pcMsg[1024];
+				sprintf_s(pcMsg, 1024, "Le champs 'TypeMatrice' n'est pas specifie dans le fichier %s.", argv[uiBoucle]);
 
-	m(2, 0) = 1;
-	m(2, 1) = 5;
-	m(2, 2) = 14;
-	m(2, 3) = 14;
+				// On profite du try/catch autour du for
+				throw Cexception(EXC_ERREUR_LEXICALE, pcMsg);
+			}
 
-	m(3, 0) = 1;
-	m(3, 1) = 5;
-	m(3, 2) = 14;
-	m(3, 3) = 15;
+			// On verifie que la matrice est bien de type 'double'.
+			if (strcmp(TABtab->TABgetValeurChaine("TypeMatrice"), "double") != 0 || strlen(TABtab->TABgetValeurChaine("TypeMatrice")) != strlen("double"))
+			{
+				char pcMsg[1024];
+				sprintf_s(pcMsg, 1024, "La valeur de TypeMatrice n'est pas 'double' dans le fichier %s.", argv[uiBoucle]);
 
-	cout << "Matrice M :" << endl;
-	cout << m << endl;
+				// On profite du try/catch autour du for
+				throw Cexception(EXC_ERREUR_LEXICALE, pcMsg);
+			}
 
-	COperationMatrice<double> t;
-	CMatrice<double> m2 = t.OPMfactorisationCholeski(m);
+			MATmatrice = CMatrice<double>::MATgenerer(TABtab);
 
-	cout << "Choleski : " << endl;
-	cout << m2 << endl;
+			delete TABtab;
+
+			cout << "Fichier " << uiBoucle << " lu." << endl;
+
+			// Calculs
+
+			cout << "----------------------------------------------------------" << endl;
+			cout << "Matrice construite : " << endl;
+			cout << "----------------------------------------------------------" << endl;
+
+			cout << MATmatrice << endl;
+
+			try
+			{
+				MATresultat = OPMoperation.OPMfactorisationCholeski(MATmatrice);
+
+				cout << "----------------------------------------------------------" << endl;
+				cout << "Matrice L de la factorisation de Choleski : " << endl;
+				cout << "----------------------------------------------------------" << endl;
+
+				cout << MATresultat;
+			}
+			catch (Cexception EXCe)
+			{
+				cout << EXCe.EXCgetMessage();
+			}
+		}
+		catch (Cexception EXCe)
+		{
+			cout << "Une erreur est survenue lors de la lecture du fichier numéro " << uiBoucle << "." << endl;
+			cout << EXCe.EXCgetMessage() << endl;
+		}
+	}
 
 	return 0;
 }

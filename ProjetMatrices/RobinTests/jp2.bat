@@ -1,1 +1,1 @@
-..\x64\Release\ProjetMatrices.exe ..\JePasse\fichier02.txt ..\JePasse\fichier03.txt ..\JePasse\fichier04.txt ..\JePasse\fichier05.txt ..\JePasse\fichier06.txt ..\JePasse\fichier07.txt
+..\Debug\ProjetMatrices.exe ..\JePasse\fichier01.txt ..\JePasse\fichier02.txt ..\JePassePas\fichier09.txt

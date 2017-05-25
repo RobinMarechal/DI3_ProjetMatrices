@@ -608,13 +608,13 @@ void CMatrice<T>::MATverifierContenuTableau(CTableauAssociatif * TABtab)
 	if (TABtab->TABgetIndiceCle("Matrice") == -1)
 		throw Cexception(EXC_ERREUR_SYNTAXIQUE, "Erreur : champs 'Matrice' non renseigné.");
 
-	if (TABtab->TABgetValeurType("NBLignes") != TAB_TYPE_ENTIER  || TABtab->TABgetValeurEntier("NBLignes") < 1)
+	if (TABtab->TABgetValeurType("NBLignes") != TYPE_ENTIER  || TABtab->TABgetValeurEntier("NBLignes") < 1)
 		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBLignes' doit etre un nombre entier strictement positif.");
 
-	if (TABtab->TABgetValeurType("NBColonnes") != TAB_TYPE_ENTIER || TABtab->TABgetValeurEntier("NBColonnes") < 1)
+	if (TABtab->TABgetValeurType("NBColonnes") != TYPE_ENTIER || TABtab->TABgetValeurEntier("NBColonnes") < 1)
 		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'NBColonnes' doit etre un nombre entier strictement positif.");
 
-	if (TABtab->TABgetValeurType("Matrice") != TAB_TYPE_CHAINE)
+	if (TABtab->TABgetValeurType("Matrice") != TYPE_CHAINE)
 		throw Cexception(EXC_ERREUR_LEXICALE, "Erreur de creation de la matrice : La valeur de 'Matrice' doit etre une liste ('[....]')");
 }
 
@@ -797,7 +797,7 @@ CMatrice<T> CMatrice<T>::MATgenerer(CTableauAssociatif * TABtab)
 				pcCoefficient[strlen(pcCoefficient) - 1] = '\0';
 			}
 
-			if (analyserType(pcCoefficient) != TAB_TYPE_REEL && analyserType(pcCoefficient) != TAB_TYPE_ENTIER)
+			if (analyserType(pcCoefficient) != TYPE_REEL && analyserType(pcCoefficient) != TYPE_ENTIER)
 			{
 				throw Cexception(EXC_ERREUR_LEXICALE, "La valeur de 'Matrice' ne doit être composée que de nombres.");
 			}

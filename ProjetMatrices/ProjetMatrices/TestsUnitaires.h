@@ -354,6 +354,18 @@ public:
 	******************************************/
 	void UNItestsCTableauAssociatif() const;
 
+
+
+	/*****************************************
+	Test du calcul de la factorisation de Choleski
+	******************************************
+	Entrée : rien.
+	Nécessite : rien.
+	Sortie : rien.
+	Entraîne : l'arrêt du programme si une assertion n'est pas vérifiée.
+	******************************************/
+	void UNItestCholeski() const;
+
 	/*****************************************
 	Début des tests.
 	******************************************

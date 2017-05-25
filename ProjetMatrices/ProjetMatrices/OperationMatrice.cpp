@@ -343,6 +343,9 @@ CMatrice<T> COperationMatrice<T>::OPMfactorisationCholeski(CMatrice<T>& MATmatri
 
 	if (!TEStesteur.TESestCarree(MATmatrice))
 		throw Cexception(EXC_DIMENSIONS_INVALIDES, "La matrice n'est pas carree.");
+
+	if (!TEStesteur.TESestSymetrique(MATmatrice))
+		throw Cexception(EXC_CALCUL_IMPOSSIBLE, "La matrice n'est pas symétrique.");
 	
 	T tSomme;
 	unsigned int uiBoucleI, uiBoucleJ, uiBoucleK;
@@ -372,8 +375,8 @@ CMatrice<T> COperationMatrice<T>::OPMfactorisationCholeski(CMatrice<T>& MATmatri
 			tSomme = tSomme + MATresult(uiBoucleI, uiBoucleK) * MATresult(uiBoucleI, uiBoucleK);
 		}
 
-		if (tSomme <= 0)
-			throw Cexception(EXC_CALCUL_IMPOSSIBLE, "La matrice n'est pas definie positive, le calcul de la factorisation de Choleski est impossible.");
+		if (MATmatrice(uiBoucleJ, uiBoucleJ) - tSomme < 0)
+			throw Cexception(EXC_CALCUL_IMPOSSIBLE, "La matrice n'est pas definie positive.");
 	
 		MATresult(uiBoucleI, uiBoucleI) = sqrt(MATmatrice(uiBoucleJ, uiBoucleJ) - tSomme);
 	}
