@@ -1,27 +1,42 @@
 #include "OperationMatrice.h"
 
 
+
+/****************************************
+Constructeur par défaut
+*****************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : La création de l'objet
+****************************************/
 template <class T>
 COperationMatrice<T>::COperationMatrice()
 {
 }
 
 
+/****************************************
+Destructeur
+*****************************************
+Entrée : rien.
+Nécessite : rien.
+Sortie : rien.
+Entraîne : La destruction de l'objet
+****************************************/
 template <class T>
 COperationMatrice<T>::~COperationMatrice()
 {
 }
 
 
-
-
 /*****************************************
-Le rang de la matrice.
+Calcul du rang d'une matrice
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : rien.
 Sortie : le rang de la matrice.
-Entraîne : rien.
+Entraîne : La création d'un nouvel objet CMatrice<T>.
 ******************************************/
 template <class T>
 unsigned int COperationMatrice<T>::OPMrang(const CMatrice<T> & MATmatrice) const
@@ -42,13 +57,14 @@ unsigned int COperationMatrice<T>::OPMrang(const CMatrice<T> & MATmatrice) const
 }
 
 
+
 /*****************************************
-Echelonnement de la matrice.
+Echelonnement d'une matrice
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : rien.
 Sortie : une matrice échelonnées (non réduite => change le déterminant).
-Entraîne : rien.
+Entraîne : La création d'un nouvel objet CMatrice<T>.
 ******************************************/
 template <class T>
 CMatrice<T> COperationMatrice<T>::OPMechelonnee(const CMatrice<T> & MATmatrice) const
@@ -84,12 +100,12 @@ CMatrice<T> COperationMatrice<T>::OPMechelonnee(const CMatrice<T> & MATmatrice) 
 
 
 /*****************************************
-Transposée de la matrice.
+Transposée d'une matrice.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : rien.
 Sortie : la transposée de la matrice
-Entraîne : rien.
+Entraîne : La création d'un nouvel objet CMatrice<T>.
 ******************************************/
 template <class T>
 CMatrice<T> COperationMatrice<T>::OPMtransposee(const CMatrice<T> & MATmatrice) const
@@ -116,6 +132,7 @@ CMatrice<T> COperationMatrice<T>::OPMtransposee(const CMatrice<T> & MATmatrice) 
 /*****************************************
 Calcul d'une sous-matrice.
 ******************************************
+Entrée : La matrice
 Entrée : l'indice de la ligne.
 Entrée : l'indice de la colonne.
 Nécessite : uiLigne >= 0 et est inferieur au nombre de lignes de la matrice.
@@ -123,7 +140,7 @@ Nécessite : uiColonne >= 0 et est inferieur au nombre de de colonnes de la matri
 Sortie : une instance de CMatrice possédant une ligne et une colonne de moins
 contenant les valeurs de la matrice qui ne sont pas sur la lige uiLigne ou
 sur la colonne uiColonne.
-Entraîne : rien.
+Entraîne : La création d'un nouvel objet CMatrice<T>.
 ******************************************/
 template <class T>
 CMatrice<T> COperationMatrice<T>::OPMsousMatrice(const CMatrice<T> & MATmatrice, unsigned int uiLigne, unsigned int uiColonne) const
@@ -159,9 +176,9 @@ CMatrice<T> COperationMatrice<T>::OPMsousMatrice(const CMatrice<T> & MATmatrice,
 
 
 /*****************************************
-Calcul du déterminant.
+Calcul du déterminant d'une matrice.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : La matrice est carrée.
 Sortie : la valeur du déterminant.
 Entraîne : rien.
@@ -216,7 +233,7 @@ T COperationMatrice<T>::OPMdet(const CMatrice<T> & MATmatrice) const
 /*****************************************
 Calcul de la trace d'une matrice.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : La matrice est carrée.
 Sortie : la valeur de la trace.
 Entraîne : rien.
@@ -238,12 +255,12 @@ T COperationMatrice<T>::OPMtr(const CMatrice<T> & MATmatrice) const
 
 
 /*****************************************
-Calcul de la commatrice.
+Calcul de la commatrice d'une matrice.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : La matrice est carrée.
 Sortie : une instance de CMatrice égale a la commatrice de l'objet.
-Entraîne : rien.
+Entraîne : La création d'un nouvel objet CMatrice<T>.
 ******************************************/
 template <class T>
 CMatrice<T> COperationMatrice<T>::OPMcommatrice(const CMatrice<T> & MATmatrice) const
@@ -273,9 +290,10 @@ CMatrice<T> COperationMatrice<T>::OPMcommatrice(const CMatrice<T> & MATmatrice) 
 /*****************************************
 Calcul de l'inverse d'une matrice.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : La matrice est carrée.
 Sortie : une instance de CMatrice égale à l'inverse de l'objet.
+Entraîne : La création d'un objet CMatrice<T>
 Entraîne : Une Cexception est levée si le determinant est nul.
 ******************************************/
 template <class T>
@@ -308,7 +326,7 @@ Nécessite : la dimension du tableau est >= uiDim
 (si elle est supérieure, seules les uiDim premières
 valeurs seront prisent en compte).
 Sortie : un matrice diagonale contenant les valeurs de ptDiag sur la diagonale.
-Entraîne : rien
+Entraîne : La création d'un objet CMatrice<T>
 ******************************************/
 template <class T>
 CMatrice<T> COperationMatrice<T>::OPMcreerMatriceDiagonale(unsigned int uiDim, const T ptDiag[])
@@ -336,6 +354,20 @@ CMatrice<T> COperationMatrice<T>::OPMcreerMatriceDiagonale(unsigned int uiDim, c
 }
 
 
+
+/*****************************************
+Calcul de la matrice triangulaire inférieure (L)
+de la factorisation de Choleski
+******************************************
+Entrée : la matrice,
+Nécessite : rien.
+Sortie : La matrice triangulaire inférieur de la factorisation de Choleski
+Entraîne : La création d'un objet CMatrice<T>
+Entraîne : Une Cexception si :
+	- La matrice n'est pas carrée,
+	- La matrice n'est pas symétrique
+	- La matrice n'est pas définie positive
+******************************************/
 template <class T>
 CMatrice<T> COperationMatrice<T>::OPMfactorisationCholeski(CMatrice<T>& MATmatrice)
 {
@@ -353,8 +385,8 @@ CMatrice<T> COperationMatrice<T>::OPMfactorisationCholeski(CMatrice<T>& MATmatri
 
 	// Matrice L de la factorisation de choleski
 	CMatrice<T> MATresult(uiDim, uiDim);
-	MATresult(0, 0) = sqrt(MATmatrice(0, 0));
 
+	MATresult(0, 0) = sqrt(MATmatrice(0, 0));
 
 	for(uiBoucleI = 1; uiBoucleI < uiDim; uiBoucleI++)
 	{

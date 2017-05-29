@@ -1,11 +1,28 @@
 #include "TesteurMatrice.h"
 
+
+/*****************************************
+Constructeur par défaut
+******************************************
+Entrée : rien.
+Nécessite : rien
+Sortie : rien.
+Entraîne : La constructeur de l'objet.
+******************************************/
 template <class T>
 CTesteurMatrice<T>::CTesteurMatrice()
 {
 }
 
 
+/*****************************************
+Destructeur
+******************************************
+Entrée : rien.
+Nécessite : rien
+Sortie : rien.
+Entraîne : La destruction de l'objet.
+******************************************/
 template <class T>
 CTesteurMatrice<T>::~CTesteurMatrice()
 {
@@ -14,9 +31,9 @@ CTesteurMatrice<T>::~CTesteurMatrice()
 
 
 /*****************************************
-Teste si la matrice est triangulaire.
+Teste si une matrice est triangulaire.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est triangulaire, False = la matrice n'est pas triangulaire.
 Entraîne : rien.
@@ -29,9 +46,9 @@ bool CTesteurMatrice<T>::TESestTriangulaire(const CMatrice<T> & MATmatrice) cons
 
 
 /*****************************************
-Teste si la matrice est triangulaire inférieure.
+Teste si une matrice est triangulaire inférieure.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est triangulaire inférieur, False = la matrice n'est pas triangulaire inférieure.
 Entraîne : rien
@@ -60,9 +77,9 @@ bool CTesteurMatrice<T>::TESestTriangulaireInferieure(const CMatrice<T> & MATmat
 
 
 /*****************************************
-Teste si la matrice est triangulaire supérieure.
+Teste si une matrice est triangulaire supérieure.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est triangulaire supérieure, False = la matrice n'est pas triangulaire supérieure.
 Entraîne : rien
@@ -79,9 +96,9 @@ bool CTesteurMatrice<T>::TESestTriangulaireSuperieure(const CMatrice<T> & MATmat
 
 
 /*****************************************
-Teste si la matrice est diagonale.
+Teste si une matrice est diagonale.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est diagonale, False = la matrice n'est pas diagonale.
 Entraîne : rien.
@@ -95,9 +112,9 @@ bool CTesteurMatrice<T>::TESestDiagonale(const CMatrice<T> & MATmatrice) const
 
 
 /*****************************************
-Teste si la matrice est inversible.
+Teste si une matrice est inversible.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : rien.
 Sortie : un booléen : True = la matrice est inversible, False = la matrice n'est pas inversible.
 Entraîne : rien
@@ -111,9 +128,9 @@ bool CTesteurMatrice<T>::TESestInversible(const CMatrice<T> & MATmatrice) const
 
 
 /*****************************************
-Teste si la matrice est symétrique.
+Teste si neu matrice est symétrique.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est symétrique, False = la matrice n'est pas symétrique.
 Entraîne : rien.
@@ -127,9 +144,9 @@ bool CTesteurMatrice<T>::TESestSymetrique(const CMatrice<T> & MATmatrice) const
 
 
 /*****************************************
-Teste si la matrice est antisymétrique.
+Teste si une matrice est antisymétrique.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : La matrice est carrée.
 Sortie : un booléen : True = la matrice est antisymétrique, False = la matrice n'est pas antisymétrique.
 Entraîne : rien.
@@ -143,9 +160,9 @@ bool CTesteurMatrice<T>::TESestAntiSymetrique(const CMatrice<T> & MATmatrice) co
 
 
 /*****************************************
-Test de matrice nulle.
+Teste si une matrice est nulle.
 ******************************************
-Entrée : rien.
+Entrée : La matrice.
 Nécessite : rien.
 Sortie : un booléen : True = la matrice est nulle, False = la matrice n'est pas nulle.
 Entraine : rien
@@ -175,6 +192,7 @@ bool CTesteurMatrice<T>::TESestNulle(const CMatrice<T> & MATmatrice) const
 /*****************************************
 Test si une ligne est null
 ******************************************
+Entrée : La matrice.
 Entrée : l'indice de la ligne
 Nécessite : rien
 Sortie : True : ligne nulle, False : la ligne n'est pas nulle.
@@ -202,6 +220,7 @@ bool CTesteurMatrice<T>::TESligneEstNulle(const CMatrice<T> & MATmatrice, unsign
 /*****************************************
 Test si une colonne est nulle
 ******************************************
+Entrée : La matrice.
 Entrée : l'indice de la colonne
 Nécessite : rien
 Sortie : True : ligne nulle, False : la ligne n'est pas nulle.
@@ -226,6 +245,14 @@ bool CTesteurMatrice<T>::TEScolonneEstNulle(const CMatrice<T> & MATmatrice, unsi
 
 
 
+/*****************************************
+Teste si une matrice est carrée.
+******************************************
+Entrée : La matrice.
+Nécessite : rien.
+Sortie : un booléen : True = la matrice est carrée, False = la matrice n'est pas carrée.
+Entraine : rien
+******************************************/
 template <class T>
 bool CTesteurMatrice<T>::TESestCarree(const CMatrice<T>& MATmatrice) const
 {

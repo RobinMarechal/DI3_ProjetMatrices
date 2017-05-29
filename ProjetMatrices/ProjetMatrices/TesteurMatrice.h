@@ -4,18 +4,40 @@
 #include "Matrice.h"
 #include "OperationMatrice.h"
 
+/****************************** 
+ Patron de classe permettant d'effectuer un certain
+ nombre de tests sur des CMatrice<T>
+ ******************************/
 template <class T>
 class CTesteurMatrice
 {
 public:
+	/*****************************************
+	Constructeur par défaut
+	******************************************
+	Entrée : rien.
+	Nécessite : rien
+	Sortie : rien.
+	Entraîne : La contruction de l'objet.
+	******************************************/
 	CTesteurMatrice();
+
+
+	/*****************************************
+	Destructeur
+	******************************************
+	Entrée : rien.
+	Nécessite : rien
+	Sortie : rien.
+	Entraîne : La destruction de l'objet.
+	******************************************/
 	~CTesteurMatrice();
 
 
 	/*****************************************
-	Teste si la matrice est triangulaire.
+	Teste si une matrice est triangulaire.
 	******************************************
-	Entrée : rien.
+	Entrée : La matrice.
 	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est triangulaire, False = la matrice n'est pas triangulaire.
 	Entraîne : rien.
@@ -24,9 +46,9 @@ public:
 
 
 	/*****************************************
-	Teste si la matrice est triangulaire supérieure.
+	Teste si une matrice est triangulaire supérieure.
 	******************************************
-	Entrée : rien.
+	Entrée : La matrice.
 	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est triangulaire supérieure, False = la matrice n'est pas triangulaire supérieure.
 	Entraîne : rien
@@ -35,9 +57,9 @@ public:
 
 
 	/*****************************************
-	Teste si la matrice est triangulaire inférieure.
+	Teste si une matrice est triangulaire inférieure.
 	******************************************
-	Entrée : rien.
+	Entrée : La matrice.
 	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est triangulaire inférieur, False = la matrice n'est pas triangulaire inférieure.
 	Entraîne : rien
@@ -46,9 +68,9 @@ public:
 
 
 	/*****************************************
-	Teste si la matrice est diagonale.
+	Teste si une matrice est diagonale.
 	******************************************
-	Entrée : rien.
+	Entrée : La matrice.
 	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est diagonale, False = la matrice n'est pas diagonale.
 	Entraîne : rien.
@@ -57,9 +79,9 @@ public:
 
 
 	/*****************************************
-	Teste si la matrice est inversible.
+	Teste si une matrice est inversible.
 	******************************************
-	Entrée : rien.
+	Entrée : La matrice.
 	Nécessite : rien.
 	Sortie : un booléen : True = la matrice est inversible, False = la matrice n'est pas inversible.
 	Entraîne : rien
@@ -68,9 +90,9 @@ public:
 
 
 	/*****************************************
-	Teste si la matrice est symétrique.
+	Teste si une matrice est symétrique.
 	******************************************
-	Entrée : rien.
+	Entrée : La matrice.
 	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est symétrique, False = la matrice n'est pas symétrique.
 	Entraîne : rien.
@@ -79,9 +101,9 @@ public:
 
 
 	/*****************************************
-	Teste si la matrice est antisymétrique.
+	Teste si une matrice est antisymétrique.
 	******************************************
-	Entrée : rien.
+	Entrée : La matrice.
 	Nécessite : La matrice est carrée.
 	Sortie : un booléen : True = la matrice est antisymétrique, False = la matrice n'est pas antisymétrique.
 	Entraîne : rien.
@@ -90,8 +112,9 @@ public:
 
 
 	/*****************************************
-	Test si une ligne est nulle
+	Teste si une ligne est nulle
 	******************************************
+	Entrée : La matrice.
 	Entrée : l'indice de la ligne
 	Nécessite : rien
 	Sortie : True : ligne nulle, False : la ligne n'est pas nulle.
@@ -101,8 +124,9 @@ public:
 
 
 	/*****************************************
-	Test si une colonne est nulle
+	Teste si une colonne est nulle
 	******************************************
+	Entrée : La matrice.
 	Entrée : l'indice de la colonne
 	Nécessite : rien
 	Sortie : True : ligne nulle, False : la ligne n'est pas nulle.
@@ -112,15 +136,24 @@ public:
 
 
 	/*****************************************
-	Test de matrice nulle.
+	Teste si une matrice est nulle.
 	******************************************
-	Entrée : rien.
+	Entrée : La matrice.
 	Nécessite : rien.
 	Sortie : un booléen : True = la matrice est nulle, False = la matrice n'est pas nulle.
 	Entraine : rien
 	******************************************/
 	bool TESestNulle(const CMatrice<T> & MATmatrice) const;
 
+
+	/*****************************************
+	Teste si une matrice est carrée.
+	******************************************
+	Entrée : La matrice.
+	Nécessite : rien.
+	Sortie : un booléen : True = la matrice est carrée, False = la matrice n'est pas carrée.
+	Entraine : rien
+	******************************************/
 	bool TESestCarree(const CMatrice<T> & MATmatrice) const;
 };
 
