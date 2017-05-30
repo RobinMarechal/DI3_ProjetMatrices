@@ -1390,7 +1390,7 @@ void CTestsUnitaires::UNItestCholeski() const
 	{
 		CMatrice<double> MATresult = OPMoperation.OPMfactorisationCholeski(MATdefPos);
 		assertionEgalite(MATdefPos, MATresult * OPMoperation.OPMtransposee(MATresult));
-		cout << "." << endl;
+		cout << ".";
 	}
 	catch (Cexception EXCe)
 	{

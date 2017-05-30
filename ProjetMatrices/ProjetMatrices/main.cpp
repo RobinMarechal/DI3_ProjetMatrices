@@ -72,7 +72,7 @@ int main(unsigned int argc, char* argv[])
 				char pcMsg[1024];
 				sprintf_s(pcMsg, 1024, "Le champs 'TypeMatrice' n'est pas specifie dans le fichier %s.", argv[uiBoucle]);
 
-				// On profite du try/catch autour du for
+				// On profite du try/catch en cours
 				throw Cexception(EXC_ERREUR_LEXICALE, pcMsg);
 			}
 
@@ -90,13 +90,12 @@ int main(unsigned int argc, char* argv[])
 
 			delete TABtab;
 
-			cout << "Fichier " << uiBoucle << " lu." << endl;
+			cout << endl << "----------------------------------------------------------" << endl << endl;
+			cout << "> Fichier " << uiBoucle << " lu." << endl;
 
 			// Calculs
 
-			cout << "----------------------------------------------------------" << endl;
-			cout << "Matrice construite : " << endl;
-			cout << "----------------------------------------------------------" << endl;
+			cout << "> Matrice construite : " << endl;
 
 			cout << MATmatrice << endl;
 
@@ -104,20 +103,19 @@ int main(unsigned int argc, char* argv[])
 			{
 				MATresultat = OPMoperation.OPMfactorisationCholeski(MATmatrice);
 
-				cout << "----------------------------------------------------------" << endl;
-				cout << "Matrice L de la factorisation de Choleski : " << endl;
-				cout << "----------------------------------------------------------" << endl;
+				cout << endl << "> Matrice L de la factorisation de Choleski : " << endl;
 
 				cout << MATresultat;
 			}
 			catch (Cexception EXCe)
 			{
-				cout << EXCe.EXCgetMessage();
+				cout << "La factorisation a echoue, la methode a souleve une exception : ";
+				cout << EXCe.EXCgetMessage() << endl;
 			}
 		}
 		catch (Cexception EXCe)
 		{
-			cout << "Une erreur est survenue lors de la lecture du fichier numéro " << uiBoucle << "." << endl;
+			cout << "Une erreur est survenue lors de la lecture du fichier numero " << uiBoucle << " : ";
 			cout << EXCe.EXCgetMessage() << endl;
 		}
 	}

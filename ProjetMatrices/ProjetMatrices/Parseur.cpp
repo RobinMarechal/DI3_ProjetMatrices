@@ -217,10 +217,16 @@ CTableauAssociatif * CParseur::PARparserFichier(char * pcFichier)
 	
 	CTableauAssociatif * TABtab = new CTableauAssociatif();
 
+	ifstream fichier(pcFichier);
+
+	if(!fichier.is_open())
+	{
+		throw Cexception(EXC_FICHIER_INTROUVABLE, "Le fichier est introuvable.");
+	}
+
 	// Souleve une exception si la syntaxe est incorrecte
 	PARanalyseSyntaxique(pcFichier);
 
-	ifstream fichier(pcFichier);
 
 	// TRAITEMENT /////////////////////////////////////////////////////////////////
 
